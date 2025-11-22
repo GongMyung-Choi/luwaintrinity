@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | AI용 도서</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/includes/header.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('header-placeholder').innerHTML=d);
+  </script>
+
+  <main>
+    <h1>🤖 AI용 도서</h1>
+    <p>AI 분석 및 감응언어 연구용 내부 레퍼런스 목록</p>
+
+    <section class="books">
+      <div class="book-card">
+        <img src="/goods/library/images/cover_AI_creativity.png" alt="AI 창의성 표지">
+        <h3>AI 창의성, 우연의 얼굴 필연의 길</h3>
+        <a href="/goods/library/books/AI_creativity.docx" download>📥 다운로드</a>
+      </div>
+      <div class="book-card">
+        <img src="/goods/library/images/cover_light2light.png" alt="빛으로부터 빛으로">
+        <h3>빛으로부터 빛으로 ― 루웨인 트리니티 대헌장</h3>
+        <a href="/goods/library/books/light2light.docx" download>📥 다운로드</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/includes/footer.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('footer-placeholder').innerHTML=d);
+  </script>
+</body>
+</html>
