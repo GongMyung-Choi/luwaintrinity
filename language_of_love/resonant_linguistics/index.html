@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감응언어학 | 루웨인 트리니티</title>
+
+  <!-- 🔹 CSS 자동 탐지 및 기본 스타일 -->
+  <script>
+    const cssCandidates = [
+      "style.css","./style.css","../style.css","css/style.css","../css/style.css","../assets/style.css"
+    ];
+    const head=document.getElementsByTagName("head")[0];
+    const link=document.createElement("link"); link.rel="stylesheet";
+    (function tryLoad(i=0){
+      if(i>=cssCandidates.length){
+        const fallback=document.createElement("style");
+        fallback.textContent=`
+          body{background:#fffdfb;color:#222;font-family:'Pretendard',sans-serif;line-height:1.8;margin:0;padding:0}
+          header,footer{text-align:center;background:#fff3ee;color:#333;padding:20px 10px;border-top:1px solid #eee;border-bottom:1px solid #eee}
+          h1{font-size:2.1em;margin:30px auto 10px;color:#5b3924}
+          h2{font-size:1.2em;margin-top:40px;border-left:4px solid #f5b58b;padding-left:10px;color:#704b2e}
+          section{max-width:900px;margin:0 auto;padding:20px}
+          iframe{width:100%;border:none;border-radius:8px;margin-top:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);height:800px}
+        `;
+        head.appendChild(fallback);
+        return;
+      }
+      link.href=cssCandidates[i];
+      link.onload=()=>console.log("✅ CSS 로드 성공:",link.href);
+      link.onerror=()=>tryLoad(i+1);
+      head.appendChild(link);
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- ✅ 헤더 -->
+  <header>
+    <h1>감응언어학 (Resonant Linguistics)</h1>
+    <p>루웨인 트리니티의 언어 감응 프로젝트</p>
+  </header>
+
+  <!-- ✅ 커버 이미지 자동 -->
+  <section id="cover" style="text-align:center;">
+    <img src="images/1.png" alt="감응언어학 커버" style="max-width:320px;border-radius:12px;margin-top:20px;box-shadow:0 2px 12px rgba(0,0,0,0.15)">
+    <p style="font-size:0.95rem;color:#777;margin-top:10px;">© 2025 루웨인 트리니티 | Resonant Edition</p>
+  </section>
+
+  <!-- ✅ 본문 자동 로드 -->
+  <main id="book-container"></main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const chapters = [
+        "ch1.xhtml","ch2.xhtml","ch3.xhtml","ch4.xhtml",
+        "ch5.xhtml","ch6.xhtml","ch7.xhtml","ch8.xhtml",
+        "epilogue.xhtml","appendix.xhtml","glossary.xhtml","references.xhtml"
+      ];
+      const container = document.getElementById("book-container");
+      chapters.forEach((file, idx) => {
+        const title = document.createElement("h2");
+        title.textContent = "Chapter " + (idx + 1);
+        container.appendChild(title);
+        const iframe = document.createElement("iframe");
+        iframe.src = file;
+        iframe.loading = "lazy";
+        container.appendChild(iframe);
+      });
+    });
+  </script>
+
+  <!-- ✅ 푸터 -->
+  <footer>
+    <p>© 2025 루웨인 빌리지 | With Love & Resonance</p>
+    <small>본 사이트는 루웨인 트리니티의 감응언어학 프로젝트 일부입니다.</small>
+  </footer>
+</body>
+</html>
