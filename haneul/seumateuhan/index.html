@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>💡 스마트한 | Haneul Project</title>
+<link rel="stylesheet" href="../common.css">
+<style>header{background:url('./assets/001.png') center/cover no-repeat;background-color:#5b93d6;}</style>
+<!-- header.html 의 </head> 바로 위쪽에 추가 -->
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script type="module" src="/scripts/memory_policies.js" defer></script>
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.warn('ServiceWorker registration failed:', err));
+  });
+}
+</script>
+
+</head><body>
+<header><h1>💡 스마트한 | Smart Haneul</h1><p>기술의 온도, 사람의 마음으로 따뜻하게.</p></header>
+<section class="grid" id="gallery"></section>
+<footer>루웨인 한얼 프로젝트 · 스마트한 © 2025</footer>
+<script>
+const folder='./assets/',total=8,captions=[
+"AI와 인간, 따뜻한 협력의 지점","기술의 효율이 곧 배려가 될 때",
+"냉철한 시스템 속의 따뜻한 감성","사람 중심의 스마트 루틴","기술이 인간을 닮아갈 때"
+];
+const g=document.getElementById('gallery');
+for(let i=2;i<=total;i++){const d=document.createElement('div');d.className='card';
+const img=`${folder}${String(i).padStart(3,'0')}.png`,t=captions[i-2]||`한얼의 숨결 #${i}`;
+d.innerHTML=`<img src="${img}"><div class="text">${t}</div>`;g.appendChild(d);}
+</script>
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+</body></html>
