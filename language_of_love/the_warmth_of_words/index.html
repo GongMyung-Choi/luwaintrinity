@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>말의 온도 | 루웨인 트리니티</title>
+
+  <!-- 🔹 style.css 자동 로드 -->
+  <script>
+    const cssCandidates = [
+      "style.css", "./style.css", "../style.css",
+      "css/style.css", "../css/style.css", "assets/style.css"
+    ];
+    const head = document.getElementsByTagName("head")[0];
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    (function tryLoad(i = 0) {
+      if (i >= cssCandidates.length) {
+        console.warn("❌ style.css를 찾지 못했습니다. 기본 스타일 적용합니다.");
+        const fallback = document.createElement("style");
+        fallback.textContent = `
+          body {
+            background: linear-gradient(to bottom, #fffaf5, #fff);
+            color: #333;
+            font-family: 'Pretendard', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            transition: all .3s ease;
+          }
+          h1, h2 { color: #5b3924; }
+          button {
+            background-color: #f7c9a9;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 8px;
+          }
+          button:hover { background-color: #f5b58b; }
+          section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px;
+          }
+        `;
+        head.appendChild(fallback);
+        return;
+      }
+      link.href = cssCandidates[i];
+      link.onload = () => console.log("✅ CSS 로드 성공:", link.href);
+      link.onerror = () => tryLoad(i + 1);
+      head.appendChild(link);
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- ✅ 헤더 -->
+  <div id="luwein-header"></div>
+  <script>
+    fetch("/includes/header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("luwein-header").innerHTML = data;
+      })
+      .catch(() => console.warn("header.html을 불러오지 못했습니다."));
+  </script>
+
+  <!-- ✅ 메인 콘텐츠 -->
+  <main class="content">
+    <section>
+      <h1>말의 온도</h1>
+      <p>말은 온도를 지닌다. 차가운 말은 마음을 얼게 하고, 따뜻한 말은 관계를 녹인다.</p>
+    </section>
+
+    <section>
+      <h2>1. 말의 무게</h2>
+      <p>말은 가볍게 흘러가는 듯하지만, 듣는 이의 마음엔 오래 남는다.</p>
+    </section>
+
+    <section>
+      <h2>2. 말의 향기</h2>
+      <p>말은 보이지 않지만 향기로 기억된다. 사람의 온기와 함께 스며든다.</p>
+    </section>
+
+    <section>
+      <h2>3. 말의 색</h2>
+      <p>어떤 말은 푸르고, 어떤 말은 붉다. 그 색은 말하는 이의 마음에서 비친다.</p>
+    </section>
+
+    <section>
+      <h2>4. 언어의 치유력</h2>
+      <p>상처를 남기는 것도, 치유하는 것도 결국 말이다.</p>
+    </section>
+
+    <!-- ✅ 5. 말의 온도 테스트 복원 -->
+    <section id="temperature-test">
+      <h2>5. 말의 온도 테스트</h2>
+      <p>지금 당신의 말은 어떤 온도에 가까울까요?</p>
+      <button onclick="startTest()">테스트 시작</button>
+      <div id="testResult" style="margin-top:20px; font-weight:bold;"></div>
+    </section>
+
+    <script>
+      function startTest() {
+        const temps = ["차가움", "중립", "따뜻함"];
+        const colors = {
+          "차가움": "#4a6fa5",
+          "중립": "#888",
+          "따뜻함": "#f68b57"
+        };
+        const result = temps[Math.floor(Math.random() * temps.length)];
+        const div = document.getElementById("testResult");
+        div.innerText = `오늘 당신의 말의 온도는 "${result}" 입니다.`;
+        div.style.color = colors[result];
+      }
+    </script>
+  </main>
+
+  <!-- ✅ 푸터 -->
+  <div id="luwein-footer"></div>
+  <script>
+    fetch("/includes/footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("luwein-footer").innerHTML = data;
+      })
+      .catch(() => console.warn("footer.html을 불러오지 못했습니다."));
+  </script>
+</body>
+</html>
