@@ -1,0 +1,5 @@
+/* 헤더가 항상 최상단 레이어로 유지 */
+.site-header, header { position: relative; z-index: 10; }
+
+/* 한국어 렌더링 안정화 */
+html { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
