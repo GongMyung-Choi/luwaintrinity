@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>루웨인 전자도서관 | 맑은샘</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      position: relative;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f9fafb;
+    }
+
+    header, footer {
+      background:#0c2233;
+      color:white;
+      text-align:center;
+      padding:1em 0;
+    }
+
+    h1 {
+      text-align:center;
+      margin-top:1.5em;
+      color:#222;
+    }
+
+    .category {
+      margin: 2em auto;
+      max-width: 900px;
+      background:white;
+      padding:1.5em;
+      border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .category h2 {
+      border-left:6px solid #118bee;
+      padding-left:0.5em;
+      color:#333;
+    }
+
+    .book-item { margin:0.5em 0; }
+    .book-item a { text-decoration:none; color:#0b5fcc; }
+    .book-item a:hover { text-decoration:underline; }
+
+    /* 팝업 */
+    .popup {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .popup.show { opacity: 1; }
+
+    .popup-content {
+      background:white;
+      padding:2em;
+      border-radius:12px;
+      max-width:400px;
+      text-align:center;
+      box-shadow:0 4px 15px rgba(0,0,0,0.3);
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity:0; }
+      to { transform: scale(1); opacity:1; }
+    }
+
+    .popup-content h2 { margin-top:0; color:#0c2233; }
+    .popup-content p { line-height:1.5em; }
+    .popup-content a { color:#118bee; font-weight:bold; }
+    .popup button {
+      margin-top:1em;
+      padding:0.5em 1.2em;
+      border:none;
+      background:#0c2233;
+      color:white;
+      border-radius:5px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h2>📘 루웨인 전자도서관 | 맑은샘</h2>
+  </header>
+
+  <main>
+    <h1>📂 분야별 도서 목록</h1>
+    <div id="libraryContainer">데이터를 불러오는 중...</div>
+  </main>
+
+  <footer>
+    <p>© 2025 루웨인 트리니티 | <a href="/goods/library/about_mecenat.html" style="color:#aee3ff;">메세나란?</a></p>
+  </footer>
+
+  <!-- 메세나 팝업 -->
+  <div id="mecenatPopup" class="popup">
+    <div class="popup-content">
+      <h2>🌱 루웨인 메세나</h2>
+      <p>“여러분의 후원은 울림을 맑게, 넓게 합니다.”</p>
+      <p><a href="/goods/library/about_mecenat.html">메세나란?</a></p>
+      <button onclick="closePopup()">닫기</button>
+    </div>
+  </div>
+
+  <script>
+    function showPopupOnce() {
+      if (!localStorage.getItem("mecenatShown")) {
+        const popup = document.getElementById("mecenatPopup");
+        popup.classList.add("show");
+        localStorage.setItem("mecenatShown", "true");
+      }
+    }
+
+    function closePopup() {
+      document.getElementById("mecenatPopup").classList.remove("show");
+    }
+
+    async function loadLibrary() {
+      try {
+        const res = await fetch("metadata.json");
+        const books = await res.json();
+
+        const grouped = {};
+        books.forEach(book => {
+          const cat = book.분류 || "기타";
+          if (!grouped[cat]) grouped[cat] = [];
+          grouped[cat].push(book);
+        });
+
+        const container = document.getElementById("libraryContainer");
+        container.innerHTML = "";
+
+        for (const [cat, items] of Object.entries(grouped)) {
+          const div = document.createElement("div");
+          div.className = "category";
+          div.innerHTML = `<h2>${cat}</h2>` +
+            items.map(b => `<div class="book-item"><a href="${b.경로}" target="_blank">${b.제목}</a> – ${b.저자}</div>`).join("");
+          container.appendChild(div);
+        }
+      } catch {
+        document.getElementById("libraryContainer").innerHTML = "⚠️ 메타데이터를 불러오지 못했습니다.";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadLibrary();
+      showPopupOnce();
+    });
+  </script>
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
