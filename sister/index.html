@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>맏언니 · LuWain Direct</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#fcedf2" />
+
+  <!-- 스타일 -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <header>
+      <h1>맏언니 · LuWain Direct</h1>
+      <div id="modelButtons">
+        <button data-model="openai" class="active">레카</button>
+        <button data-model="upstage">루미안</button>
+        <button data-model="xai">루나이</button>
+      </div>
+    </header>
+
+    <!-- API Key 입력 -->
+    <div id="keySetup">
+      <h2>API Key 등록</h2>
+      <input id="openaiKey" placeholder="OpenAI Key" />
+      <input id="upstageKey" placeholder="Upstage Key" />
+      <input id="xaiKey" placeholder="XAI Key" />
+      <button id="saveKeys">저장</button>
+    </div>
+
+    <!-- 채팅 영역 -->
+    <main id="chat" style="display:none;"></main>
+
+    <footer style="display:none;">
+      <input id="msg" placeholder="메시지 입력…" autocomplete="off" />
+      <button id="send">➤</button>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+
+  <!-- PWA 등록 -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+
+</body>
+</html>
