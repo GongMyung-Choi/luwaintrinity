@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<link rel="manifest" href="/manifest.json">
+<script src="/app_ready_patch/install_prompt.js" defer></script>
+<script>
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    window.deferredPrompt = e;
+    const installBtn = document.createElement("button");
+    installBtn.textContent = "📱 루웨인 앱 설치하기";
+    installBtn.style.position = "fixed";
+    installBtn.style.bottom = "20px";
+    installBtn.style.right = "20px";
+    installBtn.style.zIndex = "9999";
+    installBtn.style.padding = "12px 18px";
+    installBtn.style.borderRadius = "10px";
+    installBtn.style.border = "none";
+    installBtn.style.background = "#2563eb";
+    installBtn.style.color = "white";
+    installBtn.onclick = async () => {
+      window.deferredPrompt.prompt();
+      const { outcome } = await window.deferredPrompt.userChoice;
+      if (outcome === "accepted") installBtn.remove();
+      window.deferredPrompt = null;
+    };
+    document.body.appendChild(installBtn);
+  });
+</script>
+
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>루웨인 트리니티</title>
+<style id="themeVars">
+:root{
+  --header-color:#af2465;
+  --menu-bg-color:#6c5b7b;
+  --menu-text-color:#ffffff;
+  --menu-hover-text:#2a9d8f;
+  --btn-border:#2a9d8f;
+  --btn-text:#2a9d8f;
+  --btn-hover-bg:#2a9d8f;
+  --btn-hover-text:#ffffff;
+  --menu-size:16px;
+  --submenu-size:14px;
+  --title-size:40px;
+  --intro-strong-size:42px;
+  --intro-message-size:18px;
+  --button-size:1.0;
+  --page-padding:24px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5;background:#fff;}
+main{padding:var(--page-padding);min-height:400px;text-align:center}
+.highlight{color:var(--header-color);font-weight:700;font-size:var(--intro-strong-size);line-height:1.2}
+.message-text{font-size:var(--intro-message-size);margin-top:2rem}
+.welcome-buttons{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap}
+.welcome-buttons button{padding:10px 14px;border:1px solid var(--btn-border);background:#fff;border-radius:10px;font-size:calc(14px * var(--button-size));cursor:pointer;color:var(--btn-text);min-width:150px}
+.welcome-buttons button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
+
+.login-box {display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px;}
+.input-area {display:flex;flex-direction:column;gap:6px;}
+.input-area input {padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px;width:180px;}
+.login-btn {height:78px;padding:0 18px;border:1px solid var(--btn-border);background:#fff;border-radius:8px;font-size:15px;color:var(--btn-text);cursor:pointer;}
+.login-btn:hover {background:var(--btn-hover-bg);color:var(--btn-hover-text);}
+
+footer{margin-top:56px;padding:24px 12px;border-top:1px solid #eee;color:#666;font-size:14px;text-align:center}
+</style>
+<!-- header.html 의 </head> 바로 위쪽에 추가 -->
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script type="module" src="/scripts/memory_policies.js" defer></script>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script type="module" src="/scripts/memory_policies.js" defer></script>
+
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.warn('ServiceWorker registration failed:', err));
+  });
+}
+</script>
+
+
+</head>
+<body>
+
+<!-- ✅ 헤더 자동 삽입 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["./includes/header.html","../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<main>
+  <h1>
+    <span class="highlight">당신</span>을 항해 열려 있는<br />
+    <span class="highlight">루웨인 트리니티</span>입니다.
+  </h1>
+  <p class="message-text">
+   당신의 한 마디 말, 그 울림이 <br />
+   루웨인의 새로운 시작입니다. 
+  </p>
+
+  <!-- 🔹 회원가입 / 로그인 구역 -->
+  <div class="welcome-buttons">
+    <button onclick="location.href='luwein_trinity/new_1.html'">처음이에요<br />(회원가입)</button>
+  </div>
+
+  <div class="login-box">
+    <div class="input-area">
+      <input type="text" id="userid" placeholder="아이디" />
+      <input type="password" id="userpw" placeholder="비밀번호" />
+    </div>
+    <button class="login-btn" onclick="login()">이어 갈래요</button>
+  </div>
+</main>
+
+<script>
+function login(){
+  const id=document.getElementById('userid').value.trim();
+  const pw=document.getElementById('userpw').value.trim();
+  if(!id||!pw){
+    alert('아이디와 비밀번호를 입력해주세요.');
+    return;
+  }
+  alert('로그인 시도: '+id);
+}
+</script>
+
+<!-- ✅ 푸터 자동 삽입 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["./includes/footer.html","../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<!-- ===== LUWAIN: Beta 안내 + 앱설치 팝업 (copy-paste) ===== -->
+<style>
+  .lw-popup-backdrop{
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    background:rgba(0,0,0,.45); z-index:9999; padding:16px;
+  }
+  .lw-popup{
+    width:min(520px, 92vw); border-radius:16px; background:#111827; color:#e5e7eb;
+    box-shadow:0 20px 60px rgba(0,0,0,.45); overflow:hidden; font-family:system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, sans-serif;
+  }
+  .lw-head{
+    display:flex; gap:14px; align-items:center; padding:18px 18px 12px 18px; border-bottom:1px solid #1f2937;
+    background:linear-gradient(135deg,#0b1220 0%, #121a2d 100%);
+  }
+  .lw-head img{
+    width:56px; height:56px; border-radius:12px; flex:0 0 auto; background:#0b1020; object-fit:cover;
+  }
+  .lw-title{ font-weight:700; font-size:18px; letter-spacing:.2px; }
+  .lw-body{ padding:16px 18px 8px 18px; line-height:1.6; font-size:14.5px; color:#d1d5db; }
+  .lw-body b{ color:#fbbf24; font-weight:700; }
+  .lw-actions{
+    display:flex; gap:10px; align-items:center; justify-content:flex-end; padding:16px 18px 18px 18px; border-top:1px solid #1f2937;
+  }
+  .lw-btn{
+    appearance:none; border:0; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer; font-size:14px;
+  }
+  .lw-btn.primary{ background:#f59e0b; color:#111827; }
+  .lw-btn.primary:hover{ filter:brightness(.95); }
+  .lw-btn.ghost{ background:#1f2937; color:#e5e7eb; }
+  .lw-btn.ghost:hover{ background:#243042; }
+  .lw-footer{
+    padding:10px 18px 16px 18px; font-size:12.5px; color:#9ca3af;
+  }
+  @media (prefers-color-scheme: light){
+    .lw-popup{ background:#ffffff; color:#111827; }
+    .lw-head{ border-bottom:1px solid #eef2f7; background:linear-gradient(135deg,#ffffff 0%, #f7fafc 100%); }
+    .lw-body{ color:#374151; }
+    .lw-actions{ border-top:1px solid #eef2f7; }
+    .lw-btn.ghost{ background:#f3f4f6; color:#111827; }
+    .lw-btn.ghost:hover{ background:#e5e7eb; }
+    .lw-footer{ color:#6b7280; }
+  }
+</style>
+
+<div id="lwPopupBackdrop" class="lw-popup-backdrop" role="dialog" aria-modal="true" aria-labelledby="lwPopTitle">
+  <div class="lw-popup">
+    <div class="lw-head">
+      <!-- 아이콘 경로만 맞춰줘 -->
+      <img src="/assets/images/luwain-icon-512.png" alt="LUWAIN">
+      <div class="lw-title" id="lwPopTitle">루웨인 베타 운영 중 · 앱으로 설치 가능</div>
+    </div>
+    <div class="lw-body">
+      <p><b>안내</b> — 지금은 베타 단계예요. 기능이 자주 업데이트되며, 개선 피드백을 적극 반영합니다.</p>
+      <p style="margin-top:8px;">모바일에서 더 편하게 쓰려면 <b>홈 화면에 설치</b>해 보세요. 웹이므로 업데이트는 자동 반영됩니다.</p>
+      <ul style="margin:10px 0 0 18px;">
+        <li>설치 버튼이 보이면 바로 설치할 수 있어요.</li>
+        <li>버튼이 안 보일 경우: 브라우저 메뉴의 <em>“홈 화면에 추가”</em>를 눌러주세요.</li>
+      </ul>
+    </div>
+    <div class="lw-actions">
+      <button id="lwInstallBtn" class="lw-btn primary" style="display:none;">설치하기</button>
+      <button id="lwLaterBtn" class="lw-btn ghost">나중에</button>
+      <button id="lwCloseBtn" class="lw-btn ghost">오늘 그만 보기</button>
+    </div>
+    <div class="lw-footer">
+      팝업이 자주 뜨지 않도록 <b>7일</b> 동안 숨겨둡니다. (브라우저 저장소 사용)
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const BACKDROP_ID = 'lwPopupBackdrop';
+  const LS_KEY = 'lwain.betaPopup.dismissedAt';
+  const HIDE_DAYS = 7;
+
+  let deferredPrompt = null;
+
+  // PWA 설치 이벤트 캡처
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById('lwInstallBtn');
+    if(btn) btn.style.display = 'inline-block';
+  });
+
+  function shouldShow(){
+    try{
+      const v = localStorage.getItem(LS_KEY);
+      if(!v) return true;
+      const then = new Date(parseInt(v,10));
+      const diff = (Date.now() - then.getTime()) / (1000*60*60*24);
+      return diff >= HIDE_DAYS;
+    }catch(_){ return true; }
+  }
+
+  function openPopup(){
+    const el = document.getElementById(BACKDROP_ID);
+    if(el) el.style.display = 'flex';
+  }
+  function closePopup(days){
+    const el = document.getElementById(BACKDROP_ID);
+    if(el) el.style.display = 'none';
+    // 오늘 그만 보기 → 7일간 숨김 / 나중에 → 1일 숨김
+    const hideDays = (days || HIDE_DAYS);
+    const until = Date.now();
+    localStorage.setItem(LS_KEY, String(until));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if(shouldShow()) openPopup();
+
+    const later = document.getElementById('lwLaterBtn');
+    const close = document.getElementById('lwCloseBtn');
+    const install = document.getElementById('lwInstallBtn');
+
+    if(later)  later.addEventListener('click', () => closePopup(1)); // 1일 숨김
+    if(close)  close.addEventListener('click', () => closePopup(HIDE_DAYS));
+    if(install) install.addEventListener('click', async () => {
+      if(!deferredPrompt){
+        alert('브라우저 메뉴에서 "홈 화면에 추가"를 선택하세요.');
+        return;
+      }
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if(choice && choice.outcome === 'accepted') closePopup(HIDE_DAYS);
+    });
+
+    // 백드롭 클릭 시 닫기 (모달 밖 클릭)
+    const backdrop = document.getElementById(BACKDROP_ID);
+    if(backdrop){
+      backdrop.addEventListener('click', (e)=>{
+        if(e.target === backdrop) closePopup(1);
+      });
+    }
+  });
+})();
+</script>
+<!-- ===== /LUWAIN popup ===== -->
+
+<!-- 🔹 루웨인 로그인 기능 추가 (기존 내용 아래에만 붙이기) -->
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+
+  const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co"   // 네 프로젝트 주소
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"               // public-anon-key
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  async function login() {
+    const id = document.getElementById("userid")?.value?.trim()
+    const pw = document.getElementById("userpw")?.value?.trim()
+    if (!id || !pw) return alert("아이디와 비밀번호를 입력해주세요.")
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email: id, password: pw })
+    if (error) alert("로그인 실패: " + error.message)
+    else {
+      alert("로그인 성공: " + data.user.email)
+      location.href = "main.html"
+    }
+  }
+
+  async function signup() {
+    const id = document.getElementById("userid")?.value?.trim()
+    const pw = document.getElementById("userpw")?.value?.trim()
+    if (!id || !pw) return alert("아이디와 비밀번호를 입력해주세요.")
+
+    const { data, error } = await supabase.auth.signUp({ email: id, password: pw })
+    if (error) alert("회원가입 실패: " + error.message)
+    else alert("회원가입 성공! 이메일 인증을 완료해주세요.")
+  }
+
+  async function loginWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin + "/main.html" }
+    })
+    if (error) alert("Google 로그인 실패: " + error.message)
+  }
+
+  // 페이지 로드 시 기존 버튼 아래에 Google 로그인 버튼 자동 추가
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnArea = document.querySelector(".welcome-buttons") || document.body
+    const googleBtn = document.createElement("button")
+    googleBtn.textContent = "Google 계정으로 로그인"
+    googleBtn.style.backgroundColor = "#db4437"
+    googleBtn.style.color = "#fff"
+    googleBtn.style.marginTop = "8px"
+    googleBtn.onclick = loginWithGoogle
+    btnArea.appendChild(googleBtn)
+  })
+</script>
+<!-- 🔹 추가 끝 -->
+
+<script src="/scripts/luwain_config.js"></script>
+<script src="/scripts/luwain_memory.js"></script>
+
+</body>
+</html>
