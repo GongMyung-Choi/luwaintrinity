@@ -1,0 +1,5 @@
+# 관리자 페이지는 깃허브에 올리지 않음
+!vercel/
+.env
+supabase/.env
+
