@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>내 퍼스나 보기</title>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;margin:0;background:#f9f9f9;color:#333;text-align:center;padding:20px;}
+h1{color:#af2465;margin-bottom:10px;}
+#viewBox{
+  background:#fff;border:1px solid #eee;border-radius:14px;
+  max-width:700px;margin:0 auto;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{padding:10px;border-bottom:1px solid #eee;}
+th{background:#fdf2f6;color:#af2465;}
+button{margin:12px 6px;padding:10px 16px;border:none;border-radius:8px;background:#2a9d8f;color:#fff;cursor:pointer;}
+button:hover{filter:brightness(1.1);}
+.meta{color:#666;font-size:.9rem;margin-top:8px;}
+</style>
+</head>
+<body>
+<h1>🪞 내 퍼스나 보기</h1>
+<div id="viewBox">
+  <p>로컬 또는 클라우드에 저장된 퍼스나 설정을 확인할 수 있습니다.</p>
+  <table>
+    <thead><tr><th>속성</th><th>값</th></tr></thead>
+    <tbody id="personaData"><tr><td colspan="2">아직 데이터가 없습니다.</td></tr></tbody>
+  </table>
+  <div class="meta" id="timestamp">—</div>
+
+  <div style="margin-top:16px;">
+    <button id="loadLocal">로컬 불러오기</button>
+    <button id="loadCloud">☁️ 클라우드 불러오기</button>
+  </div>
+</div>
+
+<script type="module">
+import { supabase } from '/assets/js/supabase.js';
+
+// 테이블 표시 함수
+function renderTable(data){
+  const tbody=document.getElementById('personaData');
+  tbody.innerHTML='';
+  for(const [k,v] of Object.entries(data)){
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${k}</td><td>${v}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+// 로컬 불러오기
+document.getElementById('loadLocal').onclick=()=>{
+  const raw=localStorage.getItem('luwein_persona');
+  if(!raw){alert('로컬에 저장된 퍼스나가 없습니다.');return;}
+  const data=JSON.parse(raw);
+  renderTable(data);
+  document.getElementById('timestamp').textContent='📦 로컬 데이터 불러옴';
+};
+
+// 클라우드 불러오기
+document.getElementById('loadCloud').onclick=async()=>{
+  const { data, error } = await supabase
+    .from('personas')
+    .select('content, updated_at')
+    .order('updated_at', { ascending:false })
+    .limit(1);
+  if(error||!data?.length){alert('불러오기 실패 또는 데이터 없음');return;}
+  const persona=JSON.parse(data[0].content);
+  renderTable(persona);
+  document.getElementById('timestamp').textContent='☁️ 클라우드 기준: '+new Date(data[0].updated_at).toLocaleString('ko-KR');
+};
+</script>
+</body>
+</html>
