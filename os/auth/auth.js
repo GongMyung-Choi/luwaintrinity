@@ -1,34 +1,62 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-export const supabase = createClient(
-  'https://omchtafaqgkdwcrwscrp.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g
-'
-);
+import { createClient } from "https://esm.sh/@supabase/supabase-js";
 
-export async function signUp(email, password, nickname) {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { data: { nickname } }
-  });
-  if (error) alert(error.message);
-  else {
-    alert('회원가입 성공! 로그인하세요.');
-    location.href = 'login.html';
-  }
+const supabaseUrl = "https://omchtafaqgkdwcrwscrp.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g
+";
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// ------------------ 회원가입 ------------------
+const signupForm = document.getElementById("signup-form");
+if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        let { error } = await supabase.auth.signUp({ email, password });
+        if (error) alert("회원가입 실패: " + error.message);
+        else {
+            alert("회원가입 성공!");
+            window.location.href = "login.html";
+        }
+    });
 }
 
-export async function signIn(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) alert(error.message);
-  else {
-    localStorage.setItem('luwein_user', JSON.stringify(data));
-    location.href = '../breathing_room/new_0.html';
-  }
+// ------------------ 로그인 ------------------
+const loginForm = document.getElementById("login-form");
+if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        let { error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) alert("로그인 실패: " + error.message);
+        else window.location.href = "profile.html";
+    });
 }
 
-export async function signOut() {
-  await supabase.auth.signOut();
-  localStorage.removeItem('luwein_user');
-  location.href = 'login.html';
+// ------------------ 프로필 ------------------
+const emailDisplay = document.getElementById("email");
+if (emailDisplay) {
+    supabase.auth.getUser().then(({ data }) => {
+        if (!data?.user) {
+            window.location.href = "login.html";
+        } else {
+            emailDisplay.textContent = "이메일: " + data.user.email;
+        }
+    });
+}
+
+// ------------------ 로그아웃 ------------------
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+        await supabase.auth.signOut();
+        window.location.href = "login.html";
+    });
 }
