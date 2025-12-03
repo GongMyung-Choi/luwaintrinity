@@ -3,6 +3,7 @@
 .env
 supabase/.env
 os/private/
+os/private2/
 os/images/
 os/images2/
 goods/library
