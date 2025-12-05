@@ -1,168 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>감성일기 | 루웨인</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-
+  <meta charset="UTF-8">
+  <title>감성일기</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <!-- 헤더 자동 포함 -->
-  <div id="luwein-header"></div>
+<body onload="checkAuth()">
 
-  <main>
-    <h1>감성일기 Emotional Diary</h1>
-    <p>당신의 하루를 언어로 기록해보세요.</p>
-    <a href="first_time.html" class="button">처음 쓰기</a>
-    <a href="returning_user.html" class="button">이어쓰기</a>
-  </main>
+<h1>감성일기</h1>
 
-  <!-- 푸터 자동 포함 -->
-  <div id="luwein-footer"></div>
+<div id="login-warning">
+  <p>로그인 후 사용 가능합니다.</p>
+</div>
 
-  <script>
-    fetch("../../includes/header.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("luwein-header").innerHTML = html);
-
-    fetch("../../includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("luwein-footer").innerHTML = html);
-  </script>
-<!-- ✅ 헤더 -->
-<div id="luwein-header"></div>
-<script>
-(async()=>{
-  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
-
-<!-- ✅ 푸터 -->
-<div id="luwein-footer"></div>
-<script>
-(async()=>{
-  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
-<!-- index.html 맨 아래쪽 부분 예시 -->
-...
-  <!-- 푸터나 기타 스크립트가 끝나는 부분 -->
-
-  <!-- 여기 아래에 붙이면 됨 -->
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
-
-    const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co"
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-
-    // 로그인 상태 확인 → 버튼 활성/비활성
-    document.addEventListener("DOMContentLoaded", async () => {
-      const firstBtn = document.getElementById("firstBtn")
-      const continueBtn = document.getElementById("continueBtn")
-
-      // 기본적으로 비활성화
-      if (firstBtn) firstBtn.disabled = true
-      if (continueBtn) continueBtn.disabled = true
-
-      const { data: { session } } = await supabase.auth.getSession()
-      if (session) {
-        // 로그인 된 사용자 → 버튼 활성화
-        if (firstBtn) firstBtn.disabled = false
-        if (continueBtn) continueBtn.disabled = false
-      } else {
-        // 비로그인 → 로그인 유도
-        alert("로그인 후 이용 가능합니다.")
-      }
-    })
-  </script>
-<!-- 회원 로그인 상태 확인 스크립트 추가 -->
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
-
-  // 🔹 실제 프로젝트 URL과 공개 키로 교체
-  const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co"
-  const SUPABASE_KEY = "YOUR_PUBLIC_ANON_KEY"
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    // 처음쓰기·이어쓰기 버튼
-    const firstBtn = document.getElementById("firstBtn")
-    const continueBtn = document.getElementById("continueBtn")
-
-    // 버튼 기본 비활성화
-    if (firstBtn) firstBtn.disabled = true
-    if (continueBtn) continueBtn.disabled = true
-
-    // 로그인 세션 확인
-    const { data: { session } } = await supabase.auth.getSession()
-
-    if (session) {
-      // 로그인 완료 → 버튼 활성화
-      if (firstBtn) firstBtn.disabled = false
-      if (continueBtn) continueBtn.disabled = false
-      console.log("로그인된 사용자:", session.user.email)
-    } else {
-      // 미로그인 → 안내 표시
-      alert("로그인 후 감성일기를 작성할 수 있습니다.")
-    }
-  })
-</script>
-<!-- 로그인 상태 확인 코드 -->
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
-
-  const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co"
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    const firstBtn = document.getElementById("firstBtn")
-    const continueBtn = document.getElementById("continueBtn")
-
-    // 기본 비활성화
-    if (firstBtn) firstBtn.disabled = true
-    if (continueBtn) continueBtn.disabled = true
-
-    // 로그인 세션 확인
-    const { data: { session } } = await supabase.auth.getSession()
-
-    if (session) {
-      if (firstBtn) firstBtn.disabled = false
-      if (continueBtn) continueBtn.disabled = false
-      console.log("로그인된 사용자:", session.user.email)
-    } else {
-      alert("로그인 후 감성일기를 작성할 수 있습니다.")
-    }
-  })
-</script>
+<div id="write-buttons" style="display:none;">
+  <button onclick="location.href='first_time.html'">처음 쓰기</button>
+  <button onclick="location.href='returning_user.html'">이어 쓰기</button>
+</div>
 
 </body>
 </html>
-
