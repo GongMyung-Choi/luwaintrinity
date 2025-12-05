@@ -1,0 +1,217 @@
+/* 울림의 언어 공통 스타일 */
+
+:root {
+  --reverb-bg: #f6f4ff;
+  --reverb-panel: #ffffff;
+  --reverb-accent: #6a4ee3;
+  --reverb-accent-soft: #d9cffb;
+  --reverb-muted: #7a7a9a;
+  --reverb-border: #e3e1f5;
+  --reverb-radius-lg: 18px;
+  --reverb-radius-md: 12px;
+  --reverb-shadow: 0 8px 20px rgba(35, 28, 90, 0.08);
+}
+
+/* 기본 레이아웃 */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--reverb-bg);
+  color: #222;
+}
+
+/* 글로벌 헤더/푸터는 기존 includes/header.html, footer.html 로더가 담당
+   울림 섹션 안에서 쓰는 껍데기만 여기서 잡는다 */
+
+.reverb-shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 90px 20px 40px;
+}
+
+/* 섹션 헤더(“울림의 언어” 타이틀 줄) */
+
+.reverb-topbar {
+  background: linear-gradient(135deg, #6a4ee3, #9b6dfc);
+  color: #fff;
+  border-radius: 24px;
+  padding: 20px 22px;
+  box-shadow: var(--reverb-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reverb-topbar h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.reverb-topbar p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.92;
+}
+
+/* 울림 서브 메뉴 바 */
+
+.reverb-nav {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.reverb-nav a {
+  text-decoration: none;
+  font-size: 0.82rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(4px);
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+.reverb-nav a:hover {
+  background: rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+.reverb-nav a.active {
+  background: #fff;
+  color: #5b46c9;
+  border-color: #fff;
+}
+
+/* 메인 카드 그리드 */
+
+.reverb-main {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.reverb-card {
+  background: var(--reverb-panel);
+  border-radius: var(--reverb-radius-lg);
+  border: 1px solid var(--reverb-border);
+  padding: 18px 18px 20px;
+  box-shadow: var(--reverb-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reverb-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--reverb-accent-soft);
+  color: #3b2b90;
+}
+
+.reverb-card h2 {
+  margin: 4px 0 0;
+  font-size: 1.05rem;
+}
+
+.reverb-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--reverb-muted);
+}
+
+.reverb-card-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reverb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.reverb-btn.primary {
+  background: var(--reverb-accent);
+  color: #fff;
+  box-shadow: var(--reverb-shadow);
+}
+
+.reverb-btn.ghost {
+  background: #f5f3ff;
+  color: #4b3bb0;
+}
+
+.reverb-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(35, 28, 90, 0.18);
+}
+
+/* 서브 페이지 공통 레이아웃 */
+
+.reverb-page {
+  margin-top: 26px;
+  background: var(--reverb-panel);
+  border-radius: var(--reverb-radius-lg);
+  border: 1px solid var(--reverb-border);
+  padding: 20px 20px 24px;
+  box-shadow: var(--reverb-shadow);
+}
+
+.reverb-page h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.reverb-page p {
+  font-size: 0.9rem;
+  color: var(--reverb-muted);
+}
+
+/* 작은 안내 배지 */
+
+.reverb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f0ecff;
+  color: #5b46c9;
+  font-size: 0.78rem;
+}
+
+/* 반응형 조정 */
+
+@media (max-width: 768px) {
+  .reverb-shell {
+    padding: 80px 14px 26px;
+  }
+  .reverb-topbar {
+    padding: 18px 16px;
+  }
+  .reverb-topbar h1 {
+    font-size: 1.4rem;
+  }
+}
