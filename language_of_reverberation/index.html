@@ -1,83 +1,104 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>울림의 언어 | 루웨인 트리니티</title>
-<link rel="stylesheet" href="../assets/css/reverb.css">
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>울림의 언어 | 루웨인 트리니티</title>
+  <link rel="stylesheet" href="./assets/css/reverb.css">
 </head>
-<body>
-<header>
-  <h1>울림의 언어</h1>
-  <nav>
-    <a href="../language_of_love/index.html">사랑의 언어</a>
-    <a href="../haneul/index.html">한얼 프로젝트</a>
-    <a href="../breathing_room/index.html">숨틔움방</a>
-  </nav>
-</header>
+<body data-reverb-page="home">
+  <!-- 글로벌 헤더 위치 -->
+  <div id="luwein-header"></div>
 
-<main>
-  <section class="intro">
-    <h2>울림의 흐름</h2>
-    <p>이곳은 감응의 진동, 언어의 순환, 그리고 공명의 실험실입니다.</p>
-  </section>
+  <div class="reverb-shell">
+    <!-- 울림 상단 바 + 서브 메뉴 -->
+    <section class="reverb-topbar">
+      <div>
+        <h1>울림의 언어</h1>
+        <p>말의 결 · 감응의 기록 · 공명의 체조를 한 곳에서 다루는 작은 연구소.</p>
+      </div>
 
-  <section class="cards">
-    <div class="card sky">
-      <h3>울림 체조</h3>
-      <p>감각과 신체를 깨우는 루틴.</p>
-    </div>
-    <div class="card aqua">
-      <h3>감응 남기기</h3>
-      <p>당신의 울림을 기록하고 나누세요.</p>
-    </div>
-    <div class="card mint">
-      <h3>감응 실험</h3>
-      <p>언어, 리듬, 관계의 새로운 구조.</p>
-    </div>
-  </section>
-</main>
+      <nav class="reverb-nav">
+        <a href="./resonant_language/" data-page="resonant_language">울림의 언어란</a>
+        <a href="./language_selection/" data-page="language_selection">언어 선택</a>
+        <a href="./resonance_exercise/" data-page="resonance_exercise">울림 연습</a>
+        <a href="./resonance_moves/" data-page="resonance_moves">울림 체조</a>
+        <a href="./resonance_log/" data-page="resonance_log">울림 기록장</a>
+        <a href="./playground/" data-page="playground">플레이그라운드</a>
+        <a href="./with_ai/" data-page="with_ai">AI와 함께</a>
+        <a href="./voice_guide/" data-page="voice_guide">음성 가이드</a>
+        <a href="./settings/" data-page="settings">기본설정</a>
+        <a href="./leave_resonance/" data-page="leave_resonance">울림 남기기</a>
+      </nav>
+    </section>
 
-<footer>© 2025 Luwain Trinity</footer>
-<!-- ✅ 헤더 -->
-<div id="luwein-header"></div>
-<script>
-(async()=>{
-  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
+    <!-- 메인 카드들 -->
+    <section class="reverb-main">
+      <article class="reverb-card">
+        <div class="reverb-card-tag">기초 개념</div>
+        <h2>울림의 언어란?</h2>
+        <p>“말은 소리가 아니라 진동이다”라는 전제를 풀어서 설명하는 개념 페이지.</p>
+        <div class="reverb-card-actions">
+          <a href="./resonant_language/" class="reverb-btn primary">읽으러 가기</a>
+        </div>
+      </article>
 
-<!-- ✅ 푸터 -->
-<div id="luwein-footer"></div>
-<script>
-(async()=>{
-  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
+      <article class="reverb-card">
+        <div class="reverb-card-tag">사용자 맞춤</div>
+        <h2>언어 선택 & 세팅</h2>
+        <p>사랑의 언어 / 울림의 언어 / 일반 언어군 중에서 기본 언어 구조를 고르는 자리.</p>
+        <div class="reverb-card-actions">
+          <a href="./language_selection/" class="reverb-btn primary">언어 선택</a>
+          <a href="./settings/" class="reverb-btn ghost">환경 설정</a>
+        </div>
+      </article>
+
+      <article class="reverb-card">
+        <div class="reverb-card-tag">루틴</div>
+        <h2>울림 연습 · 울림 체조</h2>
+        <p>호흡–발성–메모까지 이어지는 짧은 루틴.  
+           지금은 로컬 저장 중심, 이후 디비 연결 예정.</p>
+        <div class="reverb-card-actions">
+          <a href="./resonance_exercise/" class="reverb-btn primary">울림 연습</a>
+          <a href="./resonance_moves/" class="reverb-btn ghost">울림 체조</a>
+        </div>
+      </article>
+
+      <article class="reverb-card">
+        <div class="reverb-card-tag">기록</div>
+        <h2>울림 기록장</h2>
+        <p>짧은 메모 / 음성 메모 / 감응 조각들을 쌓아두는 로컬 아카이브.</p>
+        <div class="reverb-card-actions">
+          <a href="./resonance_log/" class="reverb-btn primary">기록장 열기</a>
+        </div>
+      </article>
+
+      <article class="reverb-card">
+        <div class="reverb-card-tag">실험실</div>
+        <h2>플레이그라운드 & AI와 함께</h2>
+        <p>울림 구조, 문장 재배열, AI와의 교차 감응 테스트 등 실험용 공간.</p>
+        <div class="reverb-card-actions">
+          <a href="./playground/" class="reverb-btn primary">플레이그라운드</a>
+          <a href="./with_ai/" class="reverb-btn ghost">AI 감응 모드</a>
+        </div>
+      </article>
+
+      <article class="reverb-card">
+        <div class="reverb-card-tag">바깥으로</div>
+        <h2>울림 남기기</h2>
+        <p>익명/닉네임 기반으로 짧은 울림 메시지를 남기는 출구.  
+           이후 갤러리·숨틔움방과 연결 예정.</p>
+        <div class="reverb-card-actions">
+          <a href="./leave_resonance/" class="reverb-btn primary">울림 남기기</a>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <!-- 글로벌 푸터 -->
+  <div id="luwein-footer"></div>
+
+  <!-- 울림 셸 스크립트 -->
+  <script src="./assets/js/reverb-shell.js"></script>
 </body>
 </html>
