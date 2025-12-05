@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>루웨인 트리니티</title>
+
 <link rel="manifest" href="/manifest.json">
 <script src="/app_ready_patch/install_prompt.js" defer></script>
+
+<!-- PWA 설치 버튼 -->
 <script>
   window.addEventListener("beforeinstallprompt", e => {
     e.preventDefault();
     window.deferredPrompt = e;
+
     const installBtn = document.createElement("button");
     installBtn.textContent = "📱 루웨인 앱 설치하기";
     installBtn.style.position = "fixed";
@@ -28,10 +35,7 @@
   });
 </script>
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>루웨인 트리니티</title>
-<style id="themeVars">
+<style>
 :root{
   --header-color:#af2465;
   --menu-bg-color:#6c5b7b;
@@ -41,51 +45,64 @@
   --btn-text:#2a9d8f;
   --btn-hover-bg:#2a9d8f;
   --btn-hover-text:#ffffff;
-  --menu-size:16px;
-  --submenu-size:14px;
-  --title-size:40px;
-  --intro-strong-size:42px;
-  --intro-message-size:18px;
-  --button-size:1.0;
-  --page-padding:24px;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5;background:#fff;}
-main{padding:var(--page-padding);min-height:400px;text-align:center}
-.highlight{color:var(--header-color);font-weight:700;font-size:var(--intro-strong-size);line-height:1.2}
-.message-text{font-size:var(--intro-message-size);margin-top:2rem}
-.welcome-buttons{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap}
-.welcome-buttons button{padding:10px 14px;border:1px solid var(--btn-border);background:#fff;border-radius:10px;font-size:calc(14px * var(--button-size));cursor:pointer;color:var(--btn-text);min-width:150px}
-.welcome-buttons button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
 
-.login-box {display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px;}
-.input-area {display:flex;flex-direction:column;gap:6px;}
-.input-area input {padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px;width:180px;}
-.login-btn {height:78px;padding:0 18px;border:1px solid var(--btn-border);background:#fff;border-radius:8px;font-size:15px;color:var(--btn-text);cursor:pointer;}
-.login-btn:hover {background:var(--btn-hover-bg);color:var(--btn-hover-text);}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+  background:#fff;
+  text-align:center;
+}
 
-footer{margin-top:56px;padding:24px 12px;border-top:1px solid #eee;color:#666;font-size:14px;text-align:center}
+.language-select{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:16px;
+  font-size:15px;
+}
+
+.language-select a{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:600;
+}
+.language-select a:hover{
+  text-decoration:underline;
+}
+
+main{ padding:24px; min-height:400px; }
+.highlight{ color:var(--header-color); font-weight:700; font-size:38px; }
+.message-text{ margin-top:20px; font-size:18px; }
+
+.welcome-buttons button{
+  padding:10px 14px;
+  border:1px solid var(--btn-border);
+  background:#fff;
+  border-radius:10px;
+  color:var(--btn-text);
+  cursor:pointer;
+}
+.welcome-buttons button:hover{ background:var(--btn-hover-bg); color:var(--btn-hover-text); }
+
+footer{
+  margin-top:48px;
+  padding:24px;
+  font-size:14px;
+  color:#666;
+  border-top:1px solid #eee;
+}
 </style>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
 
 </head>
 <body>
+
+<!-- 언어 선택 -->
+<div class="language-select">
+  <a href="/">한국어</a>
+  <a href="/lang/en/">English</a>
+  <a href="/lang/jp/">日本語</a>
+</div>
 
 <!-- 헤더 -->
 <div id="luwein-header"></div>
@@ -95,7 +112,10 @@ if ('serviceWorker' in navigator) {
   for(const p of paths){
     try{
       const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+      if(r.ok){
+        document.getElementById("luwein-header").innerHTML=await r.text();
+        return;
+      }
     }catch(e){}
   }
 })();
@@ -103,24 +123,24 @@ if ('serviceWorker' in navigator) {
 
 <main>
   <h1>
-    <span class="highlight">당신</span>을 항해 열려 있는<br />
+    <span class="highlight">당신</span>을 향해 열려 있는<br>
     <span class="highlight">루웨인 트리니티</span>입니다.
   </h1>
 
   <p class="message-text">
-   당신의 한 마디 말, 그 울림이 <br />
-   루웨인의 새로운 시작입니다.
+    당신의 한 마디 말, 그 울림이<br>
+    루웨인의 새로운 시작입니다.
   </p>
 
-  <!-- 회원가입 / 로그인 -->
+  <!-- 버튼 -->
   <div class="welcome-buttons">
-    <button onclick="location.href='/os/auth/signup.html'">처음이에요<br />(회원가입)</button>
+    <button onclick="location.href='/os/auth/signup.html'">처음이에요<br>(회원가입)</button>
   </div>
 
   <div class="login-box">
     <div class="input-area">
-      <input type="text" id="userid" placeholder="아이디" />
-      <input type="password" id="userpw" placeholder="비밀번호" />
+      <input type="text" id="userid" placeholder="아이디">
+      <input type="password" id="userpw" placeholder="비밀번호">
     </div>
     <button class="login-btn" onclick="location.href='/os/auth/login.html'">이어 갈래요</button>
   </div>
@@ -134,17 +154,14 @@ if ('serviceWorker' in navigator) {
   for(const p of paths){
     try{
       const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+      if(r.ok){
+        document.getElementById("luwein-footer").innerHTML=await r.text();
+        return;
+      }
     }catch(e){}
   }
 })();
 </script>
-
-<!-- ===== LUWAIN Beta 안내 팝업 (원본 그대로 유지) ===== -->
-<!-- (길어서 생략 요청 없으므로 전부 그대로 유지됨 — 공명 원본 파일 완전 동일) -->
-
-<script src="/scripts/luwain_config.js"></script>
-<script src="/scripts/luwain_memory.js"></script>
 
 </body>
 </html>
