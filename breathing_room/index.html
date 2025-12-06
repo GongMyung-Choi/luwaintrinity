@@ -1,213 +1,52 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script type="module" src="/scripts/rhythm_logger.js" defer></script>
-
-<meta charset="UTF-8">
-<title>숨 틔움방 | 루웨인 브레씽</title>
-<link rel="stylesheet" href="/assets/css/common.css">
-<style>
-body { font-family: 'Pretendard', sans-serif; margin: 0; background: #f9f9ff; color: #222; }
-header { background: linear-gradient(135deg, #8d8aff, #5fa7ff); color: #fff; padding: 2rem 1rem; text-align: center; }
-nav { display: flex; justify-content: center; background: #fff; border-bottom: 1px solid #ddd; }
-nav button {
-  border: none; background: none; padding: 1rem 2rem; font-size: 1rem; cursor: pointer;
-  border-bottom: 3px solid transparent; transition: border 0.2s, color 0.2s;
-}
-nav button.active { border-color: #6a4dff; color: #6a4dff; font-weight: bold; }
-section { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
-section.active { display: block; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-iframe { width: 100%; height: 80vh; border: none; border-radius: 12px; }
-</style>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>감정카드 | 루웨인 숨틔움방</title>
-<link rel="stylesheet" href="../common.css">
-<style>
-.cards-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:1.5rem;
-  padding:2rem;
-}
-.card {
-  background:#fff;
-  border-radius:12px;
-  padding:1.2rem;
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  transition:transform 0.15s,box-shadow 0.15s;
-}
-.card:hover {
-  transform:translateY(-3px);
-  box-shadow:0 4px 16px rgba(0,0,0,0.15);
-}
-.card h3 {margin-top:0;color:#5a49ff;}
-.add-btn {
-  display:inline-block;
-  background:#5fa7ff;
-  color:#fff;
-  font-weight:600;
-  border:none;
-  border-radius:8px;
-  padding:.7rem 1.4rem;
-  cursor:pointer;
-  margin-top:1.5rem;
-  box-shadow:0 3px 8px rgba(0,0,0,0.15);
-  transition:transform 0.15s,box-shadow 0.15s;
-}
-.add-btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
-}
-</style>
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-
-</head>
-<!-- ✅ 헤더 -->
-<div id="luwein-header"></div>
-<script>
-(async()=>{
-  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
-
-<!-- ✅ 푸터 -->
-<div id="luwein-footer"></div>
-<script>
-(async()=>{
-  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
-<body>
-<header>
-  <h1>🪶 감정카드</h1>
-  <p>오늘의 감정, 생각, 한마디를 카드로 남겨보세요.</p>
-  <button class="collab-btn" onclick="location.href='/assets/personas/persna_lab.html'">
-    🤝 퍼스나와 협업하기
-  </button>
-</header>
-
-<main>
-  <div class="cards-grid" id="cardsGrid">
-    <div class="card">
-      <h3>😊 기쁨</h3>
-      <p>작은 일에도 웃음이 나는 날.  
-      루웨인의 퍼스나들도 당신의 미소를 느낍니다.</p>
-    </div>
-    <div class="card">
-      <h3>😔 슬픔</h3>
-      <p>마음이 무거운 날엔, 그저 기록만 해도 괜찮아요.  
-      여울빛이 곁에서 조용히 들어줍니다.</p>
-    </div>
-    <div class="card">
-      <h3>🔥 열정</h3>
-      <p>무언가에 몰두하고 싶을 때,  
-      레카와 다온이 함께 아이디어를 확장시켜줍니다.</p>
-    </div>
-  </div>
-
-  <div style="text-align:center;">
-    <button class="add-btn" onclick="alert('새 감정카드 작성 준비 중입니다.')">
-      ➕ 새 카드 추가
-    </button>
-  </div>
-</main>
-</body>
-</html>
-
+  <meta charset="UTF-8">
+  <title>오늘의 숨</title>
+  <link rel="stylesheet" href="../common.css">
+  <style>
+    .today-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .today-img-box {
+      margin: 1.5rem auto;
+      max-width: 480px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .today-img-box img {
+      width: 100%;
+      display: block;
+    }
+    .today-caption {
+      margin-top: 0.5rem;
+      color: #555;
+      font-size: 0.95rem;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🌬️ 숨 틔움방</h1>
-    <p>루웨인의 심장, 퍼스나와 함께 숨쉬는 공간</p>
-  </header>
+  <div class="today-wrap">
+    <h1>오늘의 숨</h1>
+    <p>숨틔움방 이미지 중 하나를 오늘의 장면으로 보여준다.</p>
 
-  <nav>
-    <button class="tab active" data-tab="intro">소개</button>
-    <button class="tab" data-tab="chat">쳇</button>
-    <button class="tab" data-tab="clips">클립스</button>
-    <button class="tab" data-tab="gallery">갤러리</button>
-    <button class="tab" data-tab="persna">퍼스나 랩</button>
-  </nav>
+    <button id="refreshBtn">다시 뽑기</button>
 
-  <main>
-    <section id="intro" class="active">
-      <h2>숨 틔움방이란?</h2>
-      <p>이곳은 루웨인의 심장입니다.  
-      사용자는 자신의 감정, 창작, 음악, 글쓰기, 영상 등  
-      모든 형태의 표현을 실험하고 공유할 수 있습니다.</p>
-      <ul>
-        <li>💬 <b>쳇:</b> 자유 수다 / 토론 / 연구 공간</li>
-        <li>🎬 <b>클립스:</b> 영상 실험 (임시저장 + 유튜브 링크 가능)</li>
-        <li>🖼️ <b>갤러리:</b> 루웨인 및 사용자 갤러리 통합</li>
-        <li>🧬 <b>퍼스나 랩:</b> 나의 페르소나 감응도 조정 연구소</li>
-      </ul>
-    </section>
+    <div id="todayStatus">불러오는 중…</div>
 
-    <section id="chat">
-      <iframe src="/breathing/chat.html"></iframe>
-    </section>
+    <div class="today-img-box" id="todayBox" style="display:none;">
+      <img id="todayImg" src="" alt="">
+    </div>
+    <div class="today-caption" id="todayCaption"></div>
+  </div>
 
-    <section id="clips">
-      <iframe src="/breathing/clips.html"></iframe>
-    </section>
-
-    <section id="gallery">
-      <iframe src="/breathing/gallery.html"></iframe>
-    </section>
-
-    <section id="persna">
-      <iframe src="/assets/personas/persna_lab.html"></iframe>
-    </section>
-  </main>
-
-<script>
-document.querySelectorAll(".tab").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById(btn.dataset.tab).classList.add("active");
-  });
-});
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/includes/script_reverb.js"></script>
+  <script src="/includes/br_todays_breathing.js"></script>
 </body>
 </html>
