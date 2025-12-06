@@ -1,58 +1,16 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>숨틔움 낙서방</title>
-  <link rel="stylesheet" href="../common.css">
-  <style>
-    body { text-align:center; }
-    #boardWrap {
-      margin: 0 auto;
-      width: 100%;
-      max-width: 680px;
-      padding: 1rem;
-    }
-    #drawCanvas {
-      width: 100%;
-      max-width: 680px;
-      height: 420px;
-      border: 2px solid #ccc;
-      background: #fff;
-      touch-action: none;
-      border-radius: 12px;
-    }
-    .btns {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    button {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      background: #333;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:active { opacity: 0.8; }
-  </style>
-</head>
-<body>
+<h2>낙서방</h2>
 
-  <div id="boardWrap">
-    <h1>숨틔움 낙서방</h1>
-    <p>마음 가는 대로 낙서해 보세요.</p>
+<input id="doodle_title" placeholder="제목(선택)" />
 
-    <canvas id="drawCanvas"></canvas>
+<canvas id="doodle_canvas" width="400" height="400" 
+        style="border:1px solid black;"></canvas>
 
-    <div class="btns">
-      <button id="clearBtn">지우기</button>
-      <button id="downloadBtn">이미지 저장(PNG)</button>
-    </div>
-  </div>
+<button id="doodle_save_btn">저장</button>
 
-  <script src="/includes/doodle_board.js"></script>
-</body>
-</html>
+<hr>
+
+<div id="doodle_list"></div>
+
+<script type="module" src="/assets/js/doodle_canvas.js"></script>
+<script type="module" src="/assets/js/doodle_save.js"></script>
+<script type="module" src="/assets/js/doodle_list.js"></script>
