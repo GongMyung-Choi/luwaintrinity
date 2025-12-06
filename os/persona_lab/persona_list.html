@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>퍼스나 목록</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      margin-bottom: 8px;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .toolbar input {
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      min-width: 200px;
+    }
+    .toolbar button {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #newPersonaBtn {
+      background-color: #2d5fff;
+      color: #fff;
+    }
+    #refreshBtn {
+      background-color: #eee;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid #eee;
+      padding: 8px 6px;
+      text-align: left;
+    }
+    th {
+      background-color: #f7f7f7;
+      font-weight: 600;
+    }
+    tr:hover {
+      background-color: #f5f8ff;
+    }
+    .key {
+      font-family: "Consolas", "Menlo", monospace;
+      font-size: 13px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 11px;
+      background-color: #eef2ff;
+      color: #333;
+    }
+    .empty {
+      margin-top: 16px;
+      color: #777;
+      font-size: 14px;
+    }
+    .small-btn {
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>퍼스나 목록 (관리자용)</h1>
+  <p style="color:#666; font-size:13px;">
+    persona_profiles 테이블에 저장된 퍼스나들을 한눈에 보는 페이지입니다.<br />
+    행을 클릭하면 아바타 에디터로 이동합니다.
+  </p>
+
+  <div class="toolbar">
+    <button id="newPersonaBtn">+ 새 퍼스나</button>
+    <button id="refreshBtn">새로고침</button>
+    <input id="searchInput" placeholder="검색: 키, 이름, 색상..." />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:20%;">퍼스나 키</th>
+        <th style="width:20%;">표시 이름</th>
+        <th style="width:20%;">베이스 / 헤어 / 의상 / 악세사리</th>
+        <th style="width:15%;">테마 색상</th>
+        <th style="width:15%;">업데이트</th>
+        <th style="width:10%;">편집</th>
+      </tr>
+    </thead>
+    <tbody id="personaTableBody">
+      <!-- JS에서 채움 -->
+    </tbody>
+  </table>
+
+  <div id="emptyMessage" class="empty" style="display:none;">
+    아직 등록된 퍼스나가 없습니다. 상단의 <strong>+ 새 퍼스나</strong> 버튼으로 추가하세요.
+  </div>
+
+  <script type="module" src="/os/assets/js/persona/persona_list.js"></script>
+</body>
+</html>
