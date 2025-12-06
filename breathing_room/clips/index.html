@@ -1,51 +1,13 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>숨틔움 단편</title>
-  <link rel="stylesheet" href="../common.css">
-  <style>
-    .clips-wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 1.5rem;
-    }
-    .clip-item {
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,.15);
-      margin-bottom: 0.75rem;
-      cursor: pointer;
-    }
-    .clip-item:hover { background: #f3f3f3; }
-    #playerBox {
-      margin-top: 1.5rem;
-      background: #fff;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.2);
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="clips-wrap">
-    <h1>숨틔움 단편</h1>
-    <p>짧은 영상 또는 음성 클립을 재생할 수 있는 공간입니다.</p>
+<h2>영상 클립</h2>
 
-    <div id="clipStatus">불러오는 중…</div>
-    <div id="clipList"></div>
+<input type="file" id="clip_file" accept="video/*" />
+<input id="clip_title" placeholder="제목(선택)" />
+<input id="clip_tags" placeholder="태그,쉼표,구분" />
+<button id="clip_upload_btn">업로드</button>
 
-    <div id="playerBox">
-      <h3 id="playerTitle"></h3>
-      <video id="videoPlayer" width="100%" controls style="display:none;"></video>
-      <audio id="audioPlayer" controls style="display:none;"></audio>
-    </div>
-  </div>
+<hr>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/includes/script_reverb.js"></script>
-  <script src="/includes/br_clips.js"></script>
-</body>
-</html>
+<div id="clips_list"></div>
+
+<script type="module" src="/assets/js/clips_upload.js"></script>
+<script type="module" src="/assets/js/clips_list.js"></script>
