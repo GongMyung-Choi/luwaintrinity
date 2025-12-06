@@ -2,22 +2,25 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>이어 쓰기</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+  <title>다시 쓰기</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadEntry()">
+<body>
 
-<button onclick="location.href='index.html'">← 홈</button>
+  <h1>감성일기 이어 쓰기</h1>
 
-<h2>오늘의 감정</h2>
-<input id="mood">
+  <form id="diaryForm">
+    <input id="mood" placeholder="오늘의 감정">
+    <textarea id="content" placeholder="지금 느끼는 감정"></textarea>
+    <button type="submit">저장</button>
+  </form>
 
-<h2>기록</h2>
-<textarea id="text"></textarea>
+  <h2>감성의 흔적들</h2>
+  <ul id="diariesList"></ul>
 
-<button onclick="updateEntry()">저장</button>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/includes/script_reverb.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
