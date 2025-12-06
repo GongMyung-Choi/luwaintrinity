@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>숨틔움방 글쓰기</title>
+
+<link rel="stylesheet" href="/breathing_room/assets/style.css" />
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>새 글 쓰기</h1>
+
+<label>제목</label>
+<input type="text" id="title" placeholder="제목을 입력하세요" />
+
+<label>내용</label>
+<textarea id="content" rows="12" placeholder="내용을 입력하세요"></textarea>
+
+<button id="saveBtn">저장하기</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  document.getElementById("saveBtn").onclick = async () => {
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+
+    if (!title || !content) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
+
+    const {
+      data: { user },
+      error: userErr
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const { error } = await supabase.from("writings").insert({
+      user_id: user.id,
+      title,
+      content
+    });
+
+    if (error) {
+      console.error(error);
+      alert("저장 실패");
+    } else {
+      alert("저장되었습니다.");
+      window.location.href = "/breathing_room/writings/list.html";
+    }
+  };
+</script>
+
+</body>
+</html>
