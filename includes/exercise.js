@@ -1,20 +1,44 @@
-const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+// ==============================
+//  울림 연습 저장 (reverb_practice)
+// ==============================
 
-document.getElementById("saveBtn").onclick = async () => {
-  const text = document.getElementById("exerciseText").value.trim();
-  if (!text) {
-    document.getElementById("status").innerText = "내용이 없습니다.";
+const exInput = document.getElementById("exerciseText");
+const exBtn = document.getElementById("saveBtn");
+const exStatus = document.getElementById("status");
+
+async function saveExercise() {
+  const user = await getCurrentUser();
+  if (!user) {
+    exStatus.textContent = "로그인 필요.";
     return;
   }
 
-  const { data, error } = await supabase
-    .from("resonance_exercise")
-    .insert([{ content: text }]);
+  const text = (exInput?.value || "").trim();
+  if (!text) {
+    exStatus.textContent = "내용이 비어 있음.";
+    return;
+  }
+
+  exStatus.textContent = "저장 중…";
+
+  const { error } = await supabase
+    .from("reverb_practice")
+    .insert({
+      user_id: user.id,
+      content: text,
+      created_at: new Date().toISOString()
+    });
 
   if (error) {
-    document.getElementById("status").innerText = "저장 실패";
-  } else {
-    document.getElementById("status").innerText = "저장 완료";
-    document.getElementById("exerciseText").value = "";
+    console.error(error);
+    exStatus.textContent = "저장 실패.";
+    return;
   }
-};
+
+  exInput.value = "";
+  exStatus.textContent = "저장 완료.";
+}
+
+if (exBtn) {
+  exBtn.addEventListener("click", saveExercise);
+}
