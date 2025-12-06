@@ -1,22 +1,29 @@
-const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+// /includes/leave.js
 
-document.getElementById("leaveBtn").onclick = async () => {
-  const text = document.getElementById("leaveText").value.trim();
+const leaveInput = document.getElementById("leaveText");
+const leaveBtn = document.getElementById("leaveBtn");
+const leaveStatus = document.getElementById("leaveStatus");
+
+async function saveLeave() {
+  const text = (leaveInput?.value || "").trim();
   if (!text) {
-    document.getElementById("msg").innerText = "내용이 없습니다.";
+    leaveStatus.textContent = "남길 말을 적어주세요.";
     return;
   }
 
-  const visibility = document.querySelector("input[name='visibility']:checked").value;
+  const user = await getCurrentUser();
+  const payload = {
+    content: text,
+    created_at: new Date().toISOString(),
+  };
+  if (user) payload.user_id = user.id;
 
   const { error } = await supabase
-    .from("leave_resonance")
-    .insert([{ content: text, visibility: visibility }]);
+    .from("reverberation_leave")
+    .insert(payload);
 
-  if (error) {
-    document.getElementById("msg").innerText = "저장 실패";
-  } else {
-    document.getElementById("msg").innerText = "업로드 완료";
-    document.getElementById("leaveText").value = "";
-  }
-};
+  leaveStatus.textContent = error ? "저장 실패" : "저장 완료!";
+  if (!error) leaveInput.value = "";
+}
+
+if (leaveBtn) leaveBtn.addEventListener("click", saveLeave);
