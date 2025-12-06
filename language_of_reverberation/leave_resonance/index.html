@@ -1,26 +1,77 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<title>울림 남기기</title>
-<link rel="stylesheet" href="/includes/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>울림 남기기</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #fdfdfd;
+    }
+    header {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    nav a {
+      margin-right: 12px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+    }
+    textarea {
+      width: 100%;
+      height: 160px;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 12px;
+      padding: 10px 18px;
+      background: #5c7cfa;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    #leaveStatus {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <h1>울림 남기기</h1>
+    <nav>
+      <a href="/language_of_reverberation/index.html">홈</a>
+      <a href="/language_of_reverberation/resonance_exercise/index.html">울림 연습</a>
+      <a href="/language_of_reverberation/resonance_log/index.html">울림 일지</a>
+      <a href="/language_of_reverberation/playground/index.html">놀이터</a>
+    </nav>
+  </header>
 
-<h1>울림 남기기</h1>
+  <section>
+    <textarea id="leaveText" placeholder="당신의 울림을 남겨주세요…"></textarea>
+    <button id="leaveBtn">남기기</button>
+    <p id="leaveStatus"></p>
+  </section>
 
-<textarea id="leaveText" placeholder="남기고 싶은 울림…" style="width:100%;height:180px;"></textarea>
+  <!-- Supabase + 공통 init (원하면 leave.js에서 사용 가능) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/includes/script_reverb.js"></script>
 
-<div>
-  <label><input type="radio" name="visibility" value="private" checked> 비공개</label>
-  <label><input type="radio" name="visibility" value="public"> 공개(갤러리 공유)</label>
-</div>
-
-<button id="leaveBtn">올리기</button>
-<p id="msg"></p>
-
-<button onclick="location.href='/language_of_reverberation/index.html'">홈으로</button>
-
-<script src="/includes/leave.js"></script>
+  <!-- 페이지 전용 기능 -->
+  <script src="/includes/leave.js"></script>
 </body>
 </html>
