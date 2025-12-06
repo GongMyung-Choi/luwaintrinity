@@ -1,13 +1,29 @@
 body {
     font-family: sans-serif;
     padding: 20px;
+    background: #fafafa;
 }
 
 h1 {
     margin-bottom: 0;
 }
 
-.entry, .log {
+h2 {
+    margin-top: 40px;
+}
+
+.box {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.entry, .log {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.entry:last-child, .log:last-child {
+    border-bottom: none;
 }
