@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>퍼스나 아바타 에디터</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 20px;
+      display: flex;
+      gap: 24px;
+    }
+    .preview {
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 12px;
+      width: 320px;
+      text-align: center;
+    }
+    .controls {
+      flex: 1;
+      max-width: 480px;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    select, input {
+      width: 100%;
+      padding: 6px 8px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #saveBtn {
+      background-color: #2d5fff;
+      color: white;
+    }
+    #status {
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview">
+    <h3 id="persona_title">퍼스나 아바타 미리보기</h3>
+    <canvas id="avatar_canvas" width="280" height="280"></canvas>
+  </div>
+
+  <div class="controls">
+    <div class="field">
+      <label for="persona_key">퍼스나 키 (영문):</label>
+      <input id="persona_key" placeholder="예: reka, mika, daon" />
+    </div>
+
+    <div class="field">
+      <label for="display_name">표시 이름:</label>
+      <input id="display_name" placeholder="예: 레카, 미카, 다온" />
+    </div>
+
+    <div class="field">
+      <label for="base_select">베이스</label>
+      <select id="base_select"></select>
+    </div>
+
+    <div class="field">
+      <label for="hair_select">헤어</label>
+      <select id="hair_select"></select>
+    </div>
+
+    <div class="field">
+      <label for="outfit_select">의상</label>
+      <select id="outfit_select"></select>
+    </div>
+
+    <div class="field">
+      <label for="accessory_select">악세사리</label>
+      <select id="accessory_select"></select>
+    </div>
+
+    <div class="field">
+      <label for="color_select">배경색</label>
+      <select id="color_select"></select>
+    </div>
+
+    <button id="saveBtn">저장</button>
+    <div id="status"></div>
+  </div>
+
+  <script type="module" src="/os/assets/js/avatar_editor.js"></script>
+</body>
+</html>
