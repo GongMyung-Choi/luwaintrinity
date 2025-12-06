@@ -2,22 +2,22 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>처음 쓰기</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+  <title>첫 감정 기록</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<button onclick="location.href='index.html'">← 홈</button>
+  <h1>첫 감정 기록 시작하기</h1>
 
-<h2>오늘의 감정</h2>
-<input id="mood" placeholder="지금 내 감정은…">
+  <form id="diaryForm">
+    <input id="mood" placeholder="오늘의 감정">
+    <textarea id="content" placeholder="무슨 일이 있었나요?"></textarea>
+    <button type="submit">저장</button>
+  </form>
 
-<h2>기록</h2>
-<textarea id="text" placeholder="하고 싶은 말…"></textarea>
-
-<button onclick="saveNewEntry()">저장하고 다음으로</button>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/includes/script_reverb.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
