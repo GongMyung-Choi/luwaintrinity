@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>루웨인 퍼스나 허브</title>
+</head>
+<body>
+
+<h1>루웨인 퍼스나 허브</h1>
+
+<div id="personas"></div>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadPersonas() {
+    const { data, error } = await supabase
+        .from('persona_instances')
+        .select('id, name, created_at');
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const box = document.getElementById("personas");
+    box.innerHTML = data.map(p => `
+        <div>
+            <h3>${p.name}</h3>
+            <p>ID: ${p.id}</p>
+            <p>Created: ${p.created_at}</p>
+        </div>
+        <hr>
+    `).join('');
+}
+
+loadPersonas();
+</script>
+
+</body>
+</html>
