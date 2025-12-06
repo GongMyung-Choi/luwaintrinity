@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>감응언어학 Reader</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #sidebar {
+      width: 240px;
+      border-right: 1px solid #ccc;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    #viewer {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .chapter-link {
+      padding: 0.3rem 0;
+      cursor: pointer;
+    }
+    .chapter-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar">
+    <h3>목차</h3>
+    <div id="toc"></div>
+  </div>
+
+  <div id="viewer">
+    <h2>감응언어학 로딩 중…</h2>
+  </div>
+
+  <script src="https://unpkg.com/epubjs/dist/epub.min.js"></script>
+  <script src="reader.js"></script>
+
+</body>
+</html>
