@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>루웨인 OS</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f3f6ff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 6px;
+    }
+
+    .sub {
+      font-size: 14px;
+      color: #556;
+      margin-bottom: 30px;
+    }
+
+    .enter-btn {
+      padding: 12px 26px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: #2d5fff;
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,100,0.15);
+    }
+
+    .enter-btn:hover {
+      background: #234be0;
+    }
+
+    .persona-preview {
+      margin-top: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items:center;
+      color:#444;
+      font-size: 14px;
+    }
+
+    canvas {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      background: #e6eaff;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>루웨인 OS</h1>
+  <div class="sub">Luwain Operating System</div>
+
+  <button class="enter-btn" id="enterOS">
+    OS 입장하기
+  </button>
+
+  <div class="persona-preview">
+    <canvas id="avatarCanvas" width="120" height="120"></canvas>
+    <div id="personaName">(활성 퍼스나 로딩 중…)</div>
+  </div>
+
+  <script type="module" src="/os/assets/js/os_home.js"></script>
+</body>
+</html>
