@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>루웨인 OS Dashboard</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      margin: 20px;
+      background: #fafafa;
+    }
+
+    h1 {
+      margin-bottom: 4px;
+    }
+    .sub {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      background: #fff;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .avatar-box {
+      width: 160px;
+      height: 160px;
+      background:#f0f0f0;
+      border-radius:12px;
+      border:1px solid #ddd;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:10px;
+      overflow:hidden;
+    }
+
+    .modules a {
+      display:block;
+      padding:8px 10px;
+      background:#f5f7ff;
+      margin:6px 0;
+      border-radius:6px;
+      text-decoration:none;
+      color:#223;
+      font-size:14px;
+    }
+
+    .modules a:hover {
+      background:#e8edff;
+    }
+
+    canvas { border-radius:12px; }
+
+    .log-item {
+      font-size: 13px;
+      margin: 4px 0;
+      color:#444;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>루웨인 OS Dashboard</h1>
+  <div class="sub">루웨인 전체 시스템을 한 화면에서 관리하는 홈 패널</div>
+
+  <!-- 현재 활성 퍼스나 -->
+  <div class="section">
+    <div class="title">현재 활성 퍼스나</div>
+
+    <div class="avatar-box">
+      <canvas id="avatarCanvas" width="160" height="160"></canvas>
+    </div>
+
+    <div id="personaInfo" style="font-size:14px; line-height:1.5;">
+      불러오는 중...
+    </div>
+
+    <button id="editPersonaBtn" style="margin-top:12px; padding:6px 12px; border-radius:6px;">
+      퍼스나 편집하기
+    </button>
+  </div>
+
+  <!-- 모듈 -->
+  <div class="section">
+    <div class="title">모듈 바로가기</div>
+
+    <div class="modules">
+      <a href="/breathing_room/index.html">숨틔움방 (Breathing Room)</a>
+      <a href="/language_of_reverberation/index.html">울림의 언어</a>
+      <a href="/reverb_lab/index.html">감응언어학</a>
+      <a href="/library/index.html">전자도서관</a>
+      <a href="/ruwainet/index.html">루웨인닷넷</a>
+      <a href="/os/persona_lab/persona_list.html">퍼스나 목록</a>
+      <a href="/os/persona_lab/editor.html">아바타 에디터</a>
+    </div>
+  </div>
+
+  <!-- 최근 로그 (선택적) -->
+  <div class="section">
+    <div class="title">최근 시스템 로그</div>
+    <div id="logBox" style="font-size:13px; color:#555;">
+      불러오는 중...
+    </div>
+  </div>
+
+  <script type="module" src="/os/assets/js/dashboard/os_dashboard.js"></script>
+</body>
+</html>
