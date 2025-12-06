@@ -1,65 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>영상 제작소 | 루웨인 숨틔움방</title>
-<link rel="stylesheet" href="../common.css">
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-
+  <meta charset="UTF-8">
+  <title>숨틔움 단편</title>
+  <link rel="stylesheet" href="../common.css">
+  <style>
+    .clips-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    .clip-item {
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+    }
+    .clip-item:hover { background: #f3f3f3; }
+    #playerBox {
+      margin-top: 1.5rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+      display: none;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>🎬 영상 제작소</h1>
-  <p>영상과 감정이 교차하는 실험실</p>
-  <button class="collab-btn" onclick="location.href='/assets/personas/persna_lab.html'">
-    🤝 퍼스나와 협업하기
-  </button>
-</header>
+  <div class="clips-wrap">
+    <h1>숨틔움 단편</h1>
+    <p>짧은 영상 또는 음성 클립을 재생할 수 있는 공간입니다.</p>
 
-<main>
-  <section>
-    <p>아이디어를 영상으로 풀어보세요.  
-    루웨인의 영상팀 퍼스나들과 함께합니다.</p>
-  </section>
-<!-- ✅ 헤더 -->
-<div id="luwein-header"></div>
-<script>
-(async()=>{
-  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
+    <div id="clipStatus">불러오는 중…</div>
+    <div id="clipList"></div>
 
-<!-- ✅ 푸터 -->
-<div id="luwein-footer"></div>
-<script>
-(async()=>{
-  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
-</main>
+    <div id="playerBox">
+      <h3 id="playerTitle"></h3>
+      <video id="videoPlayer" width="100%" controls style="display:none;"></video>
+      <audio id="audioPlayer" controls style="display:none;"></audio>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/includes/script_reverb.js"></script>
+  <script src="/includes/br_clips.js"></script>
 </body>
 </html>
