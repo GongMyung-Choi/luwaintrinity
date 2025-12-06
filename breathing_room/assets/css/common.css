@@ -1,52 +1,59 @@
-body {font-family:'Pretendard',sans-serif;background:#f5f6ff;margin:0;color:#222;}
-header {background:#fff;text-align:center;padding:2rem 1rem;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-header h1 {margin:0;font-size:2rem;}
-header p {margin:.3rem 0 1.2rem;font-size:1rem;color:#555;}
+/* /breathing_room/assets/css/breathing_room_common.css */
 
-.collab-btn {
-  display:inline-block;
-  background:linear-gradient(135deg,#8d8aff,#5fa7ff);
-  color:#fff;
-  font-weight:600;
-  border:none;
-  border-radius:8px;
-  padding:.7rem 1.4rem;
-  cursor:pointer;
-  box-shadow:0 3px 8px rgba(0,0,0,0.15);
-  transition:transform 0.15s,box-shadow 0.15s;
-}
-.collab-btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
-}
-.container {
-    max-width: 700px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
+/* 기본 테마 – 퍼스나 로딩되면 자동으로 바뀜 */
+:root {
+  --theme-color: #6d85ff; /* 기본값 */
 }
 
-.intro {
-    margin: 10px 0 30px;
-    font-size: 1.1em;
-    color: #555;
+/* 버튼 스타일 */
+.br-btn {
+  background: var(--theme-color);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
 }
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.br-btn:hover {
+  opacity: 0.85;
 }
 
-.menu-item {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #222;
-    transition: 0.2s;
+/* 강조 텍스트 */
+.highlight {
+  color: var(--theme-color);
+  font-weight: 600;
 }
 
-.menu-item:hover {
-    background: #f3f3f3;
+/* 활성 패널 */
+.active-panel {
+  border: 2px solid var(--theme-color);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+/* 진행 상태 UI */
+.progress-bar {
+  height: 6px;
+  background: var(--theme-color);
+  border-radius: 3px;
+  margin-top: 10px;
+}
+
+/* 선택 요소 공통 */
+.selector-item.active {
+  border-color: var(--theme-color);
+  color: var(--theme-color);
+}
+
+/* 숨틔움방 상단바 */
+.br-header {
+  padding: 14px 18px;
+  background: var(--theme-color);
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
