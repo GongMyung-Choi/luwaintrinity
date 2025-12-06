@@ -1,52 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>오늘의 숨</title>
-  <link rel="stylesheet" href="../common.css">
-  <style>
-    .today-wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 1.5rem;
-      text-align: center;
-    }
-    .today-img-box {
-      margin: 1.5rem auto;
-      max-width: 480px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.2);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #fff;
-    }
-    .today-img-box img {
-      width: 100%;
-      display: block;
-    }
-    .today-caption {
-      margin-top: 0.5rem;
-      color: #555;
-      font-size: 0.95rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>숨틔움방</title>
+    <link rel="stylesheet" href="./assets/css/common.css">
 </head>
+
 <body>
-  <div class="today-wrap">
-    <h1>오늘의 숨</h1>
-    <p>숨틔움방 이미지 중 하나를 오늘의 장면으로 보여준다.</p>
 
-    <button id="refreshBtn">다시 뽑기</button>
+<header>
+    <h1>숨틔움방</h1>
+</header>
 
-    <div id="todayStatus">불러오는 중…</div>
+<main class="menu-container">
 
-    <div class="today-img-box" id="todayBox" style="display:none;">
-      <img id="todayImg" src="" alt="">
-    </div>
-    <div class="today-caption" id="todayCaption"></div>
-  </div>
+    <!-- 카드 생성 -->
+    <a href="./cards/index.html" class="menu-card">
+        <h2>이미지 카드</h2>
+        <p>이미지/카드 생성 및 저장</p>
+    </a>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/includes/script_reverb.js"></script>
-  <script src="/includes/br_todays_breathing.js"></script>
+    <!-- 글쓰기 -->
+    <a href="./writings/index.html" class="menu-card">
+        <h2>감응 글쓰기</h2>
+        <p>텍스트 기반 작업물 저장</p>
+    </a>
+
+    <!-- 갤러리 (공유된 것들) -->
+    <a href="./gallery/index.html" class="menu-card">
+        <h2>공유 갤러리</h2>
+        <p>모두가 올린 작품들</p>
+    </a>
+
+    <!-- 내 사물함 -->
+    <a href="./my_room/index.html" class="menu-card">
+        <h2>내 사물함</h2>
+        <p>내가 만든 모든 작업물</p>
+    </a>
+
+</main>
+
+<script type="module" src="./assets/js/core.js"></script>
+
 </body>
 </html>
