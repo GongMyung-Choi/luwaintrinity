@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>글 수정</title>
+
+<link rel="stylesheet" href="/breathing_room/assets/style.css" />
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>글 수정</h1>
+
+<label>제목</label>
+<input type="text" id="title" />
+
+<label>내용</label>
+<textarea id="content" rows="12"></textarea>
+
+<button id="saveBtn">수정 완료</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // ?id=... 받아오기
+  function getId() {
+    const url = new URL(location.href);
+    return url.searchParams.get("id");
+  }
+
+  const id = getId();
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    location.href = "/breathing_room/writings/list.html";
+  }
+
+  /* -----------------------------------
+     1) 기존 글 불러오기
+  ----------------------------------- */
+  async function loadWriting() {
+    const { data, error } = await supabase
+      .from("writings")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (!data) {
+      alert("글을 불러올 수 없습니다.");
+      return;
+    }
+
+    document.getElementById("title").value = data.title;
+    document.getElementById("content").value = data.content;
+  }
+
+  /* -----------------------------------
+     2) 수정 저장
+  ----------------------------------- */
+  document.getElementById("saveBtn").onclick = async () => {
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+
+    if (!title || !content) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("writings")
+      .update({
+        title,
+        content,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("수정 실패");
+      console.error(error);
+    } else {
+      alert("수정되었습니다.");
+      location.href = `/breathing_room/writings/view.html?id=${id}`;
+    }
+  };
+
+  loadWriting();
+</script>
+
+</body>
+</html>
