@@ -1,65 +1,62 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>음악 창작 공간 | 루웨인 숨틔움방</title>
-<link rel="stylesheet" href="../common.css">
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
+  <meta charset="UTF-8">
+  <title>숨틔움 음악</title>
+  <link rel="stylesheet" href="../common.css">
 
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
+  <style>
+    .music-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    .music-item {
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.6rem;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+    .music-item:hover {
+      background: #f0f0f0;
+    }
 
+    #playerBox {
+      display: none;
+      margin-top: 1.4rem;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    }
+
+    #playerTitle {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>🎵 음악 창작 공간</h1>
-  <p>소리와 감정이 공명하는 공간</p>
-  <button class="collab-btn" onclick="location.href='/assets/personas/persna_lab.html'">
-    🤝 퍼스나와 협업하기
-  </button>
-</header>
 
-<main>
-  <section>
-    <p>악상, 리듬, 감정의 파동을 자유롭게 기록하세요.  
-    싱크노, 믹서르, 여울빛 등이 함께합니다.</p>
-  </section>
-</main>
-<!-- ✅ 헤더 -->
-<div id="luwein-header"></div>
-<script>
-(async()=>{
-  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
+  <div class="music-wrap">
+    <h1>숨틔움 음악</h1>
+    <p>짧은 음악이나 사운드를 재생할 수 있는 공간입니다.</p>
 
-<!-- ✅ 푸터 -->
-<div id="luwein-footer"></div>
-<script>
-(async()=>{
-  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
+    <div id="musicStatus">불러오는 중…</div>
+    <div id="musicList"></div>
+
+    <div id="playerBox">
+      <div id="playerTitle"></div>
+      <audio id="audioPlayer" controls style="width:100%;"></audio>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/includes/script_reverb.js"></script>
+  <script src="/includes/br_musics.js"></script>
+
 </body>
 </html>
