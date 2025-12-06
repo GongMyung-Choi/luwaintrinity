@@ -1,24 +1,33 @@
-document.getElementById("askBtn").onclick = () => {
-  const text = document.getElementById("aiInput").value.trim();
-  const box = document.getElementById("aiResponse");
+// /includes/with_ai.js
 
-  if (!text) {
-    box.innerHTML = "먼저 너의 상태를 적어줘.";
-    return;
-  }
+const aiInput = document.getElementById("aiInput");
+const askBtn = document.getElementById("askBtn");
+const aiResponse = document.getElementById("aiResponse");
 
-  // 울림 패턴 해석 규칙
-  let emotional = text.length > 80 ? "깊은 울림" :
-                  text.length > 30 ? "중간 감응" : "짧은 파동";
+async function askGuidance() {
+  const text = (aiInput?.value || "").trim();
+  if (!text) return;
 
-  let guide = "";
+  aiResponse.textContent = "정리 중…";
 
-  if (emotional === "깊은 울림") guide = "호흡을 복부 아래까지 내리고 천천히 리듬을 정리해봐.";
-  if (emotional === "중간 감응") guide = "지금의 흐름 좋다. 한 번 더 글을 이어가며 울림을 확장해봐.";
-  if (emotional === "짧은 파동") guide = "가벼운 느낌이네. 짧은 호흡-긴 호흡 패턴 한번 해보자.";
+  // 1) 입력 자체를 DB에 저장
+  const user = await getCurrentUser();
+  const base = {
+    input_text: text,
+    created_at: new Date().toISOString(),
+  };
+  if (user) base.user_id = user.id;
 
-  box.innerHTML = `
-    <p><b>울림 감지:</b> ${emotional}</p>
-    <p><b>가이드:</b> ${guide}</p>
-  `;
-};
+  // 2) AI 응답 생성 (임시 — 나중에 네가 원하는 방식으로 교체)
+  const aiAnswer = `울림 처리 결과\n(${text.length}자 입력)`;  
+
+  base.ai_answer = aiAnswer;
+
+  // 3) DB 저장
+  await supabase.from("reverberation_ai_guide").insert(base);
+
+  // 4) 화면 출력
+  aiResponse.textContent = aiAnswer;
+}
+
+if (askBtn) askBtn.addEventListener("click", askGuidance);
