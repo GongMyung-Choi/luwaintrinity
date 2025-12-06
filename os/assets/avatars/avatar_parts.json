@@ -1,0 +1,28 @@
+{
+  "bases": [
+    "base/reka_base.png",
+    "base/mika_base.png",
+    "base/daon_base.png"
+  ],
+  "hair": [
+    "hair/short_black.png",
+    "hair/long_brown.png",
+    "hair/twin_pink.png"
+  ],
+  "outfit": [
+    "outfit/casual_blue.png",
+    "outfit/formal_white.png",
+    "outfit/hoodie_gray.png"
+  ],
+  "accessory": [
+    "accessory/glasses_round.png",
+    "accessory/headphone.png",
+    "accessory/earring_star.png"
+  ],
+  "colorThemes": [
+    "#ffffff",
+    "#f0f4ff",
+    "#fff3e0",
+    "#1e1e2f"
+  ]
+}
