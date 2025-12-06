@@ -1,21 +1,203 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>글 보기</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>글 상세보기</title>
+
+<link rel="stylesheet" href="/breathing_room/assets/style.css" />
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .date {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 24px;
+  }
+  #content {
+    white-space: pre-wrap;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 16px;
+    background: #6d85ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 6px;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+  #assistBox {
+    margin-top: 28px;
+    padding: 16px;
+    border-radius: 8px;
+    background: #f3f5ff;
+  }
+  .assist-item {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  .assist-item:last-child {
+    border-bottom: none;
+  }
+  .req {
+    font-size: 14px;
+    color: #555;
+  }
+  .res {
+    margin-top: 6px;
+    white-space: pre-wrap;
+    background: #fff;
+    padding: 10px;
+    border-radius: 6px;
+  }
+</style>
+
 </head>
 <body>
 
-<a href="index.html">← 목록으로</a>
-<h1 id="writing_title"></h1>
-<small id="writing_meta"></small>
-<pre id="writing_content" style="white-space: pre-wrap;"></pre>
+<h1 id="title"></h1>
+<div class="date" id="created"></div>
+<div id="content"></div>
 
-<hr>
+<button id="editBtn">수정</button>
+<button id="deleteBtn">삭제</button>
+<button id="assistBtn">퍼스나 도움 요청</button>
 
-<button id="persona_help_btn">퍼스나 도움 받기</button>
-<div id="persona_result"></div>
+<div id="assistBox" style="display:none;">
+  <h3>퍼스나 도움 내역</h3>
+  <div id="assistList"></div>
+</div>
 
-<script type="module" src="/assets/js/writing_view.js"></script>
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL에서 id 가져오기
+  function getId() {
+    const url = new URL(location.href);
+    return url.searchParams.get("id");
+  }
+
+  const id = getId();
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    location.href = "/breathing_room/writings/list.html";
+  }
+
+  /* -----------------------------
+     1) 글 데이터 불러오기
+  ----------------------------- */
+  async function loadWriting() {
+    const { data, error } = await supabase
+      .from("writings")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (!data) {
+      alert("글을 불러올 수 없습니다.");
+      return;
+    }
+
+    document.getElementById("title").textContent = data.title;
+    document.getElementById("created").textContent =
+      new Date(data.created_at).toLocaleString();
+    document.getElementById("content").textContent = data.content;
+  }
+
+  /* -----------------------------
+     2) 글 삭제
+  ----------------------------- */
+  document.getElementById("deleteBtn").onclick = async () => {
+    if (!confirm("삭제할까요?")) return;
+
+    const { error } = await supabase
+      .from("writings")
+      .delete()
+      .eq("id", id);
+
+    if (error) alert("삭제 실패");
+    else location.href = "/breathing_room/writings/list.html";
+  };
+
+  /* -----------------------------
+     3) 글 수정 페이지 이동
+  ----------------------------- */
+  document.getElementById("editBtn").onclick = () => {
+    location.href = `/breathing_room/writings/edit.html?id=${id}`;
+  };
+
+  /* -----------------------------
+     4) 퍼스나 도움 요청
+  ----------------------------- */
+  document.getElementById("assistBtn").onclick = async () => {
+    const request = prompt("어떤 도움을 요청할까요? (요약, 문장다듬기 등)");
+
+    if (!request) return;
+
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    await supabase.from("writing_assists").insert({
+      writing_id: id,
+      user_id: user.id,
+      persona_name: "레카",
+      request_type: "user_request",
+      request_text: request
+    });
+
+    alert("요청이 접수되었습니다.");
+    loadAssists();
+  };
+
+  /* -----------------------------
+     5) 퍼스나 도움 내역 불러오기
+  ----------------------------- */
+  async function loadAssists() {
+    const box = document.getElementById("assistBox");
+    const listEl = document.getElementById("assistList");
+
+    const { data } = await supabase
+      .from("writing_assists")
+      .select("*")
+      .eq("writing_id", id)
+      .order("created_at", { ascending: false });
+
+    if (!data || data.length === 0) {
+      box.style.display = "none";
+      return;
+    }
+
+    box.style.display = "block";
+    listEl.innerHTML = data
+      .map(
+        (a) => `
+      <div class="assist-item">
+        <div class="req"><strong>요청:</strong> ${a.request_text}</div>
+        <div class="res"><strong>응답:</strong>\n${a.response_text || "(아직 처리 전)"}</div>
+      </div>
+    `
+      )
+      .join("");
+  }
+
+  loadWriting().then(loadAssists);
+</script>
+
 </body>
 </html>
