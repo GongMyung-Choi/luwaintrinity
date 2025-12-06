@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>감응 언어학 Q&A</title>
+<link rel="stylesheet" href="qna.css">
+</head>
+<body>
+
+<div class="mobile-qna-wrap">
+  <h2>Q&A</h2>
+
+  <textarea id="mqInput" placeholder="질문 입력…" class="mq-text"></textarea>
+  <button id="mqSubmit">질문 등록</button>
+
+  <h3>내 질문</h3>
+  <div id="mqList"></div>
+
+  <button onclick="history.back()">뒤로가기</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/includes/script_reverb.js"></script>
+<script src="qna-mobile.js"></script>
+
+</body>
+</html>
