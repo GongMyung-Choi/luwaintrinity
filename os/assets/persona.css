@@ -1,0 +1,49 @@
+body {
+  max-width: 900px;
+  margin: auto;
+  padding: 22px;
+  font-family: Pretendard, sans-serif;
+}
+
+h1 { margin-bottom: 20px; }
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  background: #6d85ff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+button:hover {
+  background: #576ee8;
+}
+
+.p_box {
+  background: #f5f7ff;
+  padding: 14px 16px;
+  border-radius: 10px;
+}
+
+.persona_item {
+  border: 1px solid #ddd;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.persona_item.active {
+  border-color: #6d85ff;
+  background: #eef1ff;
+}
