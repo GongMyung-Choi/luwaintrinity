@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>이미지 카드 만들기</title>
-    <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/common.css">
 </head>
 
 <body>
 
+<!-- 상단 내비게이션 -->
+<nav class="nav-bar">
+    <a href="./list.html">내 카드</a>
+    <a href="./shared.html">카드 공유방</a>
+    <a href="../my_room/index.html">내 작업실</a>
+</nav>
+
 <h1>이미지 카드 생성</h1>
 
-<!-- 대화 영역 -->
+<!-- 대화창 -->
 <div id="chat_box" class="chat-box"></div>
 
 <div class="input-row">
@@ -18,60 +25,57 @@
     <button id="send_btn">보내기</button>
 </div>
 
-<hr/>
+<hr />
 
-<!-- 이미지 생성 버튼 -->
+<!-- 이미지 생성 -->
 <button id="gen_btn">이미지 생성하기</button>
 
-<!-- 생성된 이미지 영역 -->
+<!-- 생성된 이미지 미리보기 -->
 <div id="image_preview" class="image-preview"></div>
 
-<hr/>
+<hr />
 
-<!-- 저장 버튼 -->
+<!-- 카드 저장 -->
 <button id="save_btn">카드로 저장하기</button>
-
 <div id="status"></div>
 
 <script type="module">
 import { fileToBase64, saveMyItem } from "../assets/js/core.js";
 
-// --- 대화창 추가 함수 ---
+// 대화 표시 함수
 function addMessage(sender, message) {
     const box = document.getElementById("chat_box");
-    const div = document.createElement("div");
-    div.className = sender === "user" ? "msg-user" : "msg-ai";
-    div.innerText = message;
-    box.appendChild(div);
+    const msg = document.createElement("div");
+    msg.className = sender === "user" ? "msg-user" : "msg-ai";
+    msg.innerText = message;
+    box.appendChild(msg);
     box.scrollTop = box.scrollHeight;
 }
 
-// --- 사용자 입력 처리 ---
+// 사용자 메시지 전송
 document.getElementById("send_btn").addEventListener("click", () => {
     const input = document.getElementById("user_input").value;
     if (!input) return;
 
     addMessage("user", input);
 
-    // 퍼스나 반응 (여기엔 네가 원하는 퍼스나 API 붙이면 됨)
+    // 퍼스나 더미 응답
     addMessage("ai", "…퍼스나가 응답 중…");
 
     document.getElementById("user_input").value = "";
 });
 
-// --- 이미지 생성 ---
+// 이미지 생성 기능
 let generatedBase64 = null;
 
 document.getElementById("gen_btn").addEventListener("click", async () => {
     addMessage("ai", "이미지를 생성하는 중…");
 
-    // ★ 여기 이미지 생성 API 붙이면 됨
-    // 지금은 더미 URL 사용 → 나중에 진짜 생성 API 연결
+    // 여기 나중에 퍼스나 이미지 생성 로직 연결
+    // 지금은 임시 샘플 이미지로 테스트
+    const sampleUrl = "../assets/shared_images/sample.png";
 
-    const dummyImage = "../assets/shared_images/sample.png";  // 예시
-
-    // 브라우저에서 Base64 변환
-    const res = await fetch(dummyImage);
+    const res = await fetch(sampleUrl);
     const blob = await res.blob();
 
     const base64 = await new Promise((resolve) => {
@@ -83,10 +87,10 @@ document.getElementById("gen_btn").addEventListener("click", async () => {
     generatedBase64 = base64;
 
     document.getElementById("image_preview").innerHTML =
-        `<img src="data:image/png;base64,${generatedBase64}" />`;
+        `<img src="data:image/png;base64,${generatedBase64}" alt="생성된 이미지" />`;
 });
 
-// --- 저장 기능 ---
+// DB 저장 기능
 document.getElementById("save_btn").addEventListener("click", async () => {
     if (!generatedBase64) {
         document.getElementById("status").innerText = "이미지를 먼저 생성하세요.";
@@ -95,7 +99,7 @@ document.getElementById("save_btn").addEventListener("click", async () => {
 
     try {
         await saveMyItem({
-            owner_id: "USER_ID",  // 나중에 연결
+            owner_id: "USER_ID",     // 나중에 연결
             owner_type: "user",
             type: "card",
             title: "이미지 카드",
