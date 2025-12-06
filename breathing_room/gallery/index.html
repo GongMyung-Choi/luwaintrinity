@@ -1,74 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>숨틔움 갤러리</title>
-  <link rel="stylesheet" href="../common.css">
-  <style>
-    .gallery-wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 1.5rem;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1rem;
-    }
-    .gallery-item {
-      cursor: pointer;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,.15);
-      background: #fff;
-    }
-    .gallery-item img {
-      width: 100%;
-      display: block;
-    }
-    .gallery-item-title {
-      padding: 0.5rem 0.75rem;
-      font-size: 0.9rem;
-    }
-    .viewer-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .viewer-inner {
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-    .viewer-inner img {
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-    }
-  </style>
-</head>
-<body>
-  <div class="gallery-wrap">
-    <h1>숨틔움 갤러리</h1>
-    <p>루웨인 OS / images / gallery 에 있는 그림들을 보여주는 공간.</p>
+<h2>갤러리</h2>
 
-    <div id="galleryStatus">불러오는 중…</div>
-    <div id="galleryGrid" class="gallery-grid"></div>
-  </div>
+<div>
+    <input type="file" id="gallery_file" accept="image/*" />
+    <input id="gallery_title" placeholder="제목" />
+    <textarea id="gallery_description" placeholder="설명"></textarea>
+    <label>
+        <input type="checkbox" id="gallery_public" />
+        공개하기
+    </label>
+    <button id="gallery_upload_btn">올리기</button>
+</div>
 
-  <!-- 전체 화면 보기 -->
-  <div id="viewer" class="viewer-backdrop">
-    <div class="viewer-inner">
-      <img id="viewerImg" src="" alt="">
-    </div>
-  </div>
+<hr>
 
-  <!-- Supabase + 공통 초기화 -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/includes/script_reverb.js"></script>
-  <script src="/includes/br_gallery.js"></script>
-</body>
-</html>
+<div id="gallery_list"></div>
+
+<script type="module" src="/assets/js/gallery_upload.js"></script>
+<script type="module" src="/assets/js/gallery_list.js"></script>
