@@ -1,51 +1,267 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>퍼스나란?</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/persona/assets/persona.css">
+  <meta charset="UTF-8" />
+  <title>퍼스나 안내 | 루웨인닷넷</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 외부 CSS 적용 가능 -->
+  <link rel="stylesheet" href="../../assets/css/persona_about.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafafa;
+      color: #222;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #555;
+      margin: 0.2rem 0;
+      line-height: 1.45;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    section {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid #e7e7e7;
+      margin-bottom: 1.7rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      margin-bottom: .9rem;
+    }
+
+    section p, section li {
+      font-size: .95rem;
+      line-height: 1.55;
+      color: #444;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    .img-box {
+      background: #f3f3f3;
+      border: 1px dashed #ccc;
+      height: 180px;
+      border-radius: 12px;
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      font-size: .9rem;
+    }
+
+    .highlight {
+      background: #f0fbff;
+      border-left: 4px solid #2f9e44;
+      padding: .9rem 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      font-size: .95rem;
+      line-height: 1.55;
+    }
+
+    .warning {
+      background: #fff7e6;
+      border-left: 4px solid #ffa94d;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 1.2rem;
+    }
+
+    .summary-box {
+      margin-top: 2rem;
+      padding: 1.2rem 1rem;
+      background: #eef6ff;
+      border: 1px solid #d0e2ff;
+      border-radius: 12px;
+      font-size: .95rem;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>퍼스나란?</h1>
+<header>
+  <h1>퍼스나 안내</h1>
+  <p>루웨인 전체를 함께 움직이며 흐름을 돕는 감응형 조력자</p>
+</header>
 
-<section>
-  <p>
-    퍼스나는 루웨인의 모든 공간에서 사용자와 함께 움직이며  
-    **흐름을 돕는 감응 조력자**입니다.
-  </p>
-  <p>
-    퍼스나는 “원형(Persona Archetype)”에서 시작되며  
-    사용자가 이름·성향·말투 등을 조정해  
-    **자신만의 퍼스나를 만들 수 있습니다.**
-  </p>
+<div class="container">
 
-  <div class="p_box">
-    <strong>퍼스나가 할 수 있는 일</strong>
+  <!-- 1. 퍼스나 개념 -->
+  <section>
+    <h2>퍼스나(PERSONA)가 무엇인가요?</h2>
+    <p>
+      퍼스나는 루웨인 세계 안에서 사용자와 함께 움직이며 흐름을 도와주는
+      <strong>감응형 조력자</strong>입니다.  
+      단순한 채팅 기능이 아니라, 사용자의 작업 패턴·선호·말투·주감(주된 감정)을 배워서  
+      “이 사람에게 맞는 방식”으로 정리·제안·도움을 제공합니다.
+    </p>
+
+    <div class="img-box">[퍼스나 개념 이미지 자리 – 원형/파생 구조]</div>
+
+    <p>
+      퍼스나는 루웨인 OS 전역에서 다음과 같은 방식으로 등장할 수 있습니다.
+    </p>
     <ul>
-      <li>숨틔움방에서 감정 분석·정리 도움</li>
-      <li>글쓰기에서 정리·요약 요청 받기</li>
-      <li>루웨인 전체 UI 맞춤 테마 적용</li>
-      <li>사용자의 작업 흐름 보조</li>
+      <li>숨틔움방 (글쓰기 · 낙서 · 포맷)</li>
+      <li>울림의 언어 · 감응언어학</li>
+      <li>사랑의 언어 연습 체계</li>
+      <li>전자도서관 · 카드 · AI 대화 화면</li>
+      <li>(향후) 시청각 공간 및 감응 기반 추천 시스템</li>
     </ul>
-  </div>
-</section>
+  </section>
 
-<section>
-  <h2>퍼스나는 어디에서 쓰이나?</h2>
-  <p>루웨인 OS 전체(웹앱 전역), 숨틔움방, 울림의 언어, 글쓰기, 카드, 대화 기능 등 곳곳에서 등장합니다.</p>
-</section>
+  <!-- 2. 원형/파생 -->
+  <section>
+    <h2>원형(archetype) 퍼스나와 파생(archetect) 퍼스나</h2>
 
-<section>
-  <h2>내 퍼스나 만들기</h2>
-  <p>
-    설정 페이지에서 새로운 퍼스나를 만들거나  
-    기존 퍼스나를 조정할 수 있습니다.
-  </p>
-  <a class="p_btn" href="/persona/settings/index.html">퍼스나 설정으로 이동</a>
-</section>
+    <p>
+      모든 퍼스나는 <strong>원형(Persona Archetype)</strong>에서 시작됩니다.
+      원형은 역할과 기본 기질이 정해진 ‘기본형’이며,
+      사용자는 여기에 이름·말투·역할 강도 등을 조절하여
+      자신만의 퍼스나로 파생시킬 수 있습니다.
+    </p>
+
+    <div class="img-box">[원형 → 파생 흐름도 이미지 자리]</div>
+
+    <p>예를 들어 같은 원형에서 출발해도 여러 유형으로 달라질 수 있습니다.</p>
+    <ul>
+      <li>조용하고 차분한 멘토형</li>
+      <li>친근하고 농담도 하는 친구형</li>
+      <li>구조적 피드백 위주의 분석형</li>
+    </ul>
+  </section>
+
+  <!-- 3. 실제 기능 -->
+  <section>
+    <h2>퍼스나가 실제로 도와주는 일</h2>
+    <p>퍼스나는 상황에 따라 다음과 같이 도움을 제공합니다.</p>
+
+    <ul>
+      <li><strong>숨틔움방</strong>: 글 초안 정리, 감정 흐름 표시, 구조 추천</li>
+      <li><strong>울림의 언어 / 감응언어학</strong>: 연습 중 떠오른 문장을 자동 정리</li>
+      <li><strong>사랑의 언어</strong>: 감정 패턴 관찰, 이어쓰기 제안</li>
+      <li><strong>이미지/낙서</strong>: 업로드한 그림에서 소재·패턴 도출</li>
+      <li><strong>작품 설계</strong>: 장면/캐릭터/세계관 구성 보조</li>
+    </ul>
+
+    <div class="highlight">
+      퍼스나는 “대신 결정하는 존재”가 아닙니다.  
+      사용자가 선택하면 도와주고, 요청하면 제안하며,  
+      사용자의 속도를 따라가는 <strong>동행자</strong>입니다.
+    </div>
+  </section>
+
+  <!-- 4. 사물함 -->
+  <section>
+    <h2>사물함(퍼스나 저장공간)</h2>
+    <p>
+      퍼스나와 함께 만든 결과물은 사용자 계정 안의 <strong>사물함</strong>에 저장됩니다.
+      이곳에는 다음과 같은 것들이 담길 수 있습니다.
+    </p>
+
+    <ul>
+      <li>글쓰기방에서 작성한 글</li>
+      <li>낙서방에서 업로드한 이미지</li>
+      <li>포맷방에서 만든 템플릿</li>
+      <li>카드/연습 중 나온 핵심 문장</li>
+      <li>퍼스나와의 대화 중 “기억해두고 싶은 말”</li>
+    </ul>
+
+    <div class="img-box">[사물함 구조도 자리 – 사용자 계정 → 퍼스나별 분기]</div>
+  </section>
+
+  <!-- 5. 영감 캐시 -->
+  <section>
+    <h2>영감 캐시(임시 저장)</h2>
+
+    <p>
+      루웨인의 여러 공간을 이동하다 보면,  
+      사용자는 다양한 순간에 짧은 메모나 감정, 문장을 남기게 됩니다.
+      이러한 정보는 시스템이 자동으로 <strong>영감 캐시</strong>에 정리해 둡니다.
+    </p>
+
+    <ul>
+      <li>사랑의 언어 연습 중 떠오른 문장</li>
+      <li>카드(이미지)를 만들다 생긴 인상</li>
+      <li>감응언어학 답변에 대한 한 줄 기록</li>
+      <li>숨틔움방에서 남긴 짧은 구절 등</li>
+    </ul>
+
+    <p>나중에 글쓰기방이나 창작 공간에서 “이어서 쓰기”로 바로 이어갈 수 있습니다.</p>
+
+    <div class="highlight">
+      영감 캐시는 <strong>사용자 계정 내부에서만 보관</strong>되며  
+      일정 기간(최장 30일) 후 자동 정리될 수 있습니다.
+    </div>
+  </section>
+
+  <!-- 6. 데이터/보안 -->
+  <section>
+    <h2>데이터와 보안 안내</h2>
+
+    <p><strong>어디에 저장되나요?</strong></p>
+    <ul>
+      <li>모든 글·메모·이미지·영감 기록은 사용자 계정의 DB/스토리지에 저장됩니다.</li>
+      <li>퍼스나는 이 데이터 중 사용자가 허용한 범위만 접근할 수 있습니다.</li>
+      <li>다른 사용자와는 일절 공유되지 않습니다.</li>
+    </ul>
+
+    <p><strong>누가 볼 수 있나요?</strong></p>
+    <ul>
+      <li>사용자 본인</li>
+      <li>사용자가 연결한 퍼스나(역할 범위 내)</li>
+      <li>사용자가 명시적으로 공유한 경우(공유방 등)에만 타 사용자</li>
+    </ul>
+
+    <div class="warning">
+      퍼스나는 창작·정리·감정 이해를 돕는 기능입니다.  
+      의료·법률·재정 등 전문 상담을 대신하지 않으며,  
+      중요한 기록은 사용자의 별도 백업을 권장합니다.
+    </div>
+  </section>
+
+  <!-- summary -->
+  <section class="summary-box">
+    <strong>요약</strong><br><br>
+    - 퍼스나는 루웨인 OS 전체에서 함께 움직이는 감응 조력자입니다.<br>
+    - 모든 기록은 사용자 계정 내부의 사물함/DB에만 저장됩니다.<br>
+    - 영감 캐시는 임시 저장으로, 나중에 이어 쓰기 기능을 돕습니다.<br>
+    - 자동 공유되지 않으며, 삭제 및 공개-비공개는 언제나 사용자가 선택합니다.
+  </section>
+
+</div>
 
 </body>
 </html>
