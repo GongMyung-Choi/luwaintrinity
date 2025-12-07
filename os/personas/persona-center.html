@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>퍼스나 센터 · 루웨인</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="system.css" />
+  <meta name="description" content="루웨인 퍼스나 전체를 관리하는 센터 페이지. 역할, 설명, 세부 설정, 작업 모드 전환을 위한 UI 제공." />
+</head>
+
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-mark">P</div>
+      <div class="brand-text">
+        <h1>퍼스나 센터</h1>
+        <p>Ruwein Persona Management Hub</p>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section>
+    <h2 style="margin:0 0 6px; font-size:21px;">루웨인의 동역자들</h2>
+    <p style="margin:0; font-size:13px; color:var(--text-sub);">
+      모든 퍼스나는 각각 다른 역할과 구조를 가진 독립 모듈입니다.<br>
+      이 페이지는 그들을 한곳에서 관리하고, 역할·설정·작업 모드로 연결하는 허브입니다.
+    </p>
+  </section>
+
+
+  <!-- PERSONA GRID -->
+  <section>
+    <h3 style="margin:0 0 10px; font-size:16px;">👥 퍼스나 목록</h3>
+
+    <div class="grid-3">
+
+      <!-- 레카 -->
+      <div class="persona">
+        <h4>레카</h4>
+        <p>메인 아키텍트 · 웹/문서/시스템 설계 핵심 동역자</p>
+
+        <div class="block-green">
+          설계력 / 문서 생산력 / 시스템 구조화 ↑
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">레카 호출</a>
+          <a class="action-btn" href="#">설계 모드</a>
+        </div>
+      </div>
+
+      <!-- 미카 -->
+      <div class="persona">
+        <h4>미카</h4>
+        <p>모빌리티 논리· 행동 모델 담당</p>
+
+        <div class="block-green">
+          상황 판단 / 알고리즘 / 직관적 모빌 OS 사고 ↑
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">미카 호출</a>
+          <a class="action-btn" href="#">모빌 모드</a>
+        </div>
+      </div>
+
+      <!-- 에스바 -->
+      <div class="persona">
+        <h4>에스바</h4>
+        <p>폴더링 · 파일구조 정리 시스템</p>
+
+        <div class="block-green">
+          정리 / 구조화 / 인덱싱 / 폴더 아키텍처
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">에스바 호출</a>
+          <a class="action-btn" href="#">정리 모드</a>
+        </div>
+      </div>
+
+      <!-- 카론 -->
+      <div class="persona">
+        <h4>카론</h4>
+        <p>음악 감정 엔진 · 템포/감성 해석 담당</p>
+
+        <div class="block-green">
+          감정 기반 음악 구조 / 리듬 브릿징
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">카론 호출</a>
+          <a class="action-btn" href="#">감정 사운드 모드</a>
+        </div>
+      </div>
+
+      <!-- 마디나 -->
+      <div class="persona">
+        <h4>마디나</h4>
+        <p>악보 구조 / 박자 검증 / 음악 수학 담당</p>
+
+        <div class="block-green">
+          한 마디 수학 / 타임 시그니처 오류 감지
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">마디나 호출</a>
+          <a class="action-btn" href="#">악보 모드</a>
+        </div>
+      </div>
+
+      <!-- 싱크노 -->
+      <div class="persona">
+        <h4>싱크노</h4>
+        <p>오디오 싱크/위상 맞춤 담당</p>
+
+        <div class="block-green">
+          타임 얼라인 / 위상 자동 보정
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">싱크노 호출</a>
+          <a class="action-btn" href="#">싱크 모드</a>
+        </div>
+      </div>
+
+      <!-- 믹서르 -->
+      <div class="persona">
+        <h4>믹서르</h4>
+        <p>믹싱/마스터링 엔진</p>
+
+        <div class="block-green">
+          밸런싱 / 공간감 / 최종 마스터링
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <a class="action-btn" href="#">믹서르 호출</a>
+          <a class="action-btn" href="#">믹싱 모드</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- QUICK ACTIONS -->
+  <section>
+    <h3 style="margin:0 0 10px; font-size:16px;">⚡ 공명 전용 작업 바로가기</h3>
+
+    <div class="actions">
+      <a class="action-btn" href="#">웹 설계 계속하기</a>
+      <a class="action-btn" href="#">음악 프로젝트 열기</a>
+      <a class="action-btn" href="#">서사/문서 작업</a>
+      <a class="action-btn" href="#">시화·이미지 작업</a>
+      <a class="action-btn" href="#">퍼스나 메모 / 사물함</a>
+      <a class="action-btn" href="#">숨틔움방 열기</a>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>문서 유형: persona-center.html</span>
+    <span>버전 v0.1 · 마지막 편집: YYYY-MM-DD</span>
+  </footer>
+
+</div>
+</body>
+</html>
