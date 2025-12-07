@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>음악 목록</title>
+
+<link rel="stylesheet" href="/os/assets/style.css" />
+
+<style>
+  body {
+    max-width: 880px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+
+  h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .top-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 16px;
+    background: #6d85ff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+
+  .music-item {
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: 0.12s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  }
+  .music-item:hover {
+    transform: translateY(-2px);
+    border-color: #6d85ff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .info {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.45;
+  }
+
+  .structure-preview {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #888;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>음악 목록</h1>
+
+<a class="top-btn" href="/musics/music-write.html">＋ 새 음악 만들기</a>
+
+<div id="list"></div>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  async function loadList() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("musics")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("id", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      alert("로딩 실패");
+      return;
+    }
+
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    if (data.length === 0) {
+      list.innerHTML = "<p>아직 생성된 음악이 없습니다.</p>";
+      return;
+    }
+
+    data.forEach(music => {
+      const structureText = music.structure
+        ? Object.entries(music.structure)
+            .map(([k,v]) => `${k}:${v}`)
+            .join(" / ")
+        : "구조 없음";
+
+      const div = document.createElement("div");
+      div.className = "music-item";
+      div.innerHTML = `
+        <div class="title">${music.title}</div>
+        <div class="info">
+          BPM: ${music.bpm ?? "-"}  
+          <br>분위기: ${music.mood ?? "-"}
+          <div class="structure-preview">${structureText}</div>
+        </div>
+      `;
+      div.onclick = () => {
+        window.location.href = `/musics/music-view.html?id=${music.id}`;
+      };
+      list.appendChild(div);
+    });
+  }
+
+  loadList();
+</script>
+
+</body>
+</html>
