@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>카드 수정</title>
+
+<link rel="stylesheet" href="/os/assets/style.css" />
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>카드 수정</h1>
+
+<label>제목</label>
+<input type="text" id="title" placeholder="제목을 입력하세요" />
+
+<label>설명</label>
+<textarea id="description" rows="7" placeholder="설명을 입력하세요"></textarea>
+
+<label>이미지 URL</label>
+<input type="text" id="image" placeholder="이미지 주소" />
+
+<button id="saveBtn">수정 완료</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL param
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    window.location.href = "/cards/card-list.html";
+  }
+
+  // 기존 데이터 로드
+  async function loadCard() {
+    const { data, error } = await supabase
+      .from("cards")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      alert("카드를 불러올 수 없습니다.");
+      console.error(error);
+      return;
+    }
+
+    document.getElementById("title").value = data.title;
+    document.getElementById("description").value = data.description ?? "";
+    document.getElementById("image").value = data.image_url;
+  }
+
+  loadCard();
+
+  // 저장
+  document.getElementById("saveBtn").onclick = async () => {
+
+    const title = document.getElementById("title").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const image_url = document.getElementById("image").value.trim();
+
+    if (!title || !image_url) {
+      alert("제목과 이미지 URL은 필수입니다.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("cards")
+      .update({
+        title,
+        description,
+        image_url
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("수정 실패");
+      console.error(error);
+    } else {
+      alert("수정되었습니다.");
+      window.location.href = `/cards/card-view.html?id=${id}`;
+    }
+  };
+</script>
+
+</body>
+</html>
