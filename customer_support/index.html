@@ -1,20 +1,26 @@
-<h1>알림터</h1>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>공지사항</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
 
-<div id="mode-list">
-   [공지 쓰기] (운영자만)
-   — 리스트 —
+<h1 class="page-title">공지사항</h1>
+
+<div id="notice-list"></div>
+
+<div id="notice-view" style="display:none;">
+  <h2 id="v-title"></h2>
+  <div id="v-date"></div>
+  <div id="v-content"></div>
+  <button class="btn" onclick="showList()">목록으로</button>
 </div>
 
-<div id="mode-view" style="display:none;">
-   — 공지 제목 —
-   — 날짜 —
-   — 내용 —
-   [목록으로]
-</div>
+<script type="module" src="./notices.js"></script>
+<script>showList();</script>
 
-<div id="mode-write" style="display:none;">
-   — 제목 입력 —
-   — 내용 입력 —
-   [저장]
-   [취소]
-</div>
+</body>
+</html>
