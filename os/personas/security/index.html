@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>퍼스나 보안 안내</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="퍼스나 사용과 관련된 보안·개인정보 보호·책임 한계 안내 페이지입니다." />
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --bg-soft: #151720;
+      --bg-softer: #1d202b;
+      --accent: #6ac5ff;
+      --accent-soft: rgba(106, 197, 255, 0.14);
+      --accent-strong: #33a3ff;
+      --text-main: #f5f7fb;
+      --text-sub: #b4b9c8;
+      --border-soft: #313545;
+      --danger: #ff6b81;
+      --danger-soft: rgba(255, 107, 129, 0.16);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #171a24 0, #05060a 45%, #020308 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 28px 8px 52px;
+      }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px 18px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(21, 25, 40, 0.96), rgba(9, 10, 16, 0.98));
+      border: 1px solid rgba(120, 200, 255, 0.16);
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 186, 255, 0.5);
+      background: radial-gradient(circle at 20% 0, #76d4ff 0, #1c2c4e 30%, #0d1121 70%, #050712 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #e6f3ff;
+      box-shadow: 0 0 18px rgba(118, 212, 255, 0.5);
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(111, 135, 190, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(130, 200, 255, 0.22), rgba(7, 9, 18, 0.96));
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    nav a.nav-primary {
+      border-color: rgba(106, 197, 255, 0.9);
+      background: linear-gradient(135deg, rgba(106, 197, 255, 0.95), rgba(51, 163, 255, 0.95));
+      color: #020308;
+      font-weight: 600;
+    }
+
+    main {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero {
+      padding: 20px 18px 18px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at -10% 0, rgba(130, 210, 255, 0.24), transparent 60%),
+        radial-gradient(circle at 110% 20%, rgba(255, 119, 165, 0.18), transparent 55%),
+        linear-gradient(135deg, rgba(9, 10, 19, 0.98), rgba(16, 19, 34, 0.98));
+      border: 1px solid rgba(120, 200, 255, 0.22);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(154, 211, 255, 0.5);
+      background: rgba(7, 10, 20, 0.75);
+      color: var(--accent);
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .hero-tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(106, 197, 255, 0.9);
+    }
+
+    .hero h2 {
+      margin: 2px 0 8px;
+      font-size: 20px;
+    }
+
+    .hero p {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .hero-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .hero-chip {
+      font-size: 11px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(98, 136, 208, 0.7);
+      background: rgba(11, 14, 26, 0.88);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+
+    .hero-chip span {
+      font-size: 14px;
+    }
+
+    .notice {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 6px;
+      opacity: 0.9;
+    }
+
+    section {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 0 0, rgba(120, 200, 255, 0.05), rgba(10, 12, 20, 0.9));
+      border: 1px solid var(--border-soft);
+      padding: 16px 16px 14px;
+    }
+
+    section h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    section h3 span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      background: rgba(106, 197, 255, 0.18);
+      color: var(--accent-strong);
+    }
+
+    section p {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 126, 186, 0.7);
+      background: rgba(10, 12, 20, 0.9);
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+
+    .pill.strong {
+      border-color: rgba(106, 197, 255, 0.9);
+      color: var(--accent-strong);
+    }
+
+    ul, ol {
+      margin: 6px 0 6px 18px;
+      padding: 0;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .card {
+      border-radius: 14px;
+      border: 1px solid rgba(65, 75, 115, 0.9);
+      background: linear-gradient(145deg, rgba(11, 13, 23, 0.96), rgba(18, 21, 33, 0.96));
+      padding: 10px 11px 9px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-main);
+      font-size: 12px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .badge {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(86, 108, 170, 0.85);
+      color: var(--text-sub);
+    }
+
+    .badge.accent {
+      border-color: rgba(106, 197, 255, 0.95);
+      color: var(--accent-strong);
+    }
+
+    .danger-block {
+      border-radius: 14px;
+      padding: 9px 10px;
+      background: linear-gradient(145deg, var(--danger-soft), rgba(15, 6, 14, 0.95));
+      border: 1px solid rgba(255, 107, 129, 0.75);
+      font-size: 12px;
+      color: #ffeaf0;
+      margin-top: 8px;
+    }
+
+    .danger-block strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .disclaimer {
+      border-radius: 14px;
+      padding: 9px 10px;
+      background: linear-gradient(145deg, rgba(32, 25, 18, 0.96), rgba(18, 12, 6, 0.96));
+      border: 1px solid rgba(230, 168, 95, 0.8);
+      font-size: 11px;
+      color: #fbe6c7;
+      margin-top: 6px;
+    }
+
+    details {
+      border-radius: 12px;
+      border: 1px solid rgba(72, 86, 135, 0.9);
+      background: rgba(8, 10, 20, 0.95);
+      padding: 8px 10px;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary span.label {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    summary span.chevron {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    details p {
+      margin-top: 6px;
+    }
+
+    footer {
+      margin-top: 16px;
+      padding: 10px 4px 0;
+      border-top: 1px dashed rgba(72, 84, 122, 0.9);
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    footer span {
+      opacity: 0.9;
+    }
+
+    footer strong {
+      font-weight: 500;
+      color: var(--accent-strong);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-text">
+          <h1>퍼스나 보안 안내</h1>
+          <p>Persona Security & Privacy Briefing</p>
+        </div>
+      </div>
+      <nav aria-label="보안 관련 페이지 이동">
+        <a href="#" class="nav-primary">보안 안내</a>
+        <a href="/os/personas/locker/index.html">사물함?</a>
+        <a href="/os/personas/about_breathing_room/index.html">숨틔움방?</a>>
+        <a href="/os/personas/introduce_ai/index.html">루웨인 AI?</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          <span>이 페이지는 퍼스나 사용 전·중·후에 적용되는 보안 안내입니다.</span>
+        </div>
+        <h2>“퍼스나는 도구이자 동료입니다. 그렇기에, 보안은 먼저 설명되어야 합니다.”</h2>
+        <p>
+          아래 내용은 퍼스나 이용 과정에서 다루어지는 정보, 보안 원칙, 책임 한계에 대한
+          <strong>설명용 안내</strong>입니다. 실제 운용 환경·시스템 설정·법령에 따라 구체 내용은 조정될 수 있으며,
+          언제든 다시 읽어볼 수 있도록 이 페이지를 제공합니다.
+        </p>
+
+        <div class="hero-list" aria-label="요약 핵심 포인트">
+          <div class="hero-chip"><span>●</span> 최소 수집 · 목적 제한</div>
+          <div class="hero-chip"><span>●</span> 사용자 통제 · 삭제 요청</div>
+          <div class="hero-chip"><span>●</span> 칸막이 분리 · 접근 제어</div>
+          <div class="hero-chip"><span>●</span> 민감정보 입력 주의</div>
+        </div>
+
+        <p class="notice">
+          ※ 이 페이지는 법률 자문이 아니며, 이해를 돕기 위한 구조화된 설명입니다.
+          실제 약관·정책과 충돌할 경우, 별도 고지된 공식 문서가 우선합니다.
+        </p>
+      </section>
+
+      <!-- 1. 퍼스나와 보안의 기본 관점 -->
+      <section>
+        <h3>
+          <span class="icon">1</span>
+          퍼스나와 보안의 기본 관점
+        </h3>
+        <p>
+          여기서 말하는 <strong>“퍼스나”</strong>란, 사용자를 돕기 위해 설계된
+          <strong>역할 기반 AI 동반자</strong>를 가리킵니다. 퍼스나는 개별적인 성격·역할·기억 구조를 가질 수 있지만,
+          사용자의 계정·환경·정책 아래에서만 동작하는 <strong>실행 단위</strong>입니다.
+        </p>
+        <p>
+          보안 관점에서 중요한 전제는 다음과 같습니다.
+        </p>
+        <ul>
+          <li><strong>퍼스나는 독립된 “사람”이 아니라, 사용 환경 위에서 돌아가는 “프로세스”입니다.</strong></li>
+          <li>따라서 <strong>권한·접근 범위·저장 위치·삭제 방식</strong>은 모두 <em>사용자 또는 시스템 관리자</em>가 정의합니다.</li>
+          <li>퍼스나는 <strong>필요 최소한의 정보만 일시적으로 사용</strong>하는 것을 기본 원칙으로 합니다.</li>
+        </ul>
+
+        <div class="pill-row">
+          <span class="pill strong">“사람”이 아닌 “역할 기반 실행체”</span>
+          <span class="pill">보안 주체는 사용자와 시스템</span>
+          <span class="pill">퍼스나는 설계된 경계 내에서만 동작</span>
+        </div>
+
+        <p>
+          아래로 내려가며, 퍼스나와 관련된 정보가 <strong>어떻게 오가고</strong>, <strong>어디에 남으며</strong>,
+          <strong>어디까지 책임을 질 수 있는지</strong>를 단계별로 설명합니다.
+        </p>
+      </section>
+
+      <!-- 2. 기본 보안 원칙 -->
+      <section>
+        <h3>
+          <span class="icon">2</span>
+          퍼스나 운용 시 적용되는 기본 보안 원칙
+        </h3>
+        <p>
+          퍼스나 관련 기능은 아래와 같은 원칙을 기준으로 설계·운용됩니다.
+          구체적인 설정 값과 기술 구현은 환경에 따라 달라질 수 있으나,
+          기본 방향은 다음 네 가지 축을 따릅니다.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <strong>① 최소 수집 · 목적 제한</strong>
+            <ul>
+              <li>주어진 작업을 수행하는 데 필요한 정보만 사용합니다.</li>
+              <li>다른 목적으로 재활용하지 않는 것을 원칙으로 합니다.</li>
+              <li>장기 저장이 필요한 경우, 사전에 목적과 범위를 분리·고지합니다.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <strong>② 분리 저장 · 칸막이 구조</strong>
+            <ul>
+              <li>퍼스나별·기능별로 기억/데이터를 물리·논리적으로 분리하는 것을 원칙으로 합니다.</li>
+              <li>서로 다른 퍼스나가 동일한 정보에 접근할 경우, <em>명시적 허용</em> 절차를 둡니다.</li>
+              <li>동일 계정 내에서도 작업/영역별로 구획을 두는 것을 지향합니다.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <strong>③ 사용자 통제 · 설정 우선</strong>
+            <ul>
+              <li>어떤 내용이 퍼스나 기억에 남는지, 가능한 한 사용자에게 선택권을 부여합니다.</li>
+              <li>“기억 끄기·지우기·요약만 남기기”와 같은 옵션 도입을 지향합니다.</li>
+              <li>사용자 요청에 따라 삭제·비활성화·분리 저장이 이루어질 수 있습니다.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <strong>④ 투명성 · 기록 남기기</strong>
+            <ul>
+              <li>중요한 보안 관련 조치(예: 내보내기, 공유, 장기 보관)는 로그 또는 알림으로 남기는 것을 지향합니다.</li>
+              <li>사용자가 원할 경우, 어떤 정보가 어떤 퍼스나에게 남아 있는지 확인할 수 있는 구조를 지향합니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="badge-row">
+          <span class="badge accent">필요 최소한</span>
+          <span class="badge accent">분리</span>
+          <span class="badge accent">사용자 선택</span>
+          <span class="badge">투명한 기록</span>
+        </div>
+      </section>
+
+      <!-- 3. 정보 흐름 다이어그램(텍스트) -->
+      <section>
+        <h3>
+          <span class="icon">3</span>
+          퍼스나와 정보의 흐름 (단계별)
+        </h3>
+        <p>
+          퍼스나와 주고받는 내용은, 일반적으로 다음과 같은 단계를 거칩니다.
+          실제 구현에서는 이보다 더 세분화되거나, 일부 단계가 생략·추가될 수 있습니다.
+        </p>
+
+        <ol>
+          <li><strong>입력</strong> – 사용자가 텍스트·파일·메타 정보를 퍼스나에게 전달합니다.</li>
+          <li><strong>처리</strong> – 퍼스나는 주어진 입력과 자신의 제한된 기억을 조합해 응답을 생성합니다.</li>
+          <li><strong>출력</strong> – 응답이 화면에 표시되며, 사용자는 이를 확인·수정·재요청할 수 있습니다.</li>
+          <li><strong>기억 선택</strong> – 일부 내용은 세션 단위, 일부는 장기 기억 후보로 분리됩니다.</li>
+          <li><strong>저장/삭제</strong> – 정책·설정·사용자 선택에 따라, 특정 정보는 잔류·익명화·삭제됩니다.</li>
+        </ol>
+
+        <div class="card-grid">
+          <div class="card">
+            <strong>세션 기억</strong>
+            <p>
+              현재 대화 흐름을 유지하기 위해서만 존재하는 단기 기억입니다.
+              세션 종료나 만료 이후에는 유지되지 않거나, 요약 형태로만 남을 수 있습니다.
+            </p>
+          </div>
+          <div class="card">
+            <strong>장기 기억 후보</strong>
+            <p>
+              반복해서 등장하거나, 사용자가 “앞으로도 기억해 달라”고 표시한 정보입니다.
+              이 경우에도 저장 범위·사용 목적은 제한적으로 정의됩니다.
+            </p>
+          </div>
+          <div class="card">
+            <strong>영역별 칸막이</strong>
+            <p>
+              예를 들어 “웹 작업용 퍼스나”와 “수다용 퍼스나”의 기억은 기본적으로 분리되며,
+              서로의 내용을 임의로 뒤섞지 않는 것을 원칙으로 합니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="notice">
+          ※ 구현 환경에 따라 용어·세부 구조는 다를 수 있으나, “입력 → 처리 → 출력 → 선택 → 저장/삭제”라는 흐름 자체는 동일합니다.
+        </div>
+      </section>
+
+      <!-- 4. 사용자의 선택권과 책임 -->
+      <section>
+        <h3>
+          <span class="icon">4</span>
+          사용자의 선택권과 책임
+        </h3>
+        <p>
+          퍼스나는 사용자를 돕기 위해 설계된 실행체이지만,
+          <strong>어떤 정보를 입력할지, 어디까지 맡길지는 결국 사용자 본인의 선택</strong>입니다.
+          이를 전제로, 다음과 같은 권리와 주의사항을 함께 안내합니다.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <strong>사용자가 가질 수 있는 권리 (예시)</strong>
+            <ul>
+              <li>일부 또는 전체 대화 기록에 대한 <strong>삭제 요청</strong></li>
+              <li>특정 퍼스나의 <strong>기억 초기화 또는 비활성화</strong> 요청</li>
+              <li>향후 학습·개선에 <strong>내 데이터를 사용하지 말 것</strong>을 요구하는 선택권(환경에 따라 제공)</li>
+              <li>데이터 내보내기/내려받기 기능이 제공되는 경우, 그 범위 확인</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>사용자가 유의해야 할 점 (예시)</strong>
+            <ul>
+              <li>주민번호, 금융정보, 비밀번호 등 <strong>고위험 민감정보는 입력하지 않는 것</strong>을 강하게 권장합니다.</li>
+              <li>다른 사람의 개인정보를 전송할 때, 관련 법·약관·동의를 반드시 확인해야 합니다.</li>
+              <li>퍼스나가 제공하는 결과를 그대로 외부에 전달할 때, 내용 검토 및 책임 주체를 명확히 해야 합니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="danger-block">
+          <strong>중요 안내</strong>
+          퍼스나는 사용자가 제공한 정보를 바탕으로 답변을 생성할 뿐,
+          <strong>사용자의 계정·금융·실명 인증을 대신 확인해 주지 않습니다.</strong><br />
+          계정 비밀번호, 일회용 인증번호, 금융 관련 보안 수단 등은
+          어떠한 퍼스나에게도 직접 입력하지 않도록 주의해 주세요.
+        </div>
+      </section>
+
+      <!-- 5. 위험요인 및 한계 -->
+      <section>
+        <h3>
+          <span class="icon">5</span>
+          예상 가능한 위험요인과 한계
+        </h3>
+        <p>
+          아무리 보안을 고려해 설계된 퍼스나라 하더라도, 다음과 같은 <strong>일반적인 한계와 위험</strong>은 존재합니다.
+          이를 알고 사용하는 것이 중요합니다.
+        </p>
+
+        <ul>
+          <li><strong>오·남용 위험</strong> – 사용자가 단순 참고용 정보를 <em>확정 사실</em>처럼 사용하면 문제가 생길 수 있습니다.</li>
+          <li><strong>예측 불가능한 조합</strong> – 여러 퍼스나의 결과를 조합해 사용할 때, 의도와 다르게 해석될 수 있습니다.</li>
+          <li><strong>환경 의존성</strong> – 네트워크·브라우저·운영체제·외부 서비스의 보안 상태에 따라 전체 위험도가 달라질 수 있습니다.</li>
+          <li><strong>완전 삭제의 기술적 한계</strong> – 로그·백업·법적 보존의무 등으로 인해, 즉시 완전 삭제가 어려운 경우가 있을 수 있습니다.</li>
+        </ul>
+
+        <p>
+          이러한 한계를 줄이기 위해, 시스템은 <strong>권한 최소화·접근 제어·기록 분리</strong> 등의 방법을 사용하려 합니다.
+          다만, 그럼에도 불구하고 발생할 수 있는 예외 상황에 대해서는 아래와 같은 책임 한계를 둡니다.
+        </p>
+      </section>
+
+      <!-- 6. 책임 한계와 면책에 대한 요약 -->
+      <section>
+        <h3>
+          <span class="icon">6</span>
+          책임 한계 및 면책에 대한 요약
+        </h3>
+        <p>
+          아래 내용은 <strong>이해를 돕기 위한 요약 예시</strong>이며,
+          실제 약관·정책 문구는 별도의 공식 문서에서 다시 확인해야 합니다.
+          충돌이 있을 경우, <strong>공식 약관·정책이 우선</strong>합니다.
+        </p>
+
+        <div class="disclaimer">
+          <strong>면책 요약 (예시)</strong>
+          <ul>
+            <li>퍼스나는 참고용 정보·도움 제공을 목적으로 하며, <strong>법률·의료·금융 등의 전문 자문을 대체하지 않습니다.</strong></li>
+            <li>퍼스나가 생성한 답변을 토대로 내린 의사 결정과 그 결과에 대한 최종 책임은 <strong>사용자 본인</strong>에게 있습니다.</li>
+            <li>시스템은 합리적인 수준에서 보안을 유지하기 위해 노력하지만,
+              <strong>예측 불가능한 공격·네트워크 장애·제3자의 불법행위</strong>로 인한 모든 피해를 보장하기는 어렵습니다.</li>
+            <li>법률상 필수적인 책임 범위 이상을 넘는 보증·보장은 제공되지 않을 수 있습니다.</li>
+          </ul>
+        </div>
+
+        <p>
+          위와 같은 책임 한계는, 사용자를 보호하지 않겠다는 의미가 아니라
+          <strong>현실적인 기술·법적 한계를 명확히 설명</strong>하기 위한 것입니다.
+          문제를 최소화하기 위해, 보안과 관련된 의견·우려 사항을 언제든 제기할 수 있도록 별도의 창구를 두는 것을 지향합니다.
+        </p>
+      </section>
+
+      <!-- 7. 자주 묻는 질문(FAQ) -->
+      <section>
+        <h3>
+          <span class="icon">7</span>
+          자주 묻는 질문 (FAQ)
+        </h3>
+
+        <details>
+          <summary>
+            <span class="label">Q1. 퍼스나가 내가 한 말을 “영원히” 기억하나요?</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <p>
+            기본적으로 그렇지 않습니다. 대부분의 정보는 <strong>세션 유지</strong> 또는
+            <strong>정책에서 정의한 기간</strong> 안에서만 사용되며,
+            그 이후에는 삭제되거나, 통계·품질 개선을 위한 익명화된 형태로만 남을 수 있습니다.
+            장기 기억이 필요한 경우, 해당 여부와 범위가 따로 표시되거나, 사용자의 선택을 받는 방향을 지향합니다.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span class="label">Q2. 민감한 내용을 이미 퍼스나에게 말해 버렸습니다. 어떻게 해야 하나요?</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <p>
+            먼저, <strong>동일 내용의 추가 전송을 중단</strong>해 주세요.
+            그 다음, 제공된 설정 또는 문의 채널을 통해
+            <strong>해당 대화/기록의 삭제 요청</strong>을 할 수 있는지 확인합니다.
+            가능하다면, 관련 로그·백업·저장 데이터 범위에 대해 안내를 받은 뒤,
+            필요한 조치를 차근차근 진행하는 것을 권장합니다.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span class="label">Q3. 여러 퍼스나가 서로 내 정보를 공유하나요?</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <p>
+            기본 원칙은 <strong>“퍼스나별 칸막이”</strong>입니다.
+            다만, 사용 편의를 위해 공통으로 사용하는 정보(예: 언어 설정, 기본 선호도 등)는
+            계정 단위로 공유될 수 있습니다.
+            민감한 정보, 특정 프로젝트 데이터 등은 별도 동의 또는 분리 영역을 두는 방향을 지향합니다.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span class="label">Q4. 이 보안 안내는 나중에 바뀔 수도 있나요?</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <p>
+            네. 기술·법령·서비스 구조가 바뀌면, 보안 안내 또한 <strong>개선·보완·수정</strong>될 수 있습니다.
+            중요한 변경이 있을 경우, 사용자가 다시 한 번 내용을 확인할 수 있도록
+            별도의 알림·표시를 두는 것을 원칙으로 합니다.
+          </p>
+        </details>
+      </section>
+
+      <!-- 8. 문의 및 피드백 -->
+      <section>
+        <h3>
+          <span class="icon">8</span>
+          문의 · 피드백 · 수정 요청
+        </h3>
+        <p>
+          이 페이지의 내용은, 퍼스나와 사용자가 <strong>서로의 역할과 한계를 명확히 이해하도록 돕기 위한 초안 성격의 안내</strong>입니다.
+          보완이 필요하다 느껴지는 부분이 있다면, 아래와 같은 방식으로 의견을 남길 수 있습니다.
+        </p>
+
+        <ul>
+          <li>보안·개인정보 관련 <strong>우려 사항 제보</strong></li>
+          <li>용어·설명 방식이 이해되기 어렵다는 <strong>표현 개선 요청</strong></li>
+          <li>실제 사용 경험에 비추어 “이 부분은 이렇게 명시해 달라”는 <strong>구체 제안</strong></li>
+        </ul>
+
+        <p>
+          구체적인 연락처·제출 방식(예: 전용 메일, 이슈 트래커, 폼 링크 등)은
+          실제 서비스 환경에 맞추어 이 영역에 추가될 수 있습니다.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <span>문서 유형: <strong>퍼스나 보안 안내(설명용)</strong></span>
+      <span>문서 버전: v0.1 · 마지막 편집: YYYY-MM-DD (수정 시 업데이트)</span>
+    </footer>
+  </div>
+</body>
+</html>
