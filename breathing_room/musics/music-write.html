@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>새 음악 만들기</title>
+
+<link rel="stylesheet" href="/os/assets/style.css" />
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+  h1 { font-size: 26px; margin-bottom: 20px; }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  button:hover { opacity: 0.9; }
+
+  .json-note {
+    font-size: 13px;
+    color: #777;
+    margin-top: -16px;
+    margin-bottom: 12px;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>새 음악 만들기</h1>
+
+<label>곡 제목</label>
+<input type="text" id="title" placeholder="예: Resurrecting, 한마음 특공대" />
+
+<label>BPM</label>
+<input type="number" id="bpm" placeholder="예: 120" />
+
+<label>분위기/키워드</label>
+<input type="text" id="mood" placeholder="예: 강렬, 새벽, 희망, Cinematic 등" />
+
+<label>설명</label>
+<textarea id="description" rows="6" placeholder="곡 설명, 의도, 콘셉트를 적어주세요"></textarea>
+
+<label>곡 구조(JSON)</label>
+<div class="json-note">예: {"intro":4, "verse":16, "chorus":16, "bridge":8}</div>
+<textarea id="structure" rows="8" placeholder='{"intro":4, "verse":16, "chorus":16}'></textarea>
+
+<button id="saveBtn">저장하기</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  document.getElementById("saveBtn").onclick = async () => {
+    const title = document.getElementById("title").value.trim();
+    const bpm = document.getElementById("bpm").value.trim();
+    const mood = document.getElementById("mood").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const structure = document.getElementById("structure").value.trim();
+
+    if (!title) {
+      alert("곡 제목은 필수입니다.");
+      return;
+    }
+
+    let jsonStructure = null;
+    try {
+      jsonStructure = structure ? JSON.parse(structure) : {};
+    } catch (e) {
+      alert("곡 구조(JSON) 형식이 잘못되었습니다.");
+      return;
+    }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("musics")
+      .insert({
+        user_id: user.id,
+        title,
+        bpm,
+        mood,
+        description,
+        structure: jsonStructure
+      })
+      .select()
+      .single();
+
+    if (error) {
+      alert("저장 실패");
+      console.error(error);
+    } else {
+      alert("저장되었습니다.");
+      // 자동 view 이동
+      window.location.href = `/musics/music-view.html?id=${data.id}`;
+    }
+  };
+</script>
+
+</body>
+</html>
