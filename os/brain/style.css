@@ -5,26 +5,28 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Pretendard, sans-serif;
 }
 
+/* HEADER */
 .brain-wrap {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 18px;
 }
 
 .brain-icon {
     width: 180px;
-    filter: drop-shadow(0 0 10px rgba(255,200,80,0.4));
+    filter: drop-shadow(0 0 12px rgba(255,210,120,0.45));
 }
 
 .title {
     margin-top: 8px;
     font-size: 32px;
     letter-spacing: 4px;
-    color: #d6b473;
+    color: #eacb7a;
 }
 
+/* CHAT */
 .output {
     flex: 1;
     overflow-y: auto;
@@ -32,14 +34,15 @@ body {
 }
 
 .msg {
-    padding: 8px 12px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-radius: 12px;
     max-width: 85%;
+    line-height: 1.45;
 }
 
 .msg.user {
-    background: #133b5c;
+    background: #153a5c;
     align-self: flex-end;
 }
 
@@ -48,6 +51,7 @@ body {
     align-self: flex-start;
 }
 
+/* INPUT AREA */
 .input-wrap {
     display: flex;
     padding: 10px;
@@ -61,6 +65,7 @@ input {
     border: none;
     background: #082032;
     color: white;
+    font-size: 16px;
 }
 
 button {
@@ -68,7 +73,8 @@ button {
     padding: 10px 16px;
     border-radius: 8px;
     border: none;
-    background: #c29e52;
-    color: black;
+    background: #eacb7a;
+    color: #000;
     font-weight: bold;
+    font-size: 16px;
 }
