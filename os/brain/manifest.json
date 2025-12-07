@@ -1,0 +1,15 @@
+{
+  "name": "BRAIN",
+  "short_name": "BRAIN",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#020c16",
+  "theme_color": "#020c16",
+  "icons": [
+    {
+      "src": "brain.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
