@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>도움터 관리자</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<h1 class="page-title">도움터 관리자</h1>
+
+<div id="admin-list"></div>
+
+<div id="admin-view" style="display:none;">
+  <h2 id="a-title"></h2>
+  <div id="a-author"></div>
+  <div id="a-date"></div>
+  <div id="a-content"></div>
+
+  <h3>댓글(운영자 답변)</h3>
+  <div id="comment-list"></div>
+
+  <textarea id="comment-input" class="textarea" placeholder="댓글 내용"></textarea>
+  <button class="btn" onclick="saveComment()">댓글 등록</button>
+
+  <button class="btn" onclick="adminList()">목록</button>
+</div>
+
+<script type="module" src="./comments.js"></script>
+<script>adminList();</script>
+
+</body>
+</html>
