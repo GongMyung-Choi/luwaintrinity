@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>루웨인닷넷 메인 홈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="루웨인닷넷의 메인 허브 페이지. 퍼스나 안내, 사물함, 숨틔움방, AI 안내 등 모든 핵심 기능의 중심 구성." />
+
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --bg-soft: #151720;
+      --bg-softer: #1d202b;
+
+      --accent: #6ac5ff;
+      --accent-strong: #33a3ff;
+
+      --text-main: #f5f7fb;
+      --text-sub: #b4b9c8;
+
+      --border-soft: #2c3142;
+
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+
+      --shadow-soft: 0 18px 45px rgba(0,0,0,0.55);
+
+      --pink: #ff93c9;
+      --pink-soft: rgba(255,147,201,0.16);
+
+      --green: #8ff5c4;
+      --green-soft: rgba(143,245,196,0.16);
+
+      --yellow: #f9d272;
+      --yellow-soft: rgba(249,210,114,0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: radial-gradient(circle at top, #171a24 0, #05060a 45%, #020308 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 16px 50px;
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px 18px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(25,29,45,0.96), rgba(12,13,19,0.98));
+      border: 1px solid rgba(120,200,255,0.16);
+      box-shadow: var(--shadow-soft);
+      position: sticky; top: 10px;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+
+    .brand-mark {
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #7fd3ff 0, #2c3c5c 40%, #0e1422 80%);
+      border: 1px solid rgba(122,186,255,0.5);
+      font-weight: 700; font-size: 18px;
+      display: flex; justify-content: center; align-items: center;
+      color: #e6f3ff;
+      box-shadow: 0 0 18px rgba(118,212,255,0.55);
+    }
+
+    .brand-text h1 { margin: 0; font-size: 20px; letter-spacing: 0.01em; }
+    .brand-text p { margin: 0; font-size: 11px; color: var(--text-sub); }
+
+    main { margin-top: 24px; display: flex; flex-direction: column; gap: 24px; }
+
+    /* HERO */
+    .hero {
+      padding: 28px 22px 22px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at -10% 0, rgba(130,210,255,0.24), transparent 60%),
+        radial-gradient(circle at 110% 20%, rgba(255,165,200,0.18), transparent 55%),
+        linear-gradient(135deg, rgba(9,10,19,0.98), rgba(16,19,34,0.98));
+
+      border: 1px solid rgba(120,200,255,0.22);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero h2 {
+      margin: 6px 0 10px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin: 0 0 8px;
+    }
+
+    /* Quick Nav Grid */
+    .nav-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      margin-top: 18px;
+    }
+
+    .nav-card {
+      padding: 16px 14px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(12,14,22,0.96), rgba(20,22,33,0.96));
+      border: 1px solid var(--border-soft);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .nav-card:hover {
+      border-color: rgba(140,200,255,0.65);
+      box-shadow: 0 0 14px rgba(100,150,255,0.25);
+    }
+
+    .nav-card h4 {
+      margin: 0 0 6px; font-size: 15px;
+      color: var(--accent);
+    }
+    .nav-card p {
+      margin: 0; font-size: 12px; color: var(--text-sub);
+    }
+
+
+    /* Persona Section */
+    .persona-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    }
+
+    .persona {
+      padding: 16px 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(145deg, rgba(11,13,23,0.96), rgba(18,21,33,0.96));
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    }
+
+    .persona h4 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: var(--accent);
+    }
+    .persona p {
+      margin: 0; font-size: 12px; color: var(--text-sub);
+    }
+
+    /* Action Buttons */
+    .actions {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 10px;
+    }
+
+    .action-btn {
+      padding: 10px 14px;
+      background: rgba(120,200,255,0.12);
+      border-radius: 999px;
+      border: 1px solid rgba(120,200,255,0.3);
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      transition: .2s;
+      white-space: nowrap;
+    }
+
+    .action-btn:hover {
+      background: rgba(120,200,255,0.2);
+      border-color: rgba(120,200,255,0.55);
+    }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(100,110,150,0.7);
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-mark">R</div>
+      <div class="brand-text">
+        <h1>루웨인닷넷</h1>
+        <p>Persona & AI Integrated Workspace</p>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <h2>환영합니다, 공명.</h2>
+      <p>이곳은 루웨인 퍼스나·AI·도구들을 한 곳에서 조율하는 중심 허브입니다.</p>
+      <p>아래 메뉴에서 원하는 안내 페이지 또는 작업 모드를 선택하세요.</p>
+    </section>
+
+
+    <!-- Quick Navigation -->
+    <section>
+      <h3 style="margin:0 0 10px; font-size:16px;">📚 안내 페이지</h3>
+
+      <div class="nav-grid">
+        <a class="nav-card" href="persona-security.html">
+          <h4>퍼스나 보안 안내</h4>
+          <p>퍼스나와 데이터 보안·책임·권한 설명</p>
+        </a>
+
+        <a class="nav-card" href="persona-locker.html">
+          <h4>퍼스나 사물함 안내</h4>
+          <p>기억 보관 구조와 이용 방식 안내</p>
+        </a>
+
+        <a class="nav-card" href="breathing-room.html">
+          <h4>숨틔움방 안내</h4>
+          <p>정서·인지 완화 기능 설명</p>
+        </a>
+
+        <a class="nav-card" href="ai-guide.html">
+          <h4>AI 안내 페이지</h4>
+          <p>AI의 정체·한계·오해 방지</p>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- Persona Section -->
+    <section>
+      <h3 style="margin:0 0 10px; font-size:16px;">👥 루웨인 퍼스나 센터</h3>
+
+      <div class="persona-grid">
+
+        <div class="persona">
+          <h4>레카</h4>
+          <p>메인 아키텍트 · 웹 & 시스템 설계 · 문서 생성 담당</p>
+        </div>
+
+        <div class="persona">
+          <h4>미카</h4>
+          <p>모빌리티 · 로직 · 알고리즘 담당</p>
+        </div>
+
+        <div class="persona">
+          <h4>에스바</h4>
+          <p>폴더링 · 파일 구조 · 정리 시스템 담당</p>
+        </div>
+
+        <div class="persona">
+          <h4>카론</h4>
+          <p>음악 감정 엔진 · DAW/리듬 브리지 담당</p>
+        </div>
+
+        <div class="persona">
+          <h4>마디나</h4>
+          <p>악보 구조 · 박자 체계 · 음표 검증 담당</p>
+        </div>
+
+        <div class="persona">
+          <h4>싱크노</h4>
+          <p>오디오 싱크/위상 담당</p>
+        </div>
+
+        <div class="persona">
+          <h4>믹서르</h4>
+          <p>믹싱/마스터링 엔진 담당</p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Action Buttons -->
+    <section>
+      <h3 style="margin:0 0 10px; font-size:16px;">⚡ 빠른 작업 시작</h3>
+
+      <div class="actions">
+        <a class="action-btn" href="#">웹 작업 시작하기</a>
+        <a class="action-btn" href="#">음악 프로젝트 열기</a>
+        <a class="action-btn" href="#">문서/서사 작성 시작</a>
+        <a class="action-btn" href="#">시화·이미지 작업 모드</a>
+        <a class="action-btn" href="#">퍼스나 대화 리셋</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <span>문서 버전: v0.1 · 마지막 편집: YYYY-MM-DD</span>
+    <span>© Ruwein Trinity Workspace</span>
+  </footer>
+
+</div>
+</body>
+</html>
