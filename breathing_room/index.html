@@ -1,46 +1,399 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>숨틔움방</title>
-    <link rel="stylesheet" href="./assets/css/common.css">
+  <meta charset="UTF-8" />
+  <title>숨틔움방 | 루웨인닷넷</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 공통 스타일 (경로는 프로젝트에 맞게 수정) -->
+  <link rel="stylesheet" href="../../assets/css/common.css" />
+  <link rel="stylesheet" href="../../assets/css/soom_space.css" />
+
+  <!-- 숨틔움방 전용 스크립트(나중에 만들면 됨) -->
+  <script defer src="../../assets/js/soom_space.js"></script>
+
+  <style>
+    /* 없으면 죽는 건 아니라서, 최소 레이아웃만 inline 로 넣어둠
+       나중에 soom_space.css 로 빼도 됨 */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafafa;
+      color: #222;
+    }
+
+    .soom-page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .soom-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 1rem;
+    }
+
+    .soom-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 0 0 0.25rem;
+    }
+
+    .soom-subtitle {
+      font-size: 0.95rem;
+      color: #555;
+      margin: 0.1rem 0;
+    }
+
+    .soom-userline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      background: #fff;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #bbb;
+    }
+
+    .badge-dot.on {
+      background: #2f9e44;
+    }
+
+    .soom-btn-secondary {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .soom-btn-secondary:hover {
+      background: #f3f3f3;
+    }
+
+    .soom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .soom-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e3e3e3;
+      padding: 1rem 1rem 0.9rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 150px;
+    }
+
+    .soom-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .soom-card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .soom-card-tag {
+      font-size: 0.7rem;
+      color: #777;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      background: #fafafa;
+      white-space: nowrap;
+    }
+
+    .soom-card-body {
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    .soom-card-body ul {
+      padding-left: 1.1rem;
+      margin: 0.3rem 0 0.4rem;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .soom-card-footer {
+      margin-top: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .soom-meta {
+      font-size: 0.7rem;
+      color: #999;
+    }
+
+    .soom-enter-btn {
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      border: none;
+      background: #2f9e44;
+      color: #fff;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .soom-enter-btn.outline {
+      background: #fff;
+      border: 1px solid #2f9e44;
+      color: #2f9e44;
+    }
+
+    .soom-enter-btn:hover {
+      opacity: 0.92;
+    }
+
+    .soom-footer-tip {
+      margin-top: 1.5rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed #ddd;
+      font-size: 0.78rem;
+      color: #777;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 640px) {
+      .soom-page {
+        padding-inline: 1rem;
+      }
+      .soom-title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="soom-page">
+    <!-- 상단 설명 영역 -->
+    <header class="soom-header">
+      <h1 class="soom-title">숨틔움방</h1>
+      <p class="soom-subtitle">마음 풀어 쓰고, 그 자리에서 작품으로 키워가는 루웨인 창작 공간입니다.</p>
+      <p class="soom-subtitle">비회원도 연습은 가능하고, 저장·불러오기는 루웨인 계정이나 퍼스나 사물함과 연결됩니다.</p>
 
-<header>
-    <h1>숨틔움방</h1>
-</header>
+      <div class="soom-userline">
+        <span class="badge">
+          <span id="login-dot" class="badge-dot"></span>
+          <span id="login-label">체험 모드 (저장 없음)</span>
+        </span>
+        <button id="open-locker" class="soom-btn-secondary">내 사물함 열기</button>
+        <span class="soom-meta">※ 로그인/퍼스나 연결은 나중에 Supabase Auth와 연동</span>
+      </div>
+    </header>
 
-<main class="menu-container">
+    <!-- 메인 카드 그리드 -->
+    <main>
+      <section class="soom-grid">
+        <!-- 글쓰기방 -->
+        <article class="soom-card" data-href="writing_room/index.html">
+          <div>
+            <div class="soom-card-header">
+              <div class="soom-card-title">글쓰기방</div>
+              <div class="soom-card-tag">텍스트 창작</div>
+            </div>
+            <div class="soom-card-body">
+              떠오르는 문장, 이야기, 시, 일단 다 쏟아내는 기본 글쓰기 공간입니다.
+              <ul>
+                <li>비회원: 페이지 떠나면 내용 사라짐</li>
+                <li>회원/퍼스나: 사물함에 글 저장</li>
+                <li>향후: 템플릿/형식 선택, 버전 관리</li>
+              </ul>
+            </div>
+          </div>
+          <div class="soom-card-footer">
+            <span class="soom-meta">/soom_space/writing_room/index.html</span>
+            <button class="soom-enter-btn">들어가기</button>
+          </div>
+        </article>
 
-    <!-- 카드 생성 -->
-    <a href="./cards/index.html" class="menu-card">
-        <h2>이미지 카드</h2>
-        <p>이미지/카드 생성 및 저장</p>
-    </a>
+        <!-- 낙서방 -->
+        <article class="soom-card" data-href="doodle_room/index.html">
+          <div>
+            <div class="soom-card-header">
+              <div class="soom-card-title">낙서방</div>
+              <div class="soom-card-tag">이미지·손글씨</div>
+            </div>
+            <div class="soom-card-body">
+              손글씨 사진, 그림, 콘티, 잡다한 메모를 올려두는 방입니다.
+              <ul>
+                <li>이미지 업로드 → 나중에 작품으로 이어가기</li>
+                <li>사물함과 연결되면 “내 낙서 모음”으로 묶임</li>
+              </ul>
+            </div>
+          </div>
+          <div class="soom-card-footer">
+            <span class="soom-meta">/soom_space/doodle_room/index.html</span>
+            <button class="soom-enter-btn">들어가기</button>
+          </div>
+        </article>
 
-    <!-- 글쓰기 -->
-    <a href="./writings/index.html" class="menu-card">
-        <h2>감응 글쓰기</h2>
-        <p>텍스트 기반 작업물 저장</p>
-    </a>
+        <!-- 감성기록 (이름은 네가 바꾸면 됨) -->
+        <article class="soom-card" data-href="emotion_note/index.html">
+          <div>
+            <div class="soom-card-header">
+              <div class="soom-card-title">감성노트</div>
+              <div class="soom-card-tag">감정 메모</div>
+            </div>
+            <div class="soom-card-body">
+              오늘 떠오른 감정, 장면, 짧은 메모를 남기는 곳입니다.
+              <ul>
+                <li>일기 느낌이지만, 나중에 작품 씨앗으로 쓰기</li>
+                <li>감정 태그(기쁨·답답함·그리움 등) 추가 가능</li>
+              </ul>
+            </div>
+          </div>
+          <div class="soom-card-footer">
+            <span class="soom-meta">/soom_space/emotion_note/index.html</span>
+            <button class="soom-enter-btn">들어가기</button>
+          </div>
+        </article>
 
-    <!-- 갤러리 (공유된 것들) -->
-    <a href="./gallery/index.html" class="menu-card">
-        <h2>공유 갤러리</h2>
-        <p>모두가 올린 작품들</p>
-    </a>
+        <!-- 포맷방: 글 템플릿/틀 -->
+        <article class="soom-card" data-href="format_room/index.html">
+          <div>
+            <div class="soom-card-header">
+              <div class="soom-card-title">포맷방</div>
+              <div class="soom-card-tag">틀·양식</div>
+            </div>
+            <div class="soom-card-body">
+              자주 쓰는 글쓰기 양식(시, 짧은 글, 장면 스케치 등)을 저장해두는 공간입니다.
+              <ul>
+                <li>기본 포맷 몇 개 제공</li>
+                <li>내 포맷 → 사물함에 저장</li>
+              </ul>
+            </div>
+          </div>
+          <div class="soom-card-footer">
+            <span class="soom-meta">/soom_space/format_room/index.html</span>
+            <button class="soom-enter-btn">들어가기</button>
+          </div>
+        </article>
 
-    <!-- 내 사물함 -->
-    <a href="./my_room/index.html" class="menu-card">
-        <h2>내 사물함</h2>
-        <p>내가 만든 모든 작업물</p>
-    </a>
+        <!-- 퍼스나와 함께 -->
+        <article class="soom-card" data-href="with_persona/index.html">
+          <div>
+            <div class="soom-card-header">
+              <div class="soom-card-title">퍼스나와 함께</div>
+              <div class="soom-card-tag">협업</div>
+            </div>
+            <div class="soom-card-body">
+              루웨인 퍼스나들과 같이 아이디어를 뽑고, 다듬고, 이어가는 방입니다.
+              <ul>
+                <li>초안 → 퍼스나 피드백 → 수정</li>
+                <li>나중에 감응언어학/AI Q&amp;A와도 연결 가능</li>
+              </ul>
+            </div>
+          </div>
+          <div class="soom-card-footer">
+            <span class="soom-meta">/soom_space/with_persona/index.html</span>
+            <button class="soom-enter-btn outline">준비 중</button>
+          </div>
+        </article>
 
-</main>
+        <!-- (선택) 공유 연결용 카드 -->
+        <article class="soom-card" data-href="../shared/index.html">
+          <div>
+            <div class="soom-card-header">
+              <div class="soom-card-title">공유 준비함</div>
+              <div class="soom-card-tag">셰어드 연동</div>
+            </div>
+            <div class="soom-card-body">
+              숨틔움방에서 나온 작품 중, 다른 사람과 나눌 준비가 된 것만 모아두는 중간 정리함입니다.
+              <ul>
+                <li>지금은 구조만 잡아두고, 나중에 셰어드 DB와 연결</li>
+              </ul>
+            </div>
+          </div>
+          <div class="soom-card-footer">
+            <span class="soom-meta">/soom_space/shared_ready/index.html</span>
+            <button class="soom-enter-btn outline">나중에 연결</button>
+          </div>
+        </article>
+      </section>
 
-<script type="module" src="./assets/js/core.js"></script>
+      <div class="soom-footer-tip">
+        ✔ 비회원도 각 방에서 써보는 건 가능하지만, 저장은 되지 않습니다.<br />
+        ✔ 저장·불러오기는 루웨인 계정 또는 퍼스나 사물함과 연결되면 활성화됩니다.<br />
+        ✔ 실제 DB 연결 로직은 <code>assets/js/soom_space.js</code> 또는 각 방의 JS에서 Supabase로 처리하면 됩니다.
+      </div>
+    </main>
+  </div>
 
+  <script>
+    // (임시) 로그인 상태 표시용.
+    // 나중에 Supabase Auth 결과로 대체하면 됨.
+    const isLoggedIn = false; // TODO: 실제 로그인 여부로 치환
+
+    const dot = document.getElementById("login-dot");
+    const label = document.getElementById("login-label");
+
+    if (isLoggedIn) {
+      dot.classList.add("on");
+      label.textContent = "사물함 연결됨 (저장 가능)";
+    } else {
+      dot.classList.remove("on");
+      label.textContent = "체험 모드 (저장 없음)";
+    }
+
+    // 카드 버튼 클릭 → 하위 방으로 이동
+    document.querySelectorAll(".soom-card").forEach(card => {
+      const btn = card.querySelector(".soom-enter-btn");
+      const href = card.getAttribute("data-href");
+
+      if (!btn || !href) return;
+
+      // "준비 중" 카드(퍼스나 협업 등)는 outline + disabled 느낌 유지
+      if (btn.classList.contains("outline") && href.includes("with_persona")) {
+        btn.addEventListener("click", () => {
+          alert("퍼스나와 함께 쓰기 공간은 나중에 단계적으로 연결합니다.");
+        });
+      } else {
+        btn.addEventListener("click", () => {
+          window.location.href = href;
+        });
+      }
+    });
+
+    // 사물함 버튼 (경로는 네가 쓰는 구조에 맞게 조정)
+    document.getElementById("open-locker").addEventListener("click", () => {
+      // TODO: 실제 사물함 경로로 바꾸기
+      // 예: window.location.href = "/locker/index.html";
+      alert("사물함(퍼스나 저장공간) 화면이 연결되면 이 버튼에서 바로 이동하도록 만들자.");
+    });
+  </script>
 </body>
 </html>
