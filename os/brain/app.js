@@ -47,7 +47,7 @@ async function sendMessage() {
 
 /* ========== 6) 레카 응답 (실시간 API) ========== */
 /* 공명: 여기 주소만 네 서버 주소로 교체해라 */
-const BRAIN_API = "https://너도메인.vercel.app/api/brain";
+const BRAIN_API = "https://www.luwain.net/api/brain";
 
 async function aiReply(userText) {
     try {
