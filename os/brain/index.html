@@ -4,27 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BRAIN</title>
-<link rel="stylesheet" href="style.css">
 
+<link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="brain-wrap">
     <img src="brain.png" class="brain-icon">
     <div class="title">BRAIN</div>
 </div>
 
+<!-- OUTPUT -->
 <div id="output" class="output"></div>
 
+<!-- INPUT -->
 <div class="input-wrap">
-    <input id="input" placeholder="메시지를 입력하세요…" />
+    <input id="input" placeholder="메시지를 입력하세요…">
     <button id="send">전송</button>
 </div>
 
-<script src="https://unpkg.com/@supabase/supabase-js"></script>
 <script src="app.js"></script>
 </body>
 </html>
