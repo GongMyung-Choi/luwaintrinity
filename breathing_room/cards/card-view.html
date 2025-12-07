@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>카드 보기</title>
+
+<link rel="stylesheet" href="/os/assets/style.css" />
+
+<style>
+  body {
+    max-width: 860px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+    background: #f5f7ff;
+  }
+
+  .card-view-wrapper {
+    background: #fff;
+    padding: 26px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .thumb {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+
+  .desc {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+    white-space: pre-line;
+    line-height: 1.55;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  .list-btn { background: #aaa; }
+  .edit-btn { background: #6d85ff; }
+  .delete-btn { background: #ff6d6d; }
+  button:hover { opacity: 0.92; }
+</style>
+
+</head>
+<body>
+
+<div class="card-view-wrapper" id="content"></div>
+
+<div class="btn-row">
+  <button class="list-btn" onclick="goList()">목록</button>
+  <button class="edit-btn" id="editBtn">수정</button>
+  <button class="delete-btn" id="deleteBtn">삭제</button>
+</div>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL에서 id 가져오기
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    window.location.href = "/cards/card-list.html";
+  }
+
+  window.goList = () => {
+    window.location.href = "/cards/card-list.html";
+  };
+
+  // 카드 로드
+  async function loadCard() {
+    const { data, error } = await supabase
+      .from("cards")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      alert("카드를 불러올 수 없습니다.");
+      console.error(error);
+      return;
+    }
+
+    // 렌더링
+    document.getElementById("content").innerHTML = `
+      <div class="title">${data.title}</div>
+      <img src="${data.image_url}" class="thumb" />
+      <div class="desc">${data.description ?? ""}</div>
+    `;
+
+    // 수정 버튼
+    document.getElementById("editBtn").onclick = () => {
+      window.location.href = `/cards/card-edit.html?id=${id}`;
+    };
+
+    // 삭제 버튼
+    document.getElementById("deleteBtn").onclick = async () => {
+      if (!confirm("정말 삭제할까요?")) return;
+
+      const { error: delErr } = await supabase
+        .from("cards")
+        .delete()
+        .eq("id", id);
+
+      if (delErr) {
+        alert("삭제 실패");
+        console.error(delErr);
+      } else {
+        alert("삭제되었습니다.");
+        window.location.href = "/cards/card-list.html";
+      }
+    };
+  }
+
+  loadCard();
+</script>
+
+</body>
+</html>
