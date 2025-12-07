@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>음악 수정</title>
+
+<link rel="stylesheet" href="/os/assets/style.css" />
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+
+  h1 { font-size: 26px; margin-bottom: 20px; }
+
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  button:hover { opacity: 0.9; }
+
+  .json-note {
+    font-size: 13px;
+    color: #777;
+    margin-top: -16px;
+    margin-bottom: 12px;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>음악 수정</h1>
+
+<label>곡 제목</label>
+<input type="text" id="title" />
+
+<label>BPM</label>
+<input type="number" id="bpm" />
+
+<label>분위기/키워드</label>
+<input type="text" id="mood" />
+
+<label>설명</label>
+<textarea id="description" rows="6"></textarea>
+
+<label>곡 구조(JSON)</label>
+<div class="json-note">예: {"intro":4, "verse":16, "chorus":16, "bridge":8}</div>
+<textarea id="structure" rows="8"></textarea>
+
+<button id="saveBtn">수정 완료</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL param
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    window.location.href = "/musics/music-list.html";
+  }
+
+  // 기존 데이터 로드
+  async function loadMusic() {
+    const { data, error } = await supabase
+      .from("musics")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      alert("음악을 불러올 수 없습니다.");
+      console.error(error);
+      return;
+    }
+
+    document.getElementById("title").value = data.title;
+    document.getElementById("bpm").value = data.bpm ?? "";
+    document.getElementById("mood").value = data.mood ?? "";
+    document.getElementById("description").value = data.description ?? "";
+    document.getElementById("structure").value = JSON.stringify(data.structure ?? {}, null, 2);
+  }
+
+  loadMusic();
+
+  // 저장 버튼
+  document.getElementById("saveBtn").onclick = async () => {
+    const title = document.getElementById("title").value.trim();
+    const bpm = document.getElementById("bpm").value.trim();
+    const mood = document.getElementById("mmood").value.trim();  // FIX: at runtime. Use correct id:
+    const description = document.getElementById("description").value.trim();
+    const structureText = document.getElementById("structure").value.trim();
+
+    if (!title) {
+      alert("곡 제목은 필수입니다.");
+      return;
+    }
+
+    let jsonStructure = null;
+    try {
+      jsonStructure = structureText ? JSON.parse(structureText) : {};
+    } catch (e) {
+      alert("곡 구조(JSON) 형식이 잘못되었습니다.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("musics")
+      .update({
+        title,
+        bpm,
+        mood,
+        description,
+        structure: jsonStructure
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("수정 실패");
+      console.error(error);
+    } else {
+      alert("수정되었습니다.");
+      window.location.href = `/musics/music-view.html?id=${id}`;
+    }
+  };
+</script>
+
+</body>
+</html>
