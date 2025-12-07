@@ -1,6 +1,6 @@
-const listBox = document.getElementById("library-list");
+const listBox = document.getElementById("list");
 
-async function loadLibrary() {
+async function loadList() {
     const { data, error } = await supabase
         .from("human_library")
         .select("*")
@@ -11,19 +11,16 @@ async function loadLibrary() {
         return;
     }
 
-    listBox.innerHTML = data
-        .map(doc => `
-            <div class="item">
-                <h3>${doc.title}</h3>
-                <p>${doc.description || ""}</p>
-                <button onclick="openDoc('${doc.filename}')">열기</button>
-            </div>
-        `)
-        .join("");
+    listBox.innerHTML = data.map(doc => `
+        <div>
+            <h3>${doc.title}</h3>
+            <button onclick="openDoc('${doc.filename}')">열기</button>
+        </div>
+    `).join("");
 }
 
 function openDoc(filename) {
-    window.location.href = `view.html?file=${encodeURIComponent(filename)}`;
+    location.href = `human_view.html?file=${encodeURIComponent(filename)}`;
 }
 
-loadLibrary();
+loadList();
