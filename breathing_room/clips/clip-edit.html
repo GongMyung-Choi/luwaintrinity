@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영상 클립 수정</title>
+
+<link rel="stylesheet" href="/os/assets/style.css">
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+
+  h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  button:hover { opacity: 0.92; }
+</style>
+
+</head>
+<body>
+
+<h1>영상 클립 수정</h1>
+
+<label>제목</label>
+<input type="text" id="title">
+
+<label>태그 (쉼표 구분)</label>
+<input type="text" id="tags">
+
+<button id="saveBtn">수정 완료</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL param
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    window.location.href = "/clips/clip-list.html";
+  }
+
+  // 기존 데이터 로드
+  async function loadClip() {
+    const { data, error } = await supabase
+      .from("clips")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      alert("영상을 불러올 수 없습니다.");
+      console.error(error);
+      return;
+    }
+
+    document.getElementById("title").value = data.title;
+    document.getElementById("tags").value = data.tags || "";
+  }
+
+  loadClip();
+
+  // 저장
+  document.getElementById("saveBtn").onclick = async () => {
+    const title = document.getElementById("title").value.trim();
+    const tags = document.getElementById("tags").value.trim();
+
+    if (!title) {
+      alert("제목은 필수입니다.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("clips")
+      .update({
+        title,
+        tags
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("수정 실패");
+      console.error(error);
+      return;
+    }
+
+    alert("수정되었습니다.");
+    window.location.href = `/clips/clip-view.html?id=${id}`;
+  };
+</script>
+
+</body>
+</html>
