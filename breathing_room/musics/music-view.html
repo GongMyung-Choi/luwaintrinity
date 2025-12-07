@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>음악 보기</title>
+
+<link rel="stylesheet" href="/os/assets/style.css" />
+
+<style>
+  body {
+    max-width: 880px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+    background: #f5f6ff;
+  }
+
+  .view-wrap {
+    background: #fff;
+    padding: 26px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .info-block {
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .label {
+    color: #666;
+    font-weight: 600;
+  }
+
+  .section-list {
+    padding: 0;
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  .section-list li {
+    background: #f2f4ff;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  .list-btn { background: #aaa; }
+  .edit-btn { background: #6d85ff; }
+  .delete-btn { background: #ff6d6d; }
+  button:hover { opacity: 0.92; }
+
+</style>
+
+</head>
+<body>
+
+<div class="view-wrap" id="content"></div>
+
+<div class="btn-row">
+  <button class="list-btn" onclick="goList()">목록</button>
+  <button class="edit-btn" id="editBtn">수정</button>
+  <button class="delete-btn" id="deleteBtn">삭제</button>
+</div>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL param
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    window.location.href = "/musics/music-list.html";
+  }
+
+  window.goList = () => {
+    window.location.href = "/musics/music-list.html";
+  };
+
+  // 음악 로드
+  async function loadMusic() {
+    const { data, error } = await supabase
+      .from("musics")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      alert("음악을 불러올 수 없습니다.");
+      console.error(error);
+      return;
+    }
+
+    const structure = data.structure || {};
+    const sectionHtml = Object.entries(structure)
+      .map(([name, bars]) =>
+        `<li><span>${name}</span><span>${bars} bars</span></li>`
+      )
+      .join("");
+
+    document.getElementById("content").innerHTML = `
+      <div class="title">${data.title}</div>
+
+      <div class="info-block">
+        <div><span class="label">BPM:</span> ${data.bpm ?? "-"}</div>
+        <div><span class="label">분위기:</span> ${data.mood ?? "-"}</div>
+      </div>
+
+      <div class="info-block">
+        <div class="label">설명</div>
+        <div>${data.description ?? ""}</div>
+      </div>
+
+      <div class="info-block">
+        <div class="label">곡 구조</div>
+        <ul class="section-list">
+          ${sectionHtml || "<li>구조 없음</li>"}
+        </ul>
+      </div>
+    `;
+
+    // 수정 버튼
+    document.getElementById("editBtn").onclick = () => {
+      window.location.href = `/musics/music-edit.html?id=${id}`;
+    };
+
+    // 삭제 버튼
+    document.getElementById("deleteBtn").onclick = async () => {
+      if (!confirm("정말 삭제할까요?")) return;
+
+      const { error: delErr } = await supabase
+        .from("musics")
+        .delete()
+        .eq("id", id);
+
+      if (delErr) {
+        alert("삭제 실패");
+        console.error(delErr);
+      } else {
+        alert("삭제되었습니다.");
+        window.location.href = "/musics/music-list.html";
+      }
+    };
+  }
+
+  loadMusic();
+</script>
+
+</body>
+</html>
