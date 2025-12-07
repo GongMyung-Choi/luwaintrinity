@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영상 클립 보기</title>
+
+<link rel="stylesheet" href="/os/assets/style.css">
+
+<style>
+  body {
+    max-width: 880px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+    background: #f5f6ff;
+  }
+
+  .view-wrap {
+    background: #fff;
+    padding: 26px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .tags {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 18px;
+  }
+
+  video {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.15);
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  .list-btn { background: #aaa; }
+  .edit-btn { background: #6d85ff; }
+  .delete-btn { background: #ff6d6d; }
+
+  button:hover { opacity: 0.92; }
+
+</style>
+</head>
+
+<body>
+
+<div class="view-wrap" id="content"></div>
+
+<div class="btn-row">
+  <button class="list-btn" onclick="goList()">목록</button>
+  <button class="edit-btn" id="editBtn">수정</button>
+  <button class="delete-btn" id="deleteBtn">삭제</button>
+</div>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  // URL param
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("잘못된 접근입니다.");
+    window.location.href = "/clips/clip-list.html";
+  }
+
+  window.goList = () => {
+    window.location.href = "/clips/clip-list.html";
+  };
+
+  // 로드
+  async function loadClip() {
+    const { data, error } = await supabase
+      .from("clips")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      alert("영상을 불러올 수 없습니다.");
+      console.error(error);
+      return;
+    }
+
+    document.getElementById("content").innerHTML = `
+      <div class="title">${data.title}</div>
+      <div class="tags">${data.tags || ""}</div>
+      <video controls src="${data.file_url}"></video>
+    `;
+
+    // 수정 이동
+    document.getElementById("editBtn").onclick = () => {
+      window.location.href = \`/clips/clip-edit.html?id=${id}\`;
+    };
+
+    // 삭제
+    document.getElementById("deleteBtn").onclick = async () => {
+      if (!confirm("정말 삭제할까요?")) return;
+
+      // 1) DB 삭제
+      const { error: dbErr } = await supabase
+        .from("clips")
+        .delete()
+        .eq("id", id);
+
+      if (dbErr) {
+        alert("DB 삭제 실패");
+        console.error(dbErr);
+        return;
+      }
+
+      // 2) Storage 삭제
+      const { error: stErr } = await supabase
+        .storage
+        .from("clips")
+        .remove([data.file_name]);
+
+      if (stErr) {
+        alert("Storage 삭제 실패(파일만 남음)");
+        console.error(stErr);
+      }
+
+      alert("삭제되었습니다.");
+      window.location.href = "/clips/clip-list.html";
+    };
+  }
+
+  loadClip();
+</script>
+
+</body>
+</html>
