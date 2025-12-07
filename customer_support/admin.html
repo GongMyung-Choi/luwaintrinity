@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>공지 작성</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<h1 class="page-title">공지 작성</h1>
+
+<input id="title" class="input" placeholder="제목">
+<textarea id="content" class="textarea" placeholder="내용"></textarea>
+<button id="save" class="btn">등록</button>
+
+<script type="module">
+import { supabase } from "../supabase_client.js";
+
+document.getElementById("save").onclick = async () => {
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+
+    if (!title || !content) {
+        alert("제목/내용 입력해주세요");
+        return;
+    }
+
+    const { error } = await supabase.from("notices").insert([
+        { title, content, author: "운영자" }
+    ]);
+
+    if (error) alert(error.message);
+    else {
+        alert("등록 완료");
+        location.href = "index.html";
+    }
+};
+</script>
+
+</body>
+</html>
