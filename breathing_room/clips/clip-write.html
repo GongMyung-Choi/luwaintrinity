@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>새 영상 클립 만들기</title>
+
+<link rel="stylesheet" href="/os/assets/style.css">
+
+<style>
+  body {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+    font-family: "Pretendard", sans-serif;
+  }
+
+  h1 { font-size: 26px; margin-bottom: 20px; }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 12px 18px;
+    background: #6d85ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  button:hover { opacity: 0.92; }
+
+</style>
+
+</head>
+<body>
+
+<h1>새 영상 클립 만들기</h1>
+
+<label>영상 파일</label>
+<input type="file" id="file" accept="video/*">
+
+<label>제목</label>
+<input type="text" id="title" placeholder="영상 제목">
+
+<label>태그 (쉼표 구분)</label>
+<input type="text" id="tags" placeholder="예: vlog, 자연, 여행">
+
+<button id="uploadBtn">업로드</button>
+
+<script type="module">
+  import { supabase } from "/os/assets/js/core/supabase_client.js";
+
+  const uploadBtn = document.getElementById("uploadBtn");
+
+  uploadBtn.onclick = async () => {
+    const fileInput = document.getElementById("file");
+    const title = document.getElementById("title").value.trim();
+    const tags = document.getElementById("tags").value.trim();
+
+    if (!fileInput.files.length) {
+      alert("영상 파일을 선택해주세요.");
+      return;
+    }
+    if (!title) {
+      alert("제목은 필수입니다.");
+      return;
+    }
+
+    const file = fileInput.files[0];
+
+    // 로그인 사용자
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const ext = file.name.split(".").pop();
+    const fileName = `${user.id}_${Date.now()}.${ext}`;
+
+    // 1) Storage 업로드
+    const { data: storageData, error: storageErr } = await supabase
+      .storage
+      .from("clips")
+      .upload(fileName, file, { upsert: false });
+
+    if (storageErr) {
+      alert("업로드 실패");
+      console.error(storageErr);
+      return;
+    }
+
+    const fileUrl =
+      supabase.storage.from("clips").getPublicUrl(fileName).data.publicUrl;
+
+    // 2) DB 메타데이터 기록
+    const { data: dbData, error: dbErr } = await supabase
+      .from("clips")
+      .insert({
+        user_id: user.id,
+        title,
+        tags,
+        file_url: fileUrl,
+        file_name: fileName,
+      })
+      .select()
+      .single();
+
+    if (dbErr) {
+      alert("DB 저장 실패");
+      console.error(dbErr);
+      return;
+    }
+
+    alert("영상 업로드 완료되었습니다!");
+    window.location.href = `/clips/clip-view.html?id=${dbData.id}`;
+  };
+</script>
+
+</body>
+</html>
