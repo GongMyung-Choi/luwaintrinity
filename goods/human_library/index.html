@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>전자 도서관</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="../style.css">
+    <meta charset="UTF-8">
+    <title>Human Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <header>
+        <h1>Human Library</h1>
+    </header>
 
-<h1 class="page-title">전자 도서관</h1>
+    <main>
+        <div id="library-list" class="list"></div>
+    </main>
 
-<div class="section">
-    <a class="menu-item" href="./papers_list.html">📄 논문(Papers)</a>
-</div>
-
+    <script src="/supabase_client.js"></script>
+    <script src="human_list.js"></script>
 </body>
 </html>
