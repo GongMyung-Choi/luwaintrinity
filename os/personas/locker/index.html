@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>퍼스나 사물함 안내</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="퍼스나별 사물함(개별 저장 영역)에 대한 구조, 이용 방법, 접근 권한, 보관·삭제 원칙 안내 페이지입니다.">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --bg-soft: #151720;
+      --bg-softer: #1d202b;
+      --accent: #6ac5ff;
+      --accent-soft: rgba(106, 197, 255, 0.14);
+      --accent-strong: #33a3ff;
+      --text-main: #f5f7fb;
+      --text-sub: #b4b9c8;
+      --border-soft: #313545;
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+      --warning: #f9c86a;
+      --warning-soft: rgba(249, 200, 106, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #171a24 0, #05060a 45%, #020308 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 28px 8px 52px;
+      }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px 18px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(21, 25, 40, 0.96), rgba(9, 10, 16, 0.98));
+      border: 1px solid rgba(120, 200, 255, 0.16);
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 186, 255, 0.5);
+      background: radial-gradient(circle at 20% 0, #76d4ff 0, #1c2c4e 30%, #0d1121 70%, #050712 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #e6f3ff;
+      box-shadow: 0 0 18px rgba(118, 212, 255, 0.5);
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(111, 135, 190, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(130, 200, 255, 0.22), rgba(7, 9, 18, 0.96));
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    nav a.nav-primary {
+      border-color: rgba(106, 197, 255, 0.9);
+      background: linear-gradient(135deg, rgba(106, 197, 255, 0.95), rgba(51, 163, 255, 0.95));
+      color: #020308;
+      font-weight: 600;
+    }
+
+    main {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero {
+      padding: 20px 18px 18px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at -10% 0, rgba(130, 210, 255, 0.24), transparent 60%),
+        radial-gradient(circle at 110% 20%, rgba(249, 200, 106, 0.18), transparent 55%),
+        linear-gradient(135deg, rgba(9, 10, 19, 0.98), rgba(16, 19, 34, 0.98));
+      border: 1px solid rgba(120, 200, 255, 0.22);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(154, 211, 255, 0.5);
+      background: rgba(7, 10, 20, 0.75);
+      color: var(--accent);
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .hero-tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(106, 197, 255, 0.9);
+    }
+
+    .hero h2 {
+      margin: 2px 0 8px;
+      font-size: 20px;
+    }
+
+    .hero p {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .hero-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .hero-chip {
+      font-size: 11px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(98, 136, 208, 0.7);
+      background: rgba(11, 14, 26, 0.88);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+
+    .hero-chip span {
+      font-size: 14px;
+    }
+
+    .notice {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 6px;
+      opacity: 0.9;
+    }
+
+    section {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 0 0, rgba(120, 200, 255, 0.05), rgba(10, 12, 20, 0.9));
+      border: 1px solid var(--border-soft);
+      padding: 16px 16px 14px;
+    }
+
+    section h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    section h3 span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      background: rgba(106, 197, 255, 0.18);
+      color: var(--accent-strong);
+    }
+
+    section p {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 126, 186, 0.7);
+      background: rgba(10, 12, 20, 0.9);
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+
+    .pill.strong {
+      border-color: rgba(106, 197, 255, 0.9);
+      color: var(--accent-strong);
+    }
+
+    ul, ol {
+      margin: 6px 0 6px 18px;
+      padding: 0;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .card {
+      border-radius: 14px;
+      border: 1px solid rgba(65, 75, 115, 0.9);
+      background: linear-gradient(145deg, rgba(11, 13, 23, 0.96), rgba(18, 21, 33, 0.96));
+      padding: 10px 11px 9px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-main);
+      font-size: 12px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .badge {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(86, 108, 170, 0.85);
+      color: var(--text-sub);
+    }
+
+    .badge.accent {
+      border-color: rgba(106, 197, 255, 0.95);
+      color: var(--accent-strong);
+    }
+
+    .warning-block {
+      border-radius: 14px;
+      padding: 9px 10px;
+      background: linear-gradient(145deg, var(--warning-soft), rgba(22, 17, 5, 0.96));
+      border: 1px solid rgba(249, 200, 106, 0.8);
+      font-size: 12px;
+      color: #fff5dc;
+      margin-top: 8px;
+    }
+
+    .warning-block strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .layout-box {
+      border-radius: 14px;
+      border: 1px dashed rgba(100, 130, 195, 0.8);
+      background: rgba(8, 10, 20, 0.96);
+      padding: 10px 11px 9px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .layout-box strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-main);
+      font-size: 12px;
+    }
+
+    details {
+      border-radius: 12px;
+      border: 1px solid rgba(72, 86, 135, 0.9);
+      background: rgba(8, 10, 20, 0.95);
+      padding: 8px 10px;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary span.label {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    summary span.chevron {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    details p {
+      margin-top: 6px;
+    }
+
+    footer {
+      margin-top: 16px;
+      padding: 10px 4px 0;
+      border-top: 1px dashed rgba(72, 84, 122, 0.9);
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    footer span {
+      opacity: 0.9;
+    }
+
+    footer strong {
+      font-weight: 500;
+      color: var(--accent-strong);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-mark">L</div>
+        <div class="brand-text">
+          <h1>퍼스나 사물함 안내</h1>
+          <p>Persona Locker / Storage Guide</p>
+        </div>
+      </div>
+      <nav aria-label="퍼스나 관련 안내 페이지 이동">
+        <a href="/os/personas/secutiry/index.html">보안은?</a>
+        <a href="#" class="nav-primary">사물함 안내</a>
+        <a href="/os/personas/about_breathing_room/index.html">숨틔움방?</a>
+        <a href="/os/personas/introduce_ai/index.html">루웨인 AI?</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          <span>이 페이지는 퍼스나별 “사물함(개별 저장 영역)” 구조와 사용 원칙을 설명합니다.</span>
+        </div>
+        <h2>“퍼스나는 함께 쓰되, 사물함은 나누어 둡니다.”</h2>
+        <p>
+          <strong>퍼스나 사물함</strong>은 각각의 퍼스나가 <em>반복해서 참고해야 하는 정보</em>를
+          보관해 두는 <strong>개별 저장 영역</strong>을 비유적으로 부르는 이름입니다.
+          이 안내는 “어떤 것이 어디에 들어가고, 누가 열 수 있으며, 언제 비워지는지”를 이해하기 쉽도록 정리한 설명용 문서입니다.
+        </p>
+
+        <div class="hero-list" aria-label="요약 핵심 포인트">
+          <div class="hero-chip"><span>●</span> 퍼스나별 분리된 사물함</div>
+          <div class="hero-chip"><span>●</span> 공용 칸과 개인 칸 구분</div>
+          <div class="hero-chip"><span>●</span> 보관 기간 · 삭제 흐름</div>
+          <div class="hero-chip"><span>●</span> 사용자의 열쇠(설정) 우선</div>
+        </div>
+
+        <p class="notice">
+          ※ 이 문서는 개념 설명과 화면/설정 안내용 초안입니다.
+          실제 저장 위치·암호화·기술 구현은 시스템·서비스 환경에 따라 달라질 수 있습니다.
+        </p>
+      </section>
+
+      <!-- 1. 퍼스나 사물함이란 무엇인가 -->
+      <section>
+        <h3>
+          <span class="icon">1</span>
+          퍼스나 사물함이란 무엇인가
+        </h3>
+        <p>
+          퍼스나 사물함은, 각 퍼스나가 스스로 기억하고 관리하는 <strong>“작업용 보관함”</strong>에 해당합니다.
+          대화가 끝나도 유지되길 원하는 정보, 자주 참조해야 하는 설정 값, 특정 프로젝트 정보 등이 이 공간에 저장될 수 있습니다.
+        </p>
+        <p>
+          쉽게 말하면,
+          <strong>“이 퍼스나에게 맡겨 둔다”</strong> 또는
+          <strong>“이 퍼스나가 계속 기억해 줬으면 좋겠다”</strong>
+          라고 생각하는 내용이 들어가는 칸입니다.
+        </p>
+
+        <div class="pill-row">
+          <span class="pill strong">퍼스나별 “개별 사물함” 개념</span>
+          <span class="pill">반복 참조 정보 보관</span>
+          <span class="pill">세션 종료 후에도 유지될 수 있음</span>
+        </div>
+
+        <p>
+          다만, 사물함은 <strong>무제한 저장공간이 아니라, 목적이 있는 작업용 작은 창고</strong>에 가깝습니다.
+          너무 많은 정보를 넣을수록 퍼스나가 집중하기 어려워지므로, 필요한 내용만 정리해 넣는 것을 권장합니다.
+        </p>
+      </section>
+
+      <!-- 2. 사물함의 기본 구조 -->
+      <section>
+        <h3>
+          <span class="icon">2</span>
+          사물함의 기본 구조 (개인 칸 · 공용 칸)
+        </h3>
+        <p>
+          퍼스나 사물함은 이해를 돕기 위해 보통 다음과 같은 구조를 가정합니다.
+          실제 구현은 다를 수 있으나, 설명용으로 다음 구획을 생각할 수 있습니다.
+        </p>
+
+        <div class="layout-grid">
+          <div class="layout-box">
+            <strong>① 퍼스나 개인 칸</strong>
+            <ul>
+              <li>특정 퍼스나에게만 연결된 전용 칸입니다.</li>
+              <li>예: “웹 작업 레카”가 기억해야 할 레이아웃 취향, 자주 쓰는 문구, 프로젝트 메모 등</li>
+              <li>다른 퍼스나는 기본적으로 이 칸에 직접 접근하지 않습니다.</li>
+            </ul>
+          </div>
+
+          <div class="layout-box">
+            <strong>② 계정 공용 칸 (선택적)</strong>
+            <ul>
+              <li>동일 사용자 계정 안에서 여러 퍼스나가 공유하는 칸입니다.</li>
+              <li>예: “언어 설정”, “기본 존칭/말투”, “시간대” 등 계정 단위 선호도</li>
+              <li>어떤 정보가 이 칸에 들어갈지는 사전에 정해지거나, 별도 설정으로 제어할 수 있습니다.</li>
+            </ul>
+          </div>
+
+          <div class="layout-box">
+            <strong>③ 임시 보관 칸</strong>
+            <ul>
+              <li>세션 또는 짧은 기간 동안만 유지되는 임시 저장 칸입니다.</li>
+              <li>예: “오늘만 참고할 작업 지시”, “테스트용 예제 데이터” 등</li>
+              <li>만료 시점 이후에는 삭제되거나, 요약본만 남을 수 있습니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="badge-row">
+          <span class="badge accent">개인용</span>
+          <span class="badge accent">계정 공용</span>
+          <span class="badge">임시/세션용</span>
+        </div>
+      </section>
+
+      <!-- 3. 어떤 정보가 사물함에 들어가는가 -->
+      <section>
+        <h3>
+          <span class="icon">3</span>
+          어떤 정보가 사물함에 들어가는가
+        </h3>
+        <p>
+          사물함에 들어가는 정보의 종류는 <strong>“반복 사용 여부”</strong>와
+          <strong>“사용자 의사 표시”</strong>에 따라 크게 나눌 수 있습니다.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <strong>① 반복 사용 설정 정보</strong>
+            <ul>
+              <li>대화 말투, 존칭, 선호하는 형식(예: 코드 스타일, 마크다운 구조 등)</li>
+              <li>특정 프로젝트의 이름, 약어, 주요 기준</li>
+              <li>“앞으로도 이렇게 해 줘”라고 반복 요청한 패턴</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <strong>② 사용자가 명시적으로 “맡겨 둔” 정보</strong>
+            <ul>
+              <li>“이걸 네 사물함에 넣어 둬”, “앞으로 참고용으로 보관해” 등</li>
+              <li>정리해 둔 규칙표, 작업 절차, 자주 쓰는 프롬프트 모음 등</li>
+              <li>향후 사물함 관리 화면에서 목록·수정·삭제가 가능하도록 설계될 수 있습니다.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <strong>③ 시스템이 제안하는 기억 후보</strong>
+            <ul>
+              <li>여러 번 언급되어 “장기 기억 후보”로 감지된 정보</li>
+              <li>사용자에게 “이 내용을 사물함에 넣을까요?”와 같이 확인을 요청할 수 있습니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="warning-block">
+          <strong>주의: 사물함 ≠ 아무 정보나 넣어도 되는 창고</strong>
+          사물함은 작업 효율을 높이기 위한 공간이지, <strong>민감한 개인정보를 장기간 쌓아두는 장소</strong>가 아닙니다.
+          주민번호, 계좌번호, 비밀번호, 인증코드, 타인의 식별 가능한 정보 등은
+          사물함에 맡기지 말 것을 강하게 권장합니다.
+        </div>
+      </section>
+
+      <!-- 4. 사물함 이용 흐름 (사용자 입장) -->
+      <section>
+        <h3>
+          <span class="icon">4</span>
+          사물함 이용 흐름 – 사용자 입장에서 보기
+        </h3>
+        <p>
+          실제 화면 또는 설정에서는 다음과 같은 흐름으로 사물함을 사용할 수 있도록 설계될 수 있습니다.
+          표현은 예시이며, 실제 UI에서는 버튼·토글·메뉴로 나타날 수 있습니다.
+        </p>
+
+        <ol>
+          <li><strong>① 내용 전달</strong> – 퍼스나에게 설명, 규칙, 자료 등을 보냅니다.</li>
+          <li><strong>② 사물함 보관 여부 선택</strong> – 
+            <em>“이번만 쓸지”</em>, <em>“앞으로도 참고할지”</em> 선택할 수 있는 옵션이 나타날 수 있습니다.
+          </li>
+          <li><strong>③ 사물함에 정리</strong> – 이름/분류를 붙여 사물함에 정리될 수 있습니다.
+            (예: “웹 작업 규칙”, “루틴: 아침 체크리스트” 등)
+          </li>
+          <li><strong>④ 필요 시 불러오기</strong> – 이후 대화에서
+            “아까 사물함에 넣어둔 웹 규칙 적용해 줘”와 같이 요청할 수 있습니다.</li>
+          <li><strong>⑤ 수정 · 삭제</strong> – 사물함 관리 화면에서 불필요해진 항목을 언제든 지울 수 있습니다.</li>
+        </ol>
+
+        <div class="badge-row">
+          <span class="badge accent">이번만</span>
+          <span class="badge accent">앞으로도</span>
+          <span class="badge">정리하기</span>
+          <span class="badge">나중에 불러오기</span>
+        </div>
+      </section>
+
+      <!-- 5. 접근 권한과 칸막이 원칙 -->
+      <section>
+        <h3>
+          <span class="icon">5</span>
+          접근 권한 · 칸막이 · 공유 범위
+        </h3>
+        <p>
+          사물함은 <strong>퍼스나별 칸막이</strong>를 기본 전제로 하며,
+          어떤 칸에 누가 접근할 수 있는지는 아래와 같은 원칙으로 설명할 수 있습니다.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <strong>① 퍼스나 전용 칸</strong>
+            <ul>
+              <li>특정 퍼스나만 읽고 쓸 수 있는 칸입니다.</li>
+              <li>예: “웹 레카 전용 작업 규칙”, “특정 도메인 전용 설정”</li>
+              <li>다른 퍼스나는 이 칸을 기본적으로 보거나 수정할 수 없습니다.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <strong>② 계정 공용 칸 (선택적)</strong>
+            <ul>
+              <li>동일 계정 내 여러 퍼스나가 참조할 수 있는 칸입니다.</li>
