@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>사랑의 연습 | 사랑의 언어</title>
+  <link rel="stylesheet" href="../style/main.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>사랑의 연습</h1>
+  <p class="subtitle">
+    우리는 ‘사랑한다’고 말하면서도 정작<br>
+    사랑을 어떻게 표현해야 할지 잘 모르는 경우가 많습니다.<br><br>
+    **사랑의 연습은 실제 관계 속 장면을 떠올리고,  
+    내가 건네고 싶은 말을 조심스럽게 적어보는 과정입니다.**
+  </p>
+</header>
+
+<main>
+
+  <!-- 안내 -->
+  <section class="guide">
+    <h2>왜 사랑도 연습이 필요할까?</h2>
+    <p>
+      사랑은 감정 그 자체이지만, 표현은 기술입니다.<br>
+      우리는 기술을 연습하지 않으면 금세 서툴러지고,<br>
+      서툰 표현은 쉽게 오해를 불러옵니다.<br><br>
+
+      이 공간은 ‘잘 쓰기 위한’ 것이 아니라  
+      **내 방식의 사랑을 찾아가는 과정**을 돕는 공간입니다.
+    </p>
+
+    <h3>연습은 이렇게 진행됩니다</h3>
+    <ol>
+      <li>하나의 상황을 떠올린다</li>
+      <li>그 상황에서 내가 건네고 싶은 말을 적는다</li>
+      <li>DB에 저장된다</li>
+      <li>나중에 퍼스나 코칭(레카/루미아)이 이 기록들을 기반으로 조언을 준다</li>
+    </ol>
+  </section>
+
+  <!-- 입력 -->
+  <section id="practice-input">
+    <h2>새 연습 만들기</h2>
+
+    <form id="practice-form">
+      <label for="scenario">상황 / 장면</label>
+      <input id="scenario" placeholder="예: 지쳐 있는 연인에게 건네는 말">
+
+      <label for="my-line">내 말</label>
+      <textarea id="my-line" rows="4"
+        placeholder="지금 떠오르는 말을 그대로 적어보세요."></textarea>
+
+      <button type="submit">연습 기록 저장</button>
+    </form>
+  </section>
+
+  <!-- 히스토리 -->
+  <section id="practice-history">
+    <h2>내 사랑의 연습 기록</h2>
+    <p class="guide-small">
+      내가 어떤 말에 더 익숙한지,  
+      어떤 상황에서 말이 잘 안 나오는지,  
+      어떤 표현이 자주 반복되는지  
+      천천히 관찰해보세요.
+    </p>
+    <ul id="practice-list"></ul>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/includes/script_reverb.js"></script>
+<script src="practice.js"></script>
+
+</body>
+</html>
