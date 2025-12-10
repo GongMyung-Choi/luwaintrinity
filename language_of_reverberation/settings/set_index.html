@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>설정</title>
+<link rel="stylesheet" href="/includes/style.css">
+</head>
+<body>
+
+<h1>설정</h1>
+
+<label>텍스트 크기</label>
+<select id="fontSize">
+  <option value="16px">보통</option>
+  <option value="20px">크게</option>
+</select>
+
+<label>색상 모드</label>
+<select id="theme">
+  <option value="light">라이트 모드</option>
+  <option value="dark">다크 모드</option>
+</select>
+
+<script>
+document.getElementById("fontSize").onchange = e => {
+  localStorage.setItem("reverberation_font", e.target.value);
+};
+document.getElementById("theme").onchange = e => {
+  localStorage.setItem("reverberation_theme", e.target.value);
+};
+</script>
+
+</body>
+</html>
