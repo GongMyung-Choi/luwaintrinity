@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>글쓰기방 | 숨틔움방</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="../../../assets/css/common.css" />
+  <link rel="stylesheet" href="../../../assets/css/writing_room.css" />
+
+  <script defer src="../../../assets/js/writing_room.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #fafafa;
+      font-family: system-ui, sans-serif;
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem 1.2rem 4rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1.4rem;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .btn:hover {
+      background: #f0f0f0;
+    }
+    .btn.primary {
+      background: #2f9e44;
+      border-color: #2f9e44;
+      color: #fff;
+    }
+    .btn.primary:hover {
+      opacity: 0.92;
+    }
+
+    #content {
+      width: 100%;
+      min-height: 380px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .info-line {
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+      color: #888;
+    }
+
+    .saved-popup {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      background: #2f9e44;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+      font-size: 0.9rem;
+    }
+    .saved-popup.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>글쓰기방</h1>
+    <p class="desc">
+      자유롭게 쓰세요.  
+      비회원은 페이지를 나가면 내용이 사라집니다.<br/>
+      로그인/퍼스나 연결 시 사물함에 작품으로 저장됩니다.
+    </p>
+
+    <div class="toolbar">
+      <button id="btnSave" class="btn primary">저장하기</button>
+      <button id="btnClear" class="btn">내용 지우기</button>
+      <button id="btnLoad" class="btn">불러오기</button>
+    </div>
+
+    <textarea id="content" placeholder="여기에 마음껏 적어보세요."></textarea>
+    <div class="info-line" id="statusText">체험 모드 — 저장 불가능</div>
+  </div>
+
+  <div class="saved-popup" id="popupSaved">저장되었습니다</div>
+</body>
+</html>
