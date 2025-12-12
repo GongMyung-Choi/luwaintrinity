@@ -1,0 +1,34 @@
+:root{
+  /* BRAND */
+  --color-primary:#af2465;
+  --color-secondary:#6c5b7b;
+  --color-accent:#2a9d8f;
+
+  /* GRAY SCALE */
+  --gray-900:#111;
+  --gray-700:#444;
+  --gray-500:#666;
+  --gray-300:#ddd;
+  --gray-200:#eee;
+
+  /* TEXT */
+  --font-base:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+
+  /* SIZE */
+  --h1-size:40px;
+  --h2-size:28px;
+  --body-size:16px;
+  --small-size:14px;
+
+  /* SPACE */
+  --space-xl:24px;
+  --space-md:16px;
+  --space-sm:12px;
+
+  /* BUTTON */
+  --btn-radius:10px;
+  --btn-border:var(--color-accent);
+  --btn-text:var(--color-accent);
+  --btn-hover-bg:var(--color-accent);
+  --btn-hover-text:#fff;
+}
