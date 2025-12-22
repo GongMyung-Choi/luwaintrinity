@@ -1,31 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BRAIN</title>
-
-<link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
-
+  <meta charset="UTF-8" />
+  <title>BRAIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-
 <body>
 
-<!-- HEADER -->
-<div class="brain-wrap">
-    <img src="brain.png" class="brain-icon">
-    <div class="title">BRAIN</div>
-</div>
+<header style="padding:12px;font-size:22px;font-weight:bold;">
+  BRAIN
+</header>
 
-<!-- OUTPUT -->
-<div id="output" class="output"></div>
+<div id="output"></div>
 
-<!-- INPUT -->
-<div class="input-wrap">
-    <input id="input" placeholder="메시지를 입력하세요…">
-    <button id="send">전송</button>
-</div>
+<footer style="position:fixed;bottom:0;left:0;right:0;padding:12px;background:#eee;">
+  <input id="input" placeholder="레카?" />
+  <button id="send">전송</button>
+</footer>
 
 <script src="app.js"></script>
 </body>
